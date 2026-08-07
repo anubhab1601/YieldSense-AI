@@ -61,14 +61,15 @@ function HistoryRow({ record, onDelete }: { record: PredictionHistoryItem; onDel
         report_type: "prediction",
       });
       toast.success("Report generated! Download it from the Reports page.");
-    } catch {
-      toast.error("Failed to generate report.");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to generate report.");
     } finally {
       setGeneratingReport(false);
     }
   };
 
   return (
+
     <Card padding="sm" className="overflow-hidden">
       {/* Summary Row */}
       <div
@@ -211,12 +212,13 @@ export default function HistoryPage() {
       const { reportService: rs } = await import("@/services/m3services");
       await rs.downloadHistoryCsv();
       toast.success("CSV downloaded!");
-    } catch {
-      toast.error("Download failed.");
+    } catch (err: any) {
+      toast.error(err?.message || "Download failed.");
     } finally {
       setDownloading(false);
     }
   };
+
 
   if (loading) return <LoadingSpinner text="Loading history..." />;
 

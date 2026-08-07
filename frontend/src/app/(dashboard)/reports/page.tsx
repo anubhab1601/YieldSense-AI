@@ -199,8 +199,8 @@ function ReportCard({ report, onDelete }: ReportCardProps) {
     try {
       await reportService.downloadPdf(report.id, `${report.title}.pdf`);
       toast.success("PDF downloaded!");
-    } catch {
-      toast.error("Failed to download PDF.");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to download PDF.");
     } finally {
       setDownloading(false);
     }
@@ -211,12 +211,13 @@ function ReportCard({ report, onDelete }: ReportCardProps) {
     try {
       await reportService.downloadReportCsv(report.id);
       toast.success("CSV downloaded!");
-    } catch {
-      toast.error("Failed to download CSV.");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to download CSV.");
     } finally {
       setDownloadingCsv(false);
     }
   };
+
 
   const handleDelete = async () => {
     if (!confirm(`Delete "${report.title}"?`)) return;

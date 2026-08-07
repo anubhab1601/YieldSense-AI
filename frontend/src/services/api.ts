@@ -58,14 +58,29 @@ api.interceptors.request.use(
 );
 
 
-// Response interceptor — normalize errors
+// Response interceptor — normalize errors (handles JSON and Blob error responses)
 api.interceptors.response.use(
   (response) => response,
-  (error: AxiosError<{ detail?: string }>) => {
-    const message =
-      error.response?.data?.detail ||
-      error.message ||
-      "An unexpected error occurred";
+  async (error: AxiosError<any>) => {
+    let message = "An unexpected error occurred";
+
+    if (error.response?.data) {
+      if (error.response.data instanceof Blob) {
+        try {
+          const text = await error.response.data.text();
+          const parsed = JSON.parse(text);
+          message = parsed.detail || message;
+        } catch {
+          message = error.message || message;
+        }
+      } else if (typeof error.response.data === "object") {
+        message = error.response.data.detail || error.message || message;
+      } else if (typeof error.response.data === "string") {
+        message = error.response.data;
+      }
+    } else if (error.message) {
+      message = error.message;
+    }
 
     return Promise.reject(new Error(message));
   }
