@@ -91,25 +91,24 @@ class HistoryService:
         Returns:
             Tuple of (list of prediction dicts, total count).
         """
-        query = (
-            self.db.collection(PREDICTION_HISTORY_COLLECTION)
-            .where("user_id", "==", user_id)
-            .order_by("created_at", direction="DESCENDING")
-        )
-
+        # Query by user_id only (does not require composite index in Firestore)
+        query = self.db.collection(PREDICTION_HISTORY_COLLECTION).where("user_id", "==", user_id)
         all_docs = list(query.stream())
-        total = len(all_docs)
-
-        offset = (page - 1) * limit
-        paginated = all_docs[offset: offset + limit]
 
         records = []
-        for doc in paginated:
+        for doc in all_docs:
             data = doc.to_dict()
             data["id"] = doc.id
             records.append(data)
 
-        return records, total
+        # Sort in Python by created_at descending
+        records.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+
+        total = len(records)
+        offset = (page - 1) * limit
+        paginated = records[offset: offset + limit]
+
+        return paginated, total
 
     def get_prediction(self, prediction_id: str, user_id: str) -> Dict[str, Any]:
         """
@@ -145,32 +144,18 @@ class HistoryService:
 
     def get_recent_predictions(self, user_id: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Get the N most recent predictions for a user."""
-        query = (
-            self.db.collection(PREDICTION_HISTORY_COLLECTION)
-            .where("user_id", "==", user_id)
-            .order_by("created_at", direction="DESCENDING")
-            .limit(limit)
-        )
-        docs = list(query.stream())
-        result = []
-        for doc in docs:
-            data = doc.to_dict()
-            data["id"] = doc.id
-            result.append(data)
-        return result
+        records = self.get_all_for_analytics(user_id, limit=100)
+        return records[:limit]
 
     def get_all_for_analytics(self, user_id: str, limit: int = 100) -> List[Dict[str, Any]]:
         """Get all prediction records for analytics computation."""
-        query = (
-            self.db.collection(PREDICTION_HISTORY_COLLECTION)
-            .where("user_id", "==", user_id)
-            .order_by("created_at", direction="DESCENDING")
-            .limit(limit)
-        )
+        query = self.db.collection(PREDICTION_HISTORY_COLLECTION).where("user_id", "==", user_id)
         docs = list(query.stream())
-        result = []
+        records = []
         for doc in docs:
             data = doc.to_dict()
             data["id"] = doc.id
-            result.append(data)
-        return result
+            records.append(data)
+        records.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+        return records[:limit]
+

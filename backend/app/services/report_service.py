@@ -163,17 +163,19 @@ class ReportService:
 
     def get_reports(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all reports for a user (most recent first)."""
-        query = (
-            self.db.collection(REPORTS_COLLECTION)
-            .where("user_id", "==", user_id)
-            .order_by("created_at", direction="DESCENDING")
-            .limit(50)
-        )
+        query = self.db.collection(REPORTS_COLLECTION).where("user_id", "==", user_id)
         docs = list(query.stream())
-        result = []
+        all_reports = []
         for doc in docs:
             data = doc.to_dict()
             data["id"] = doc.id
+            all_reports.append(data)
+
+        # Sort in Python by created_at descending
+        all_reports.sort(key=lambda r: r.get("created_at", ""), reverse=True)
+
+        result = []
+        for data in all_reports[:50]:
             # Include lightweight summary only (not full data dict)
             result.append({
                 "id": data["id"],

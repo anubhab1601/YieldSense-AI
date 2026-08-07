@@ -27,25 +27,27 @@ class NotificationService:
         Returns:
             Tuple of (list of notification dicts, unread count).
         """
-        query = (
-            self.db.collection(NOTIFICATIONS_COLLECTION)
-            .where("user_id", "==", user_id)
-            .order_by("created_at", direction="DESCENDING")
-            .limit(50)
-        )
+        query = self.db.collection(NOTIFICATIONS_COLLECTION).where("user_id", "==", user_id)
 
         docs = list(query.stream())
-        notifications = []
-        unread_count = 0
-
+        all_notifs = []
         for doc in docs:
             data = doc.to_dict()
             data["id"] = doc.id
+            all_notifs.append(data)
+
+        all_notifs.sort(key=lambda n: n.get("created_at", ""), reverse=True)
+
+        notifications = []
+        unread_count = 0
+
+        for data in all_notifs[:50]:
             notifications.append(data)
             if not data.get("is_read", False):
                 unread_count += 1
 
         return notifications, unread_count
+
 
     def mark_as_read(self, notification_id: str, user_id: str) -> dict:
         """
