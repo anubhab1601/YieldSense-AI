@@ -33,17 +33,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch user profile from backend
+  // Fetch user profile from backend with single retry for auth transition
   const fetchProfile = useCallback(async (): Promise<UserProfile | null> => {
     try {
       const data = await userService.getProfile();
       setProfile(data);
       return data;
     } catch {
-      setProfile(null);
-      return null;
+      // Retry once after 300ms delay in case token was in transition during sign-in
+      await new Promise((r) => setTimeout(r, 300));
+      try {
+        const data = await userService.getProfile();
+        setProfile(data);
+        return data;
+      } catch {
+        setProfile(null);
+        return null;
+      }
     }
   }, []);
+
 
   // Listen for auth state changes
   useEffect(() => {

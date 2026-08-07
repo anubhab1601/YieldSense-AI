@@ -9,6 +9,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import {
   MapPin, Wheat, Ruler, BarChart3, Plus, TrendingUp,
   ArrowRight, Sprout, Cloud, Layers, AlertTriangle,
@@ -50,6 +52,7 @@ const RISK_STYLES: Record<string, { badge: string; icon: React.ReactNode; text: 
 };
 
 export default function DashboardPage() {
+  const router = useRouter();
   const { user, profile } = useAuth();
 
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
@@ -85,8 +88,13 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
+    if (profile && profile.role === "admin") {
+      router.replace(ROUTES.ADMIN);
+      return;
+    }
     loadDashboard();
-  }, [user?.uid]);
+  }, [user?.uid, profile?.role]);
+
 
 
   if (loading) return <LoadingSpinner text="Loading dashboard..." />;
