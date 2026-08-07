@@ -89,6 +89,29 @@ def _get_styles():
     return custom
 
 
+def _clean_text(val: Any) -> str:
+    """Sanitize text to latin-1 compatible ASCII/Latin-1 string for ReportLab."""
+    if val is None:
+        return "N/A"
+    s = str(val)
+    replacements = {
+        "\u2014": "-",  # em-dash —
+        "\u2013": "-",  # en-dash –
+        "\u2018": "'",  # left single quote ‘
+        "\u2019": "'",  # right single quote ’
+        "\u201c": '"',  # left double quote “
+        "\u201d": '"',  # right double quote ”
+        "\u2022": "*",  # bullet •
+        "\u2026": "...", # ellipsis …
+        "\u00a0": " ",  # non-breaking space
+        "°": "deg ",     # degree sign
+        "²": "^2",      # superscript 2
+    }
+    for old, new in replacements.items():
+        s = s.replace(old, new)
+    return s.encode("latin-1", errors="ignore").decode("latin-1")
+
+
 def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     """
     Generate a professional PDF report from a report data dict.
@@ -121,14 +144,16 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     story.append(HRFlowable(width="100%", thickness=2, color=BRAND_GREEN))
     story.append(Spacer(1, 0.4 * cm))
 
-    title = report_data.get("data", {}).get("prediction", {}).get("crop", "") + " Crop Report"
-    report_title = report_data.get("title", title)
+    title = _clean_text(report_data.get("data", {}).get("prediction", {}).get("crop", "")) + " Crop Report"
+    report_title = _clean_text(report_data.get("title", title))
     story.append(Paragraph(f"Report: {report_title}", styles["Bold"]))
+    gen_at = _clean_text(report_data.get('data', {}).get('generated_at', datetime.now().isoformat())[:19].replace('T', ' '))
     story.append(Paragraph(
-        f"Generated: {report_data.get('data', {}).get('generated_at', datetime.now().isoformat())[:19].replace('T', ' ')} UTC",
+        f"Generated: {gen_at} UTC",
         styles["Small"],
     ))
     story.append(Spacer(1, 0.5 * cm))
+
 
     data_payload = report_data.get("data", {})
     prediction = data_payload.get("prediction", {})
@@ -144,16 +169,16 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
 
     pred_table_data = [
         ["Parameter", "Value"],
-        ["Crop", prediction.get("crop", "—")],
-        ["Season", prediction.get("season", "—")],
-        ["State / Region", prediction.get("state", "—")],
-        ["Farm Area", f"{prediction.get('area', 0):,.1f} ha"],
-        ["Predicted Yield", f"{prediction.get('predicted_yield', 0):.3f} {prediction.get('prediction_unit', 'tons/ha')}"],
-        ["Total Estimated Production", f"{prediction.get('total_production', 0):,.2f} tons"],
-        ["ML Model", prediction.get("model_used", "—")],
-        ["Model Accuracy (R²)", f"{(prediction.get('model_accuracy') or 0) * 100:.1f}%" if prediction.get("model_accuracy") else "—"],
-        ["Prediction Confidence", prediction.get("confidence", "—")],
-        ["Prediction Date", str(prediction.get("created_at", "—"))[:19].replace("T", " ")],
+        ["Crop", _clean_text(prediction.get("crop", "-"))],
+        ["Season", _clean_text(prediction.get("season", "-"))],
+        ["State / Region", _clean_text(prediction.get("state", "-"))],
+        ["Farm Area", _clean_text(f"{prediction.get('area', 0):,.1f} ha")],
+        ["Predicted Yield", _clean_text(f"{prediction.get('predicted_yield', 0):.3f} {prediction.get('prediction_unit', 'tons/ha')}")],
+        ["Total Estimated Production", _clean_text(f"{prediction.get('total_production', 0):,.2f} tons")],
+        ["ML Model", _clean_text(prediction.get("model_used", "-"))],
+        ["Model Accuracy (R^2)", _clean_text(f"{(prediction.get('model_accuracy') or 0) * 100:.1f}%" if prediction.get("model_accuracy") else "-")],
+        ["Prediction Confidence", _clean_text(prediction.get("confidence", "-"))],
+        ["Prediction Date", _clean_text(str(prediction.get("created_at", "-"))[:19].replace("T", " "))],
     ]
 
     pred_table = Table(pred_table_data, colWidths=[8 * cm, 9 * cm])
@@ -178,15 +203,15 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     story.append(Paragraph("2. Input Parameters", styles["SectionHeader"]))
     input_table_data = [
         ["Parameter", "Value"],
-        ["Temperature", f"{inputs.get('temperature', '—')} °C"],
-        ["Annual Rainfall", f"{inputs.get('annual_rainfall', '—')} mm"],
-        ["Humidity", f"{inputs.get('humidity', '—')} %" if inputs.get('humidity') else "—"],
-        ["Soil pH", f"{inputs.get('soil_ph', '—')}"],
-        ["Nitrogen (N)", f"{inputs.get('nitrogen', '—')} kg/ha"],
-        ["Phosphorus (P)", f"{inputs.get('phosphorus', '—')} kg/ha"],
-        ["Potassium (K)", f"{inputs.get('potassium', '—')} kg/ha"],
-        ["Fertilizer Usage", f"{inputs.get('fertilizer_usage', '—')} kg/ha"],
-        ["Pesticide Usage", f"{inputs.get('pesticide_usage', '—')} kg/ha"],
+        ["Temperature", _clean_text(f"{inputs.get('temperature', '-')} deg C")],
+        ["Annual Rainfall", _clean_text(f"{inputs.get('annual_rainfall', '-')} mm")],
+        ["Humidity", _clean_text(f"{inputs.get('humidity', '-')} %" if inputs.get('humidity') else "-")],
+        ["Soil pH", _clean_text(f"{inputs.get('soil_ph', '-')}")],
+        ["Nitrogen (N)", _clean_text(f"{inputs.get('nitrogen', '-')} kg/ha")],
+        ["Phosphorus (P)", _clean_text(f"{inputs.get('phosphorus', '-')} kg/ha")],
+        ["Potassium (K)", _clean_text(f"{inputs.get('potassium', '-')} kg/ha")],
+        ["Fertilizer Usage", _clean_text(f"{inputs.get('fertilizer_usage', '-')} kg/ha")],
+        ["Pesticide Usage", _clean_text(f"{inputs.get('pesticide_usage', '-')} kg/ha")],
     ]
     input_table = Table(input_table_data, colWidths=[8 * cm, 9 * cm])
     input_table.setStyle(TableStyle([
@@ -208,14 +233,14 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     # ---- Section 3: Risk Assessment ----
     if risk:
         story.append(Paragraph("3. Agricultural Risk Assessment", styles["SectionHeader"]))
-        risk_level = risk.get("overall_risk_level", "Unknown")
+        risk_level = _clean_text(risk.get("overall_risk_level", "Unknown"))
         risk_score = risk.get("risk_score", 0)
-        risk_priority = risk.get("priority_level", "Monitor")
+        risk_priority = _clean_text(risk.get("priority_level", "Monitor"))
 
         risk_summary_data = [
             ["Overall Risk Level", risk_level],
             ["Risk Score", f"{risk_score:.1f} / 100"],
-            ["Risk Category", risk.get("risk_category", "—")],
+            ["Risk Category", _clean_text(risk.get("risk_category", "-"))],
             ["Priority", risk_priority],
             ["Risks Detected", str(risk.get("detected_risk_count", 0))],
         ]
@@ -245,11 +270,11 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
             story.append(Spacer(1, 0.1 * cm))
             risk_items_data = [["Risk", "Severity", "Category", "Mitigation"]]
             for r in risks_list[:8]:
-                mitigation_text = r.get("mitigation", "")[:120] + ("..." if len(r.get("mitigation", "")) > 120 else "")
+                mitigation_text = _clean_text(r.get("mitigation", "")[:120]) + ("..." if len(r.get("mitigation", "")) > 120 else "")
                 risk_items_data.append([
-                    r.get("name", ""),
-                    r.get("severity", ""),
-                    r.get("category", ""),
+                    _clean_text(r.get("name", "")),
+                    _clean_text(r.get("severity", "")),
+                    _clean_text(r.get("category", "")),
                     mitigation_text,
                 ])
             risk_items_table = Table(risk_items_data, colWidths=[4 * cm, 2.5 * cm, 2.5 * cm, 8 * cm])
@@ -274,16 +299,16 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     if recommendations:
         story.append(Paragraph("4. Agricultural Recommendations", styles["SectionHeader"]))
 
-        irrigation = recommendations.get("irrigation_advice", "")
+        irrigation = _clean_text(recommendations.get("irrigation_advice", ""))
         if irrigation:
             story.append(Paragraph("Irrigation:", styles["Bold"]))
             story.append(Paragraph(irrigation, styles["Body"]))
-            freq = recommendations.get("irrigation_frequency", "")
+            freq = _clean_text(recommendations.get("irrigation_frequency", ""))
             if freq:
                 story.append(Paragraph(f"Frequency: {freq}", styles["Body"]))
             story.append(Spacer(1, 0.2 * cm))
 
-        season_plan = recommendations.get("season_planning", "")
+        season_plan = _clean_text(recommendations.get("season_planning", ""))
         if season_plan:
             story.append(Paragraph("Season Planning:", styles["Bold"]))
             story.append(Paragraph(season_plan, styles["Body"]))
@@ -293,17 +318,17 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
         if best_practices:
             story.append(Paragraph("Best Farming Practices:", styles["Bold"]))
             for bp in best_practices:
-                story.append(Paragraph(f"  • {bp}", styles["Body"]))
+                story.append(Paragraph(f"  * {_clean_text(bp)}", styles["Body"]))
             story.append(Spacer(1, 0.2 * cm))
 
         yield_tips = recommendations.get("yield_improvement_tips", [])
         if yield_tips:
             story.append(Paragraph("Yield Improvement Tips:", styles["Bold"]))
             for tip in yield_tips:
-                story.append(Paragraph(f"  • {tip}", styles["Body"]))
+                story.append(Paragraph(f"  * {_clean_text(tip)}", styles["Body"]))
             story.append(Spacer(1, 0.2 * cm))
 
-        improvement_est = recommendations.get("estimated_yield_improvement", "")
+        improvement_est = _clean_text(recommendations.get("estimated_yield_improvement", ""))
         if improvement_est:
             story.append(Paragraph(f"Estimated Improvement: {improvement_est}", styles["Bold"]))
 
@@ -314,8 +339,8 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
         story.append(Paragraph("5. Soil Health Summary", styles["SectionHeader"]))
         soil_data = [
             ["Health Score", f"{soil.get('health_score', 0):.1f} / 100"],
-            ["Health Label", soil.get("health_label", "—")],
-            ["pH Status", soil.get("ph_status", "—")],
+            ["Health Label", _clean_text(soil.get("health_label", "-"))],
+            ["pH Status", _clean_text(soil.get("ph_status", "-"))],
         ]
         soil_table = Table(soil_data, colWidths=[6 * cm, 11 * cm])
         soil_table.setStyle(TableStyle([
@@ -335,7 +360,7 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
     story.append(HRFlowable(width="100%", thickness=1, color=BORDER_GRAY))
     story.append(Spacer(1, 0.2 * cm))
     story.append(Paragraph(
-        "This report was generated by YieldSense AI — an AI-powered agricultural productivity forecasting system. "
+        "This report was generated by YieldSense AI - an AI-powered agricultural productivity forecasting system. "
         "Recommendations are based on agronomic rule-based analysis and should be used in conjunction with "
         "local agricultural expertise and field observations.",
         styles["Small"],
@@ -344,6 +369,7 @@ def generate_pdf(report_data: Dict[str, Any]) -> bytes:
         "Consult your local agricultural extension officer for field-specific advice.",
         styles["Small"],
     ))
+
 
     doc.build(story)
     buffer.seek(0)
