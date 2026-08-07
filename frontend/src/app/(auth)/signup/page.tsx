@@ -64,12 +64,10 @@ export default function SignupPage() {
         role: formData.role,
       });
       toast.success("Account created successfully!");
-      if (formData.role === "admin") {
-        router.push(ROUTES.ADMIN);
-      } else {
-        router.push(ROUTES.DASHBOARD);
-      }
+      const targetRoute = formData.role === "admin" ? ROUTES.ADMIN : ROUTES.DASHBOARD;
+      window.location.href = targetRoute;
     } catch (error: unknown) {
+
       const message = error instanceof Error ? error.message : "Registration failed";
       toast.error(message);
     } finally {

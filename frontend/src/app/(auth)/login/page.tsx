@@ -42,12 +42,10 @@ export default function LoginPage() {
     try {
       const userProfile = await login(email, password);
       toast.success("Welcome back!");
-      if (userProfile?.role === "admin") {
-        router.push(ROUTES.ADMIN);
-      } else {
-        router.push(ROUTES.DASHBOARD);
-      }
+      const targetRoute = userProfile?.role === "admin" ? ROUTES.ADMIN : ROUTES.DASHBOARD;
+      window.location.href = targetRoute;
     } catch (error: unknown) {
+
 
       const message = error instanceof Error ? error.message : "Login failed";
       toast.error(message);
