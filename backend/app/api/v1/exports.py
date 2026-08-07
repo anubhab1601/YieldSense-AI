@@ -4,9 +4,10 @@ YieldSense AI — Export API Endpoints (Milestone 3)
 Generates PDF and CSV export downloads.
 """
 
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import Response, StreamingResponse
 import io
+import re
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import Response
 
 from app.api.deps import get_current_user_id
 from app.services.report_service import ReportService
@@ -15,6 +16,14 @@ from app.services.export_service import generate_pdf, generate_history_csv, gene
 from app.utils.exceptions import NotFoundException, ForbiddenException
 
 router = APIRouter(prefix="/export", tags=["Export"])
+
+
+def _safe_filename(raw_title: str, ext: str) -> str:
+    """Ensure filename in Content-Disposition header is strictly ASCII-encoded for HTTP/1.1 compliance."""
+    s = str(raw_title).replace("—", "-").replace("–", "-").replace(" ", "_")
+    s = re.sub(r"[^\w\-]", "", s)
+    s = s[:40] or "report"
+    return f"YieldSense_{s}.{ext}"
 
 
 @router.get("/pdf/{report_id}", summary="Download report as PDF")
@@ -37,9 +46,7 @@ async def download_pdf(
         report = report_svc.get_report(report_id, user_id)
 
         pdf_bytes = generate_pdf(report)
-
-        title = report.get("title", "report").replace(" ", "_").replace("/", "-")[:50]
-        filename = f"YieldSense_{title}.pdf"
+        filename = _safe_filename(report.get("title", "report"), "pdf")
 
         return Response(
             content=pdf_bytes,
@@ -93,8 +100,7 @@ async def download_report_csv(
         report = report_svc.get_report(report_id, user_id)
 
         csv_content = generate_report_csv(report)
-        title = report.get("title", "report").replace(" ", "_")[:40]
-        filename = f"YieldSense_{title}.csv"
+        filename = _safe_filename(report.get("title", "report"), "csv")
 
         return Response(
             content=csv_content,
@@ -107,3 +113,4 @@ async def download_report_csv(
         raise HTTPException(status_code=403, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"CSV generation failed: {str(e)}")
+

@@ -85,7 +85,8 @@ class ReportService:
         crop = prediction_record.get("crop", "Unknown")
         season = prediction_record.get("season", "")
         if not title:
-            title = f"{crop} {season} Yield Report — {utc_now_iso()[:10]}"
+            title = f"{crop} {season} Yield Report - {utc_now_iso()[:10]}"
+
 
         farm_name = None
         if farm_data:
