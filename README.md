@@ -12,29 +12,37 @@
 
 ## 📋 Overview
 
-YieldSense AI is a production-ready Web and Machine Learning platform designed to help farmers make intelligent, data-driven farming choices. By integrating historical agricultural data, live weather forecasts, soil characteristics, and machine learning models, the system predicts crop yields and recommends optimal crops to cultivate.
+YieldSense AI is a production-ready Web and Machine Learning platform designed to help farmers and agricultural administrators make intelligent, data-driven farming choices. By integrating historical agricultural data, live weather forecasts, soil characteristics, and machine learning models, the system predicts crop yields, recommends optimal crops, generates analytical insights, exports PDF/CSV reports, and provides complete system administration.
 
-This codebase contains the complete implementation for **Milestone 1** (Core Software Foundation & Infrastructure) and **Milestone 2** (Machine Learning, Integration, and Advanced Services).
+This codebase contains the complete implementation for **Milestone 1** (Core Software Foundation & Infrastructure), **Milestone 2** (Machine Learning, Integration, and Advanced Services), and **Milestone 3** (Analytics, History, Reporting, Multi-Tenant Isolation, and Admin Governance).
 
 ---
 
 ## 🚀 Milestone Features
 
 ### Milestone 1: Software Foundation & Core Infrastructure
-*   🏗️ **Complete Software Foundation**: Setup a robust FastAPI backend and Next.js frontend with Tailwind CSS and TypeScript.
-*   🔐 **Firebase Authentication Integration**: Client-side SDK and Backend Admin SDK validation (Signup, Login, Forgot Password, protected routes).
-*   🚜 **Farm Management System**: Full CRUD capability for farm attributes (Area, Crop, Location) stored in Google Firestore.
-*   🔔 **Notifications & Settings**: Infrastructure for farm notifications, settings pages, and user profile management.
-*   🐳 **Containerization**: Backend Dockerfile, Frontend Dockerfile, and `docker-compose.yml` for multi-container orchestration.
+* 🏗️ **Complete Software Foundation**: Setup a robust FastAPI backend and Next.js frontend with Tailwind CSS and TypeScript.
+* 🔐 **Firebase Authentication Integration**: Client-side SDK and Backend Admin SDK validation (Signup, Login, Forgot Password, protected routes).
+* 🚜 **Farm Management System**: Full CRUD capability for farm attributes (Area, Crop, Location) stored in Google Firestore.
+* 🔔 **Notifications & Settings**: Infrastructure for farm notifications, settings pages, and user profile management.
+* 🐳 **Containerization**: Backend Dockerfile, Frontend Dockerfile, and `docker-compose.yml` for multi-container orchestration.
 
 ### Milestone 2: Machine Learning & Intelligent Services
-*   🧠 **Dual Machine Learning Pipelines**: Independent pipelines for classification (crop recommendation) and regression (yield prediction).
-*   📊 **Automated Model Selection**: Evaluates 5 different algorithms for classification and regression, generating comparison matrices and saving the best-performing models dynamically.
-*   📈 **KNN Hyperparameter Tuning**: Automatically conducts KNN elbow curve searches (plotting accuracy/$R^2$ scores vs. $k$-neighbors) to train with optimal parameters.
-*   🛡️ **Agronomic Boundary Safety Overrides**: Implements strict physical rule overrides inside the prediction engine to force a 0.0 tons/ha output in unviable growing conditions (e.g., freezing temperature, extreme drought, extreme soil pH, or severe nutrient depletion).
-*   🌤️ **Live Weather Integration**: Connects with the Open-Meteo API to fetch current weather conditions and 7-day daily forecasts with caching to optimize performance.
-*   🌱 **Soil Health Analysis**: Rule-based soil health evaluation assessing NPK ratings, pH status, and crop-specific suitability.
-*   🖥️ **Interactive Dashboards**: Live pages for Predictions, Weather monitoring, and Soil analysis connected to the FastAPI endpoints.
+* 🧠 **Dual Machine Learning Pipelines**: Independent pipelines for classification (crop recommendation) and regression (yield prediction).
+* 📊 **Automated Model Selection**: Evaluates 5 different algorithms for classification and regression, generating comparison matrices and saving the best-performing models dynamically.
+* 📈 **KNN Hyperparameter Tuning**: Automatically conducts KNN elbow curve searches (plotting accuracy/$R^2$ scores vs. $k$-neighbors) to train with optimal parameters.
+* 🛡️ **Agronomic Boundary Safety Overrides**: Implements strict physical rule overrides inside the prediction engine to force a 0.0 tons/ha output in unviable growing conditions (e.g., freezing temperature, extreme drought, extreme soil pH, or severe nutrient depletion).
+* 🌤️ **Live Weather Integration**: Connects with Open-Meteo API to fetch current weather conditions and 7-day daily forecasts with caching to optimize performance.
+* 🌱 **Soil Health Analysis**: Rule-based soil health evaluation assessing NPK ratings, pH status, and crop-specific suitability.
+* 🖥️ **Interactive Dashboards**: Live pages for Predictions, Weather monitoring, and Soil analysis connected to FastAPI endpoints.
+
+### Milestone 3: Analytics, History, Reports, Isolation & Admin Governance
+* 📈 **Analytics & Live Charts Dashboard**: Interactive visual insights featuring Yield Trends, Crop Yield Comparison, Season Performance, and Scatter Analysis (Rainfall vs. Yield).
+* 📜 **Historical Predictions System**: Comprehensive prediction history with individual search, pagination, detailed modal view, and record deletion.
+* 📄 **PDF & CSV Export Engine**: Professional ReportLab PDF generator (with custom canvas headers, non-latin1 unicode sanitization, metrics table, risk badges, agronomic recommendations) and CSV downloader.
+* 🛡️ **Multi-Tenant User Isolation**: Automatic user-scoped Firestore queries (`user_id == uid`) ensuring 100% data separation between individual farmers.
+* ⚙️ **Dedicated Admin Control Center (`/admin`)**: System administration platform with live KPI metrics (Total Users, System Farms, System Predictions, Reports), user management table with role switching (`Farmer` ↔ `Admin`), ML engine status monitoring, system-wide prediction audit stream, and role-guarded access.
+* ⚡ **Auto-Refresh Auth Lifecycle**: Zero-delay single page refresh on login and registration for clean session isolation across Farmer and Admin accounts.
 
 ---
 
@@ -48,7 +56,8 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 │  • React 19 + TypeScript│      │  • REST API (v1)         │
 │  • Tailwind CSS v4      │      │  • Firebase Admin SDK    │
 │  • Firebase Client SDK  │      │  • ML Inference Engine   │
-│  • App Router           │      │  • Open-Meteo Weather    │
+│  • App Router           │      │  • ReportLab PDF Engine  │
+│  • Recharts Analytics   │      │  • Open-Meteo Weather    │
 └─────────────────────────┘      └──────────────────────────┘
          │                                 │
          │         ┌──────────────┐        │
@@ -72,17 +81,28 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 │   │   │   ├── deps.py              # Auth and Firestore injectables
 │   │   │   └── v1/
 │   │   │       ├── auth.py          # Firebase Auth endpoints
+│   │   │       ├── users.py         # User profile routes
 │   │   │       ├── farms.py         # Farm collection CRUD operations
 │   │   │       ├── prediction.py    # Yield prediction & Crop recommendation routes
 │   │   │       ├── weather.py       # Weather data and forecasts
 │   │   │       ├── soil.py          # Soil analysis endpoints
+│   │   │       ├── analytics.py     # Analytics & Dashboard aggregation endpoints
+│   │   │       ├── history.py       # Prediction history management endpoints
+│   │   │       ├── reports.py       # Report creation & management endpoints
+│   │   │       ├── exports.py       # PDF & CSV file download routes
+│   │   │       ├── admin.py         # System administration endpoints
 │   │   │       └── router.py        # v1 Aggregator
 │   │   ├── core/
 │   │   │   └── config.py            # Pydantic environment configurations
 │   │   ├── services/
 │   │   │   ├── weather_service.py   # Open-Meteo client wrapper with caching
 │   │   │   ├── soil_service.py      # NPK & pH suitability checker
-│   │   │   └── prediction_service.py# E2E prediction orchestrator
+│   │   │   ├── prediction_service.py# E2E prediction orchestrator
+│   │   │   ├── analytics_service.py # Analytics calculation service
+│   │   │   ├── history_service.py   # Prediction history service
+│   │   │   ├── report_service.py    # Report management service
+│   │   │   ├── export_service.py    # ReportLab PDF & CSV generation engine
+│   │   │   └── admin_service.py     # Admin stats, user management & system audit
 │   │   └── schemas/                 # Request/Response validation schemas
 │   ├── datasets/
 │   │   ├── raw/                     # Original CSV files (Crop_recommendation, yield_df, sample_crop_data)
@@ -93,19 +113,24 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 │   │   ├── inference/
 │   │   │   └── predictor.py         # Singleton predictor loading .joblib artifacts
 │   │   └── train.py                 # ML training orchestrator CLI
-│   ├── test_api.py                  # API integration test suite
+│   ├── package.json                 # npm runner scripts for backend dev & training
 │   ├── requirements.txt
 │   └── main.py                      # FastAPI App entrypoint
 ├── frontend/
 │   ├── src/
 │   │   ├── app/                     # Next.js App Router structure
 │   │   │   └── (dashboard)/
+│   │   │       ├── dashboard/       # Farmer Dashboard Page
 │   │   │       ├── prediction/      # Interactive AI Yield Prediction Page
-│   │   │       ├── weather/         # 7-day Weather Forecast Page
+│   │   │       ├── analytics/       # Live Charts & Analytics Page
+│   │   │       ├── history/         # Prediction History Page
+│   │   │       ├── reports/         # PDF/CSV Reports Generation Page
+│   │   │       ├── admin/           # Dedicated Admin Control Center
+│   │   │       ├── weather/         # 7-Day Weather Forecast Page
 │   │   │       └── soil/            # Soil Analysis & Recommendations Page
-│   │   ├── services/                # API client calls (predictionService, etc.)
+│   │   ├── services/                # API client calls (predictionService, adminService, etc.)
 │   │   └── utils/
-│   │       └── constants.ts         # Constant crop/season lists matching ML categories
+│   │       └── constants.ts         # Constants & route definitions matching ML categories
 │   ├── package.json
 │   └── tailwind.config.ts
 └── README.md
@@ -115,243 +140,82 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 
 ## 📁 Milestone File Mapping
 
-The following structure outlines which files were created and implemented for each milestone:
-
 ### Milestone 1 Files (Core Foundation)
-*   **Backend Core & Config**: [backend/app/core/config.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/app/core/config.py), [backend/app/core/security.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/app/core/security.py), [backend/app/firebase/client.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/app/firebase/client.py)
-*   **Database & Firebase Integration**: [backend/app/firebase/firestore.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/app/firebase/firestore.py)
-*   **Domain Models & CRUD Services**: `backend/app/models/farm.py`, `backend/app/models/user.py`, `backend/app/services/farm_service.py`, `backend/app/services/auth_service.py`, `backend/app/services/user_service.py`
-*   **API Routers**: `backend/app/api/v1/auth.py`, `backend/app/api/v1/farms.py`, `backend/app/api/v1/users.py`, `backend/app/api/v1/notifications.py`
-*   **Deployment Setup**: `backend/Dockerfile`, `frontend/Dockerfile`, `docker-compose.yml`
-*   **Frontend Authentication & CRUD Views**: `frontend/src/app/(auth)/login/page.tsx`, `frontend/src/app/(auth)/signup/page.tsx`, `frontend/src/app/(auth)/forgot-password/page.tsx`, `frontend/src/app/(dashboard)/farms/page.tsx`, `frontend/src/app/(dashboard)/farms/new/page.tsx`
-*   **Auth Context & Services**: `frontend/src/contexts/AuthContext.tsx`, `frontend/src/services/authService.ts`, `frontend/src/services/farmService.ts`
+* **Backend Core & Config**: `backend/app/core/config.py`, `backend/app/core/security.py`, `backend/app/firebase/client.py`
+* **Database & Firebase Integration**: `backend/app/firebase/firestore.py`
+* **Domain Models & CRUD Services**: `backend/app/models/farm.py`, `backend/app/models/user.py`, `backend/app/services/farm_service.py`, `backend/app/services/auth_service.py`, `backend/app/services/user_service.py`
+* **API Routers**: `backend/app/api/v1/auth.py`, `backend/app/api/v1/farms.py`, `backend/app/api/v1/users.py`, `backend/app/api/v1/notifications.py`
+* **Deployment Setup**: `backend/Dockerfile`, `frontend/Dockerfile`, `docker-compose.yml`
+* **Frontend Auth & Views**: `frontend/src/app/(auth)/login/page.tsx`, `frontend/src/app/(auth)/signup/page.tsx`, `frontend/src/app/(dashboard)/farms/page.tsx`
 
-### Milestone 2 Files (Machine Learning & Advanced Services)
-*   **ML Pipeline & Runner**: [backend/ml/train.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/ml/train.py), `backend/ml/preprocessing/`, `backend/ml/training/`, `backend/ml/evaluation/`, `backend/ml/utils/config.py`
-*   **Model Inference Engine**: [backend/ml/inference/predictor.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/ml/inference/predictor.py)
-*   **Data Preprocessing Pipeline**: `backend/preprocessing/process.ipynb`, `backend/preprocessing/run_preprocess.py`
-*   **Weather, Soil, & Prediction Services**: `backend/app/services/weather_service.py`, `backend/app/services/soil_service.py`, `backend/app/services/prediction_service.py`
-*   **Prediction, Weather, & Soil APIs**: `backend/app/api/v1/prediction.py`, `backend/app/api/v1/weather.py`, `backend/app/api/v1/soil.py`, `backend/app/schemas/prediction.py`
-*   **API Test Suite**: [backend/test_api.py](file:///d:/ANUBHAB/b_Projects/Infosys_AI_crop/Demo_3/backend/test_api.py)
-*   **Interactive Frontend Pages**: `frontend/src/app/(dashboard)/prediction/page.tsx`, `frontend/src/app/(dashboard)/weather/page.tsx`, `frontend/src/app/(dashboard)/soil/page.tsx`
-*   **Prediction Service Callouts**: `frontend/src/services/predictionService.ts`, `frontend/src/types/prediction.ts`
+### Milestone 2 Files (Machine Learning & Integration)
+* **ML Pipeline & Runner**: `backend/ml/train.py`, `backend/ml/preprocessing/`, `backend/ml/training/`, `backend/ml/evaluation/`
+* **Model Inference Engine**: `backend/ml/inference/predictor.py`
+* **Weather, Soil, & Prediction Services**: `backend/app/services/weather_service.py`, `backend/app/services/soil_service.py`, `backend/app/services/prediction_service.py`
+* **Prediction, Weather, & Soil APIs**: `backend/app/api/v1/prediction.py`, `backend/app/api/v1/weather.py`, `backend/app/api/v1/soil.py`
+
+### Milestone 3 Files (Analytics, History, Exports & Admin Control)
+* **Analytics & History Services**: `backend/app/services/analytics_service.py`, `backend/app/services/history_service.py`
+* **Report & PDF/CSV Export Engine**: `backend/app/services/report_service.py`, `backend/app/services/export_service.py`
+* **Admin System & Governance**: `backend/app/services/admin_service.py`, `backend/app/api/v1/admin.py`, `frontend/src/services/adminService.ts`, `frontend/src/app/(dashboard)/admin/page.tsx`
+* **Milestone 3 Routers**: `backend/app/api/v1/analytics.py`, `backend/app/api/v1/history.py`, `backend/app/api/v1/reports.py`, `backend/app/api/v1/exports.py`
+* **Frontend Pages & Charts**: `frontend/src/app/(dashboard)/analytics/page.tsx`, `frontend/src/app/(dashboard)/history/page.tsx`, `frontend/src/app/(dashboard)/reports/page.tsx`, `frontend/src/components/charts/`
 
 ---
 
 ## 🧠 Machine Learning Engine
 
-YieldSense AI employs a modular machine learning pipeline built on `scikit-learn` and `joblib`. The models are trained on processed versions of the dataset generated by reproducing the steps in `process.ipynb`.
+YieldSense AI employs a modular machine learning pipeline built on `scikit-learn` and `joblib`.
 
 ### 1. Crop Recommendation (Classification)
-*   **Dataset**: `Crop_recommendation_processed.csv` (2,200 rows)
-*   **Goal**: Classify the optimal crop to cultivate based on Nitrogen (`N`), Phosphorus (`P`), Potassium (`K`), temperature, humidity, pH, and rainfall.
-*   **Algorithms Evaluated**: Logistic Regression, Decision Tree (Gini), Decision Tree (Entropy), Random Forest Classifier, and KNN Classifier.
-*   **KNN Optimization**: Ran an elbow search (1 to 15 $k$-neighbors) yielding an optimal parameter of **$k=3$**.
-*   **Performance Result**: **Random Forest** achieved the highest test accuracy of **0.9932** (Weighted F1: 0.9932).
-*   **Saved Artifacts**: `crop_best_model.joblib`, `crop_scaler.joblib`, and metadata.
-*   **Comparison Outputs**: Saved under `backend/ml/models/saved/plots/`:
-    *   `crop_knn_elbow.png`
-    *   `crop_model_comparison.png`
-    *   `crop_confusion_matrix.png`
+* **Dataset**: `Crop_recommendation_processed.csv` (2,200 rows)
+* **Goal**: Classify the optimal crop based on NPK, temperature, humidity, pH, and rainfall.
+* **Algorithms Evaluated**: Logistic Regression, Decision Trees, Random Forest, KNN Classifier.
+* **KNN Optimization**: Optimal parameter **$k=3$**.
+* **Best Model**: **Random Forest** (Accuracy: **0.9932**, F1: 0.9932).
 
 ### 2. Crop Yield Prediction (Regression)
-*   **Dataset**: `yield_df_processed.csv` (25,932 rows, 114 columns)
-*   **Goal**: Predict the yield in tons/hectare using environmental parameters (temperature, rainfall, pesticide tonnage) and location/crop categories.
-*   **Algorithms Evaluated**: Multiple Linear Regression, Decision Tree (criterion='squared_error'), Decision Tree (criterion='friedman_mse'), Random Forest Regressor, and KNN Regressor.
-*   **KNN Optimization**: Ran an elbow search (1 to 15 $k$-neighbors) yielding an optimal parameter of **$k=2$**.
-*   **Performance Result**: **KNN Regressor (tuned)** achieved the highest $R^2$ score of **0.9860** on the test set.
-*   **Saved Artifacts**: `yield_best_model.joblib`, `yield_scaler.joblib`, `yield_feature_columns.joblib`, and metadata.
-*   **Comparison Outputs**: Saved under `backend/ml/models/saved/plots/`:
-    *   `yield_knn_elbow.png`
-    *   `yield_model_comparison.png`
-    *   `yield_actual_vs_predicted.png`
+* **Dataset**: `yield_df_processed.csv` (25,932 rows, 114 columns)
+* **Goal**: Predict yield in tons/hectare using environmental parameters, location, and crop category.
+* **Algorithms Evaluated**: Linear Regression, Decision Trees, Random Forest Regressor, KNN Regressor.
+* **KNN Optimization**: Optimal parameter **$k=2$**.
+* **Best Model**: **KNN Regressor (tuned)** ($R^2$ Score: **0.9860**).
 
 ### 3. Agronomic Safety Overrides
-To prevent false-positive predictions under impossible environmental conditions (a limitation of standard ML models), a rule-based layer intercepts inputs. The system instantly returns `0.0` tons/ha yield with `High` confidence if any of the following boundaries are breached:
-*   🌧️ **Extreme Drought**: `annual_rainfall` < 50.0 mm
-*   🌡️ **Extreme Temperature**: `temperature` < 5.0°C or > 48.0°C
-*   🧪 **Extreme Soil pH**: `soil_ph` < 4.0 or > 9.5
-*   📉 **Severe Nutrient Depletion**: Nitrogen, Phosphorus, and Potassium all < 5.0 kg/ha
-
----
-
-## 🔌 API Documentation
-
-### 1. Predict Yield
-*   **URL**: `/api/v1/prediction/predict-yield`
-*   **Method**: `POST`
-*   **Payload**:
-    ```json
-    {
-      "crop": "Rice",
-      "season": "Kharif",
-      "state": "Uttar Pradesh",
-      "area": 10.0,
-      "temperature": 28.5,
-      "annual_rainfall": 1200.0,
-      "humidity": 70.0,
-      "soil_ph": 6.5,
-      "nitrogen": 80.0,
-      "phosphorus": 40.0,
-      "potassium": 38.0,
-      "fertilizer_usage": 180.0,
-      "pesticide_usage": 12.5,
-      "latitude": 28.6139,
-      "longitude": 77.2090
-    }
-    ```
-*   **Response**:
-    ```json
-    {
-      "predicted_yield": 3.607,
-      "prediction_unit": "tons/hectare",
-      "total_production": 36.07,
-      "crop": "Rice",
-      "area": 10.0,
-      "season": "Kharif",
-      "model_used": "KNN Regressor (tuned)",
-      "model_accuracy": 0.986,
-      "confidence": "High",
-      "weather_summary": {
-        "temperature": 29.6,
-        "humidity": 85.0,
-        "rainfall": 0.0,
-        "wind_speed": 2.7,
-        "description": "Mainly clear",
-        "source": "Open-Meteo"
-      },
-      "soil_summary": {
-        "health_score": 100.0,
-        "health_label": "Excellent",
-        "ph_status": "Neutral",
-        "warnings": [],
-        "suggestions": ["Soil conditions are generally favorable for cultivation"]
-      },
-      "prediction_timestamp": "2026-07-12T17:44:37.452364+00:00"
-    }
-    ```
-
-### 2. Recommend Crop
-*   **URL**: `/api/v1/prediction/recommend-crop`
-*   **Method**: `POST`
-*   **Payload**:
-    ```json
-    {
-      "nitrogen": 90.0,
-      "phosphorus": 45.0,
-      "potassium": 35.0,
-      "temperature": 24.5,
-      "humidity": 82.0,
-      "soil_ph": 6.8,
-      "annual_rainfall": 1000.0
-    }
-    ```
-*   **Response**:
-    ```json
-    {
-      "recommended_crop": "Rice",
-      "top_recommendations": [
-        { "crop": "Rice", "confidence": 92.0 },
-        { "crop": "Jute", "confidence": 8.0 },
-        { "crop": "Pomegranate", "confidence": 0.0 }
-      ],
-      "model_used": "Random Forest",
-      "model_accuracy": 0.9932
-    }
-    ```
-
-### 3. Soil Analysis
-*   **URL**: `/api/v1/soil/analyze`
-*   **Method**: `POST`
-*   **Request**: `soil_ph`, `nitrogen`, `phosphorus`, `potassium`, `crop` (optional)
-*   **Response**: Overall health score (0-100), nutrient status classification, warnings, and improvement suggestions.
-
-### 4. Weather Forecast
-*   **URL**: `/api/v1/weather/forecast`
-*   **Method**: `GET`
-*   **Params**: `lat` (latitude), `lon` (longitude)
-*   **Response**: Cached current conditions and 7-day forecast.
+Rule-based boundary layers prevent false positive predictions under extreme conditions:
+* 🌧️ **Extreme Drought**: `annual_rainfall` < 50.0 mm
+* 🌡️ **Extreme Temperature**: `temperature` < 5.0°C or > 48.0°C
+* 🧪 **Extreme Soil pH**: `soil_ph` < 4.0 or > 9.5
+* 📉 **Severe Nutrient Depletion**: N, P, K all < 5.0 kg/ha
 
 ---
 
 ## ⚙️ Project Setup & Configuration
 
 ### Prerequisites
-*   Python 3.10+
-*   Node.js 18+
-
-### Environment Configuration
-The backend and frontend connect to resources using local configurations. Create the environment files using `.env.example` templates to avoid leaking credentials.
-
-#### Backend Env (`backend/.env`):
-```ini
-PROJECT_NAME="YieldSense AI"
-VERSION="1.0.0"
-API_V1_STR="/api/v1"
-
-# Firebase Config (Populate locally with your emulator or sandbox credentials)
-FIREBASE_DATABASE_URL="https://your-project.firebaseio.com"
-FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
-
-# Weather Configuration
-WEATHER_CACHE_TTL=3600
-```
-
-#### Frontend Env (`frontend/.env.local`):
-```ini
-NEXT_PUBLIC_API_BASE_URL="http://localhost:8000/api/v1"
-
-# Firebase Client SDK Configuration (Populate with sandbox project identifiers)
-NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSy..."
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-project.firebaseapp.com"
-NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-project"
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-project.appspot.com"
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="12345678"
-NEXT_PUBLIC_FIREBASE_APP_ID="1:123:web:abc"
-```
+* Python 3.10+
+* Node.js 18+
 
 ### Running Locally
 
-#### 1. Start FastAPI Backend
+#### 1. Start Backend
 ```bash
 cd backend
-# Create and activate virtual environment
-python -m venv venv
-venv\Scripts\activate      # Windows
-source venv/bin/activate   # Linux/Mac
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run model training pipeline
-python -m ml.train
-
-# Start the uvicorn development server
-uvicorn main:app --reload --port 8000
-```
-
-#### 2. Start Next.js Frontend
-```bash
-cd frontend
-# Install packages
-npm install
-
-# Start the development server
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) to view the application interface.
+*(Runs uvicorn on http://localhost:8000)*
 
-#### 3. Run API Tests
+#### 2. Start Frontend
 ```bash
-cd backend
-# Verify all endpoints and ML predictions
-python test_api.py
+cd frontend
+npm run dev
 ```
+*(Runs Next.js development server on http://localhost:3000)*
 
 ---
 
 ## 🚀 Repository & Deployment Note
 
-*   **Security Check**: All Firestore JSON keys, Firebase private tokens, and `.env` variables are strictly ignored by `.gitignore` to prevent credentials from being exposed on GitHub.
-*   **Deployment Target**: The current active branch for development is `anubhab-mishra`. No pushes should be made directly to the `main` branch to prevent deployment conflicts.
-*   **Commit/Push Rule**: Changes are validated and run locally. Pushes to remote repository branches will only be triggered when explicitly requested by the project developer.
+* **Active Development Branch**: `anubhab-mishra` (synced with `main`).
+* **Multi-Tenant Security**: User datasets are isolated at the database query level (`user_id == uid`).
+* **Admin Governance**: Dedicated role-based access control guarding `/admin`.
