@@ -51,6 +51,10 @@ export interface PredictionResponse {
   weather_summary: WeatherSummary | null;
   soil_summary: SoilSummary | null;
   prediction_timestamp: string;
+  // Milestone 3
+  risk_assessment?: Record<string, unknown> | null;
+  recommendations?: Record<string, unknown> | null;
+  prediction_id?: string | null;
 }
 
 export interface ModelInfo {

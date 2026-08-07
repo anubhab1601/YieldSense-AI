@@ -17,6 +17,8 @@ import {
   Cloud,
   Layers,
   FileText,
+  History,
+  LineChart,
   X,
   Sprout,
 } from "lucide-react";
@@ -37,6 +39,9 @@ const menuItems = [
   { label: "Prediction", icon: BarChart3, href: ROUTES.PREDICTION },
   { label: "Weather", icon: Cloud, href: ROUTES.WEATHER },
   { label: "Soil Analysis", icon: Layers, href: ROUTES.SOIL },
+  { type: "divider" as const, label: "Analytics & Reports" },
+  { label: "Analytics", icon: LineChart, href: ROUTES.ANALYTICS },
+  { label: "History", icon: History, href: ROUTES.HISTORY },
   { label: "Reports", icon: FileText, href: ROUTES.REPORTS },
 ];
 
@@ -107,8 +112,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       {/* Footer */}
       <div className="p-4 border-t border-gray-100 dark:border-gray-800">
         <div className="px-3 py-2">
-          <p className="text-xs text-gray-400">YieldSense AI v1.0.0</p>
-          <p className="text-xs text-gray-400">Milestone 2</p>
+          <p className="text-xs text-gray-400">YieldSense AI v3.0.0</p>
+          <p className="text-xs text-gray-400">Milestone 3</p>
         </div>
       </div>
     </div>

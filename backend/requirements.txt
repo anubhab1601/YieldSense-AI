@@ -39,3 +39,6 @@ pytest-asyncio==1.0.0
 # Utilities
 python-dateutil==2.9.0
 
+# Milestone 3 — Reporting & Export
+reportlab==4.4.1
+

@@ -5,7 +5,6 @@ Pydantic models for the yield prediction API.
 """
 
 from typing import Dict, List, Optional
-
 from pydantic import BaseModel, Field
 
 
@@ -83,6 +82,11 @@ class PredictionResponse(BaseModel):
     # Contextual data
     weather_summary: Optional[WeatherSummaryResponse] = None
     soil_summary: Optional[SoilSummaryResponse] = None
+
+    # Milestone 3 additions
+    risk_assessment: Optional[Dict] = Field(None, description="Risk assessment results")
+    recommendations: Optional[Dict] = Field(None, description="Agricultural recommendations")
+    prediction_id: Optional[str] = Field(None, description="Firestore record ID (if saved)")
 
     # Metadata
     prediction_timestamp: str = Field(..., description="ISO 8601 timestamp")

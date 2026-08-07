@@ -25,7 +25,11 @@ export const ROUTES = {
   WEATHER: "/weather",
   SOIL: "/soil",
   REPORTS: "/reports",
+  // Milestone 3
+  ANALYTICS: "/analytics",
+  HISTORY: "/history",
 } as const;
+
 
 export const PUBLIC_ROUTES = [
   ROUTES.HOME,

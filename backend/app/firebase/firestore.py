@@ -18,6 +18,12 @@ NOTIFICATIONS_COLLECTION = "notifications"
 PREDICTION_HISTORY_COLLECTION = "prediction_history"
 REPORTS_COLLECTION = "reports"
 
+# Milestone 3 collections
+RECOMMENDATIONS_COLLECTION = "recommendations"
+RISK_ASSESSMENTS_COLLECTION = "risk_assessments"
+ANALYTICS_COLLECTION = "analytics"
+
+
 
 _firestore_client: FirestoreClient | None = None
 
