@@ -19,8 +19,8 @@ interface AuthContextType {
   user: User | null;
   profile: UserProfile | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (credentials: RegisterCredentials) => Promise<void>;
+  login: (email: string, password: string) => Promise<UserProfile | null>;
+  signup: (credentials: RegisterCredentials) => Promise<UserProfile | null>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   refreshProfile: () => Promise<void>;
@@ -34,12 +34,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   // Fetch user profile from backend
-  const fetchProfile = useCallback(async () => {
+  const fetchProfile = useCallback(async (): Promise<UserProfile | null> => {
     try {
       const data = await userService.getProfile();
       setProfile(data);
+      return data;
     } catch {
       setProfile(null);
+      return null;
     }
   }, []);
 
@@ -48,7 +50,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
-        // Small delay to ensure token is available
         await fetchProfile();
       } else {
         setProfile(null);
@@ -59,17 +60,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, [fetchProfile]);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<UserProfile | null> => {
     // Ensure clean state before login
     if (auth.currentUser) {
       await authService.logout();
     }
     const firebaseUser = await authService.login(email, password);
     setUser(firebaseUser);
-    await fetchProfile();
+    const userProfile = await fetchProfile();
+    return userProfile;
   };
 
-  const signup = async (credentials: RegisterCredentials) => {
+  const signup = async (credentials: RegisterCredentials): Promise<UserProfile | null> => {
     // Ensure any existing user session is completely signed out first
     if (auth.currentUser) {
       await authService.logout();
@@ -82,8 +84,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Then login client-side with new user credentials
     const firebaseUser = await authService.login(credentials.email, credentials.password);
     setUser(firebaseUser);
-    await fetchProfile();
+    const userProfile = await fetchProfile();
+    return userProfile;
   };
+
 
   const logout = async () => {
     await authService.logout();
