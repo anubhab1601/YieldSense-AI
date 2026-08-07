@@ -21,32 +21,42 @@ import {
   LineChart,
   X,
   Sprout,
+  Shield,
 } from "lucide-react";
 import { ROUTES } from "@/utils/constants";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const menuItems = [
-  { label: "Dashboard", icon: LayoutDashboard, href: ROUTES.DASHBOARD },
-  { label: "Farms", icon: MapPin, href: ROUTES.FARMS },
-  { label: "Profile", icon: User, href: ROUTES.PROFILE },
-  { label: "Notifications", icon: Bell, href: ROUTES.NOTIFICATIONS },
-  { label: "Settings", icon: Settings, href: ROUTES.SETTINGS },
-  { type: "divider" as const, label: "AI Features" },
-  { label: "Prediction", icon: BarChart3, href: ROUTES.PREDICTION },
-  { label: "Weather", icon: Cloud, href: ROUTES.WEATHER },
-  { label: "Soil Analysis", icon: Layers, href: ROUTES.SOIL },
-  { type: "divider" as const, label: "Analytics & Reports" },
-  { label: "Analytics", icon: LineChart, href: ROUTES.ANALYTICS },
-  { label: "History", icon: History, href: ROUTES.HISTORY },
-  { label: "Reports", icon: FileText, href: ROUTES.REPORTS },
-];
-
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const { profile } = useAuth();
+
+  const menuItems = [
+    ...(profile?.role === "admin"
+      ? [
+          { type: "divider" as const, label: "Administration" },
+          { label: "Admin Control", icon: Shield, href: ROUTES.ADMIN },
+        ]
+      : []),
+    { type: "divider" as const, label: "Main Navigation" },
+    { label: "Dashboard", icon: LayoutDashboard, href: ROUTES.DASHBOARD },
+    { label: "Farms", icon: MapPin, href: ROUTES.FARMS },
+    { label: "Profile", icon: User, href: ROUTES.PROFILE },
+    { label: "Notifications", icon: Bell, href: ROUTES.NOTIFICATIONS },
+    { label: "Settings", icon: Settings, href: ROUTES.SETTINGS },
+    { type: "divider" as const, label: "AI Features" },
+    { label: "Prediction", icon: BarChart3, href: ROUTES.PREDICTION },
+    { label: "Weather", icon: Cloud, href: ROUTES.WEATHER },
+    { label: "Soil Analysis", icon: Layers, href: ROUTES.SOIL },
+    { type: "divider" as const, label: "Analytics & Reports" },
+    { label: "Analytics", icon: LineChart, href: ROUTES.ANALYTICS },
+    { label: "History", icon: History, href: ROUTES.HISTORY },
+    { label: "Reports", icon: FileText, href: ROUTES.REPORTS },
+  ];
 
   const isActive = (href: string) => {
     if (href === ROUTES.DASHBOARD) return pathname === href;

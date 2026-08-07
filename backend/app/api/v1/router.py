@@ -22,6 +22,7 @@ from app.api.v1.risk import router as risk_router
 from app.api.v1.history import router as history_router
 from app.api.v1.reports import router as reports_router
 from app.api.v1.exports import router as exports_router
+from app.api.v1.admin import router as admin_router
 
 api_v1_router = APIRouter()
 
@@ -44,3 +45,5 @@ api_v1_router.include_router(risk_router)
 api_v1_router.include_router(history_router)
 api_v1_router.include_router(reports_router)
 api_v1_router.include_router(exports_router)
+api_v1_router.include_router(admin_router)
+

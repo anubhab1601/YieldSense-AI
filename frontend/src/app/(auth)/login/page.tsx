@@ -42,6 +42,16 @@ export default function LoginPage() {
     try {
       await login(email, password);
       toast.success("Welcome back!");
+      try {
+        const { userService } = await import("@/services/userService");
+        const userProfile = await userService.getProfile();
+        if (userProfile?.role === "admin") {
+          router.push(ROUTES.ADMIN);
+          return;
+        }
+      } catch {
+        // Fallback to dashboard if profile fetch fails
+      }
       router.push(ROUTES.DASHBOARD);
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : "Login failed";
@@ -50,6 +60,7 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
 
   return (
     <>

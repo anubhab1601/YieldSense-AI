@@ -28,7 +28,9 @@ export const ROUTES = {
   // Milestone 3
   ANALYTICS: "/analytics",
   HISTORY: "/history",
+  ADMIN: "/admin",
 } as const;
+
 
 
 export const PUBLIC_ROUTES = [
