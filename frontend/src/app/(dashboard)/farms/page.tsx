@@ -22,10 +22,13 @@ import EmptyState from "@/components/ui/EmptyState";
 import Dialog from "@/components/ui/Dialog";
 import { ROUTES } from "@/utils/constants";
 import { formatDate, formatArea } from "@/utils/formatters";
+import { useAuth } from "@/contexts/AuthContext";
 import { useDebounce } from "@/hooks/useDebounce";
 import type { Farm, FarmListResponse } from "@/types/farm";
 
+
 export default function FarmsListPage() {
+  const { user } = useAuth();
   const router = useRouter();
   const [data, setData] = useState<FarmListResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -52,7 +55,8 @@ export default function FarmsListPage() {
 
   useEffect(() => {
     loadFarms();
-  }, [loadFarms]);
+  }, [loadFarms, user?.uid]);
+
 
   const handleDelete = async () => {
     if (!deleteDialog.farm) return;

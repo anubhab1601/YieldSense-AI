@@ -18,7 +18,9 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import EmptyState from "@/components/ui/EmptyState";
 import Pagination from "@/components/ui/Pagination";
 import { getRelativeTime, formatArea } from "@/utils/formatters";
+import { useAuth } from "@/contexts/AuthContext";
 import type { PredictionHistoryItem } from "@/types/m3types";
+
 
 const RISK_BADGE: Record<string, "success" | "warning" | "danger" | "default"> = {
   Low: "success",
@@ -174,6 +176,7 @@ function HistoryRow({ record, onDelete }: { record: PredictionHistoryItem; onDel
 }
 
 export default function HistoryPage() {
+  const { user } = useAuth();
   const [records, setRecords] = useState<PredictionHistoryItem[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -199,7 +202,7 @@ export default function HistoryPage() {
 
   useEffect(() => {
     loadHistory();
-  }, []);
+  }, [user?.uid]);
 
   const handleDelete = (id: string) => {
     setRecords((prev) => prev.filter((r) => r.id !== id));

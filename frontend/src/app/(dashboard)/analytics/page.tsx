@@ -18,9 +18,11 @@ import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import YieldTrendChart from "@/components/charts/YieldTrendChart";
 import CropComparisonChart from "@/components/charts/CropComparisonChart";
 import { SeasonComparisonChart, RainfallVsYieldChart } from "@/components/charts/SeasonRainfallCharts";
+import { useAuth } from "@/contexts/AuthContext";
 import type { AnalyticsData } from "@/types/analytics";
 
 export default function AnalyticsPage() {
+  const { user } = useAuth();
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +42,8 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [user?.uid]);
+
 
   if (loading) return <LoadingSpinner text="Loading analytics..." />;
 

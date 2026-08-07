@@ -19,8 +19,10 @@ import Badge from "@/components/ui/Badge";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import EmptyState from "@/components/ui/EmptyState";
 import { getRelativeTime } from "@/utils/formatters";
+import { useAuth } from "@/contexts/AuthContext";
 import type { ReportSummary } from "@/types/m3types";
 import type { PredictionHistoryItem } from "@/types/m3types";
+
 
 // ============================================================
 // Generate Report Modal
@@ -304,6 +306,7 @@ function ReportCard({ report, onDelete }: ReportCardProps) {
 // ============================================================
 
 export default function ReportsPage() {
+  const { user } = useAuth();
   const [reports, setReports] = useState<ReportSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -323,7 +326,8 @@ export default function ReportsPage() {
 
   useEffect(() => {
     loadReports();
-  }, []);
+  }, [user?.uid]);
+
 
   const handleDelete = (id: string) => {
     setReports((prev) => prev.filter((r) => r.id !== id));

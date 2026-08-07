@@ -50,7 +50,8 @@ const RISK_STYLES: Record<string, { badge: string; icon: React.ReactNode; text: 
 };
 
 export default function DashboardPage() {
-  const { profile } = useAuth();
+  const { user, profile } = useAuth();
+
   const [summary, setSummary] = useState<DashboardSummary | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -85,7 +86,8 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadDashboard();
-  }, []);
+  }, [user?.uid]);
+
 
   if (loading) return <LoadingSpinner text="Loading dashboard..." />;
 

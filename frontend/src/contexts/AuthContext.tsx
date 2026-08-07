@@ -60,16 +60,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [fetchProfile]);
 
   const login = async (email: string, password: string) => {
+    // Ensure clean state before login
+    if (auth.currentUser) {
+      await authService.logout();
+    }
     const firebaseUser = await authService.login(email, password);
     setUser(firebaseUser);
     await fetchProfile();
   };
 
   const signup = async (credentials: RegisterCredentials) => {
+    // Ensure any existing user session is completely signed out first
+    if (auth.currentUser) {
+      await authService.logout();
+    }
+    setUser(null);
+    setProfile(null);
+
     // Register via backend (creates Firebase user + Firestore doc)
     await authService.register(credentials);
-    // Then login client-side
-    await authService.login(credentials.email, credentials.password);
+    // Then login client-side with new user credentials
+    const firebaseUser = await authService.login(credentials.email, credentials.password);
+    setUser(firebaseUser);
     await fetchProfile();
   };
 
@@ -78,6 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     setProfile(null);
   };
+
 
   const resetPassword = async (email: string) => {
     await authService.forgotPassword(email);
