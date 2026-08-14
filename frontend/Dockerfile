@@ -10,7 +10,7 @@ RUN npm ci
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+ENV DOCKER_BUILD=true
 RUN npm run build
 
 # Production image
