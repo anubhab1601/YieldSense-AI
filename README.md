@@ -209,6 +209,61 @@ Rule-based boundary layers prevent false positive predictions under extreme cond
 
 ---
 
+## 📦 Model Setup & Large ML Artifact Management
+
+### Artifact Exclusion Strategy (Option 1)
+Trained binary ML model artifacts (`*.joblib`, `*.pkl`, `*.h5`, `*.model`, `*.bin`) are explicitly **excluded from Git version control** via `.gitignore`. 
+
+**Rationale:**
+- Keeps the GitHub repository lightweight, clean, and fast to clone.
+- Ensures 100% code reproducibility across environments directly from raw/processed datasets.
+- Eliminates dependency on external Git LFS quotas.
+
+---
+
+### How to Generate the ML Models Locally
+
+A new developer can clone the repository and regenerate the exact trained model artifacts in seconds:
+
+1. **Verify Preprocessed Datasets**:
+   - `backend/datasets/processed/Crop_recommendation_processed.csv`
+   - `backend/datasets/processed/yield_df_processed.csv`
+
+2. **Run the Model Training Pipeline**:
+   ```bash
+   cd backend
+   python -m ml.train
+   ```
+
+3. **Generated Output Artifacts**:
+   The script trains, tunes, evaluates, and saves binary artifacts to `backend/ml/models/saved/`:
+   - `crop_best_model.joblib` (Random Forest Crop Recommendation Model)
+   - `crop_scaler.joblib` (StandardScaler for Crop Features)
+   - `yield_best_model.joblib` (Tuned KNN Crop Yield Regressor)
+   - `yield_scaler.joblib` (StandardScaler for Yield Features)
+   - `yield_feature_columns.joblib` (Feature column mappings)
+   - `crop_model_metadata.json` & `yield_model_metadata.json`
+
+---
+
+### Inference Model Loading & Developer Error Handling
+
+- The FastAPI prediction inference engine (`backend/ml/inference/predictor.py`) implements thread-safe lazy singleton loaders (`CropYieldPredictor` & `CropRecommendationPredictor`).
+- **Missing Model Safety**: If model binaries are not present when an inference endpoint is called, the API returns a clean HTTP 503 developer error instead of an unhandled crash:
+  ```json
+  {
+    "detail": "Model not available: Yield model artifact not found. Please train the model first by running python -m ml.train"
+  }
+  ```
+
+---
+
+### Containerized Docker Deployment Model Handling
+
+- The production `backend/Dockerfile` container startup command checks for the binary model artifact on launch. If absent, it automatically triggers `python -m ml.train` to generate the binaries before launching the Uvicorn production server.
+
+---
+
 ## ⚙️ Development & Testing Execution
 
 ### Prerequisites

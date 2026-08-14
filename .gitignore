@@ -85,7 +85,7 @@ htmlcov/
 .nyc_output/
 
 # ============================================================
-# Datasets (keep raw samples, ignore large files)
+# Datasets & ML Model Artifacts (Option 1: Excluded from Git)
 # ============================================================
 backend/datasets/processed/*.csv
 !backend/datasets/processed/.gitkeep
@@ -93,11 +93,13 @@ backend/datasets/processed/*.csv
 *.h5
 *.pkl
 *.joblib
-
-# ============================================================
-# ML Model Artifacts (Milestone 2)
-# ============================================================
-backend/ml/models/saved/
+*.model
+*.bin
+backend/ml/models/saved/*.joblib
+backend/ml/models/saved/*.pkl
+backend/ml/models/saved/*.h5
+backend/ml/models/saved/*.model
+backend/ml/models/saved/*.bin
 !backend/ml/models/saved/.gitkeep
 
 # ============================================================
