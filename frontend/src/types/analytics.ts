@@ -80,14 +80,23 @@ export interface RainfallYieldPoint {
   temperature: number;
 }
 
+export interface FarmYieldPoint {
+  farm_name: string;
+  avg_yield: number;
+  count: number;
+  total_production: number;
+}
+
 export interface AnalyticsData {
   yield_trend: YieldTrendPoint[];
   crop_comparison: CropYieldPoint[];
   season_comparison: SeasonYieldPoint[];
   rainfall_vs_yield: RainfallYieldPoint[];
+  farm_comparison: FarmYieldPoint[];
   total_predictions: number;
   avg_yield: number | null;
   best_crop: string | null;
   best_season: string | null;
+  productivity_score: number | null;
   data_range_days: number;
 }

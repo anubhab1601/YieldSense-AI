@@ -94,6 +94,13 @@ class RainfallYieldPoint(BaseModel):
     temperature: float
 
 
+class FarmYieldPoint(BaseModel):
+    """Average yield per farm for farm comparison charts."""
+    farm_name: str
+    avg_yield: float
+    count: int
+    total_production: float
+
 class AnalyticsResponse(BaseModel):
     """Full analytics data response for the analytics dashboard page."""
     # Chart data
@@ -101,12 +108,14 @@ class AnalyticsResponse(BaseModel):
     crop_comparison: List[CropYieldPoint] = []
     season_comparison: List[SeasonYieldPoint] = []
     rainfall_vs_yield: List[RainfallYieldPoint] = []
+    farm_comparison: List[FarmYieldPoint] = []
 
     # Summary metrics
     total_predictions: int = 0
     avg_yield: Optional[float] = None
     best_crop: Optional[str] = None
     best_season: Optional[str] = None
+    productivity_score: Optional[float] = None
 
     # Metadata
     data_range_days: int = 30

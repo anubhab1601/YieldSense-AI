@@ -252,14 +252,47 @@ class AnalyticsService:
         best_crop = crop_comparison[0]["crop"] if crop_comparison else None
         best_season = season_comparison[0]["season"] if season_comparison else None
 
+        # ---- Productivity Score ----
+        # (latest yield / historical average yield) * 100
+        # Represents how the most recent prediction compares to the user's overall average.
+        productivity_score = None
+        if avg_yield and avg_yield > 0 and records:
+            latest_yield = records[0].get("predicted_yield")  # records sorted desc by date
+            if latest_yield is not None:
+                productivity_score = round((float(latest_yield) / avg_yield) * 100, 1)
+
+        # ---- Farm Comparison ----
+        # Group prediction history by farm_name and compute per-farm metrics.
+        farm_stats: Dict[str, Dict] = defaultdict(lambda: {"total_yield": 0.0, "total_production": 0.0, "count": 0})
+        for r in records:
+            fname = r.get("farm_name") or "Unnamed Farm"
+            y = r.get("predicted_yield", 0) or 0
+            tp = r.get("total_production", 0) or 0
+            farm_stats[fname]["total_yield"] += y
+            farm_stats[fname]["total_production"] += tp
+            farm_stats[fname]["count"] += 1
+
+        farm_comparison = []
+        for fname, stats in farm_stats.items():
+            count = stats["count"]
+            farm_comparison.append({
+                "farm_name": fname,
+                "avg_yield": round(stats["total_yield"] / count, 3) if count > 0 else 0,
+                "count": count,
+                "total_production": round(stats["total_production"], 2),
+            })
+        farm_comparison.sort(key=lambda f: f["avg_yield"], reverse=True)
+
         return {
             "yield_trend": yield_trend,
             "crop_comparison": crop_comparison,
             "season_comparison": season_comparison,
             "rainfall_vs_yield": rainfall_vs_yield,
+            "farm_comparison": farm_comparison,
             "total_predictions": len(records),
             "avg_yield": avg_yield,
             "best_crop": best_crop,
             "best_season": best_season,
+            "productivity_score": productivity_score,
             "data_range_days": 30,
         }
