@@ -1,5 +1,5 @@
 """
-YieldSense AI — Soil Analysis Service
+YieldSense AI  -  Soil Analysis Service
 
 Rule-based soil health analyzer. Evaluates pH, NPK levels,
 and provides crop-specific suitability ratings and recommendations.
@@ -119,7 +119,7 @@ def analyze_soil(
         "color": n_color,
     })
     if n_status == "Low":
-        warnings.append("Nitrogen levels are low — may limit plant growth")
+        warnings.append("Nitrogen levels are low  -  may limit plant growth")
         suggestions.append("Apply nitrogen-rich fertilizers (urea, ammonium sulfate)")
     elif n_status == "High":
         suggestions.append("Reduce nitrogen fertilizer to prevent nutrient burn")
@@ -135,7 +135,7 @@ def analyze_soil(
         "color": p_color,
     })
     if p_status == "Low":
-        warnings.append("Phosphorus is deficient — root development may suffer")
+        warnings.append("Phosphorus is deficient  -  root development may suffer")
         suggestions.append("Apply phosphatic fertilizers (DAP, SSP)")
 
     # Potassium
@@ -149,7 +149,7 @@ def analyze_soil(
         "color": k_color,
     })
     if k_status == "Low":
-        warnings.append("Potassium levels are low — may reduce disease resistance")
+        warnings.append("Potassium levels are low  -  may reduce disease resistance")
         suggestions.append("Apply potash fertilizers (MOP, SOP)")
 
     # ---- Overall Health Score ----
@@ -178,10 +178,10 @@ def analyze_soil(
     # ---- Moisture Analysis ----
     if moisture is not None:
         if moisture < 20:
-            warnings.append("Soil moisture is very low — irrigation recommended")
+            warnings.append("Soil moisture is very low  -  irrigation recommended")
             suggestions.append("Increase watering frequency or add mulch to retain moisture")
         elif moisture > 80:
-            warnings.append("Soil moisture is excessively high — drainage may be needed")
+            warnings.append("Soil moisture is excessively high  -  drainage may be needed")
 
     # ---- Organic Matter ----
     if organic_matter is not None:

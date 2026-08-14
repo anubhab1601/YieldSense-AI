@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Auth Context
+ * YieldSense AI  -  Auth Context
  *
  * Provides authentication state and methods throughout the app.
  * Wraps Firebase onAuthStateChanged for session persistence.

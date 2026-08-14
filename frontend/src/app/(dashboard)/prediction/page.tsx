@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — AI Yield Prediction Page
+ * YieldSense AI  -  AI Yield Prediction Page
  *
  * Guided multi-step prediction workflow with dynamic preview,
  * step validation, farm auto-fill, risk assessment, and recommendations.
@@ -385,7 +385,7 @@ export default function PredictionPage() {
                         <option value="">Select a farm to auto-fill parameters...</option>
                         {farms.map((farm) => (
                           <option key={farm.id} value={farm.id}>
-                            {farm.name} — {farm.crop} ({farm.area} ha)
+                            {farm.name}  -  {farm.crop} ({farm.area} ha)
                           </option>
                         ))}
                       </select>

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Service
+YieldSense AI  -  Farm Service
 
 Business logic for farm CRUD operations.
 """

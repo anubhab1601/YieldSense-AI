@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Firebase Client SDK Configuration
+ * YieldSense AI  -  Firebase Client SDK Configuration
  *
  * Initializes the Firebase client-side SDK for authentication and Firestore.
  * Uses lazy initialization to prevent errors during SSR/static build.
@@ -22,14 +22,14 @@ const firebaseConfig = {
 
 /**
  * Lazily initialize the Firebase app.
- * Safe to call during SSR — returns null if config is missing.
+ * Safe to call during SSR  -  returns null if config is missing.
  */
 function getFirebaseApp(): FirebaseApp {
   if (getApps().length > 0) return getApp();
   return initializeApp(firebaseConfig);
 }
 
-// Lazy singletons — only initialized when accessed client-side
+// Lazy singletons  -  only initialized when accessed client-side
 let _auth: Auth | null = null;
 let _db: Firestore | null = null;
 let _storage: FirebaseStorage | null = null;

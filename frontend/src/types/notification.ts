@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Notification Types
+ * YieldSense AI  -  Notification Types
  */
 
 export interface Notification {

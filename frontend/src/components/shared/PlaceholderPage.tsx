@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Placeholder Page Component
+ * YieldSense AI  -  Placeholder Page Component
  *
  * Used for features coming in future milestones.
  */

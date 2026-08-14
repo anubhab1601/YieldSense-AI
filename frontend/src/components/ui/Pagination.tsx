@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Pagination Component
+ * YieldSense AI  -  Pagination Component
  */
 
 "use client";

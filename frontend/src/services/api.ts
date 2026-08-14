@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — API Client
+ * YieldSense AI  -  API Client
  *
  * Axios-based HTTP client with Firebase auth token injection.
  * Waits for Firebase auth to initialize before sending any request
@@ -40,7 +40,7 @@ function getCurrentUser(): Promise<User | null> {
   });
 }
 
-// Request interceptor — attach Firebase token (waits for auth ready)
+// Request interceptor  -  attach Firebase token (waits for auth ready)
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     try {
@@ -50,7 +50,7 @@ api.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch {
-      // Token fetch failed — request proceeds without auth header
+      // Token fetch failed  -  request proceeds without auth header
     }
     return config;
   },
@@ -58,7 +58,7 @@ api.interceptors.request.use(
 );
 
 
-// Response interceptor — normalize errors (handles JSON and Blob error responses)
+// Response interceptor  -  normalize errors (handles JSON and Blob error responses)
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<any>) => {

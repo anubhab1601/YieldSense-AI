@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Auth Types
+ * YieldSense AI  -  Auth Types
  */
 
 export interface LoginCredentials {

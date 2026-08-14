@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Constants
+ * YieldSense AI  -  Constants
  */
 
 export const APP_NAME = "YieldSense AI";

@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Dialog Component
+ * YieldSense AI  -  Dialog Component
  */
 
 "use client";

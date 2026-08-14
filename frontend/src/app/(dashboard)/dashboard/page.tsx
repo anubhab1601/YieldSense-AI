@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Dashboard Page
+ * YieldSense AI  -  Dashboard Page
  *
  * Clear visual hierarchy. Data-first layout.
  * No decorative gradients, no emoji, no excessive cards.
@@ -163,14 +163,14 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* ── Status Row — Yield / Risk / Model ── */}
+      {/* ── Status Row  -  Yield / Risk / Model ── */}
       {summary && summary.total_predictions > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* Average Yield */}
           <div className="bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 px-4 py-4">
             <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Avg. Yield</p>
             <p className="text-xl font-bold text-gray-900 dark:text-white">
-              {summary.avg_predicted_yield ? `${summary.avg_predicted_yield.toFixed(2)} t/ha` : "—"}
+              {summary.avg_predicted_yield ? `${summary.avg_predicted_yield.toFixed(2)} t/ha` : " - "}
             </p>
             <p className="text-xs text-gray-400 mt-1">
               across {summary.total_predictions} prediction{summary.total_predictions !== 1 ? "s" : ""}

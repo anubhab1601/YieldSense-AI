@@ -1,5 +1,5 @@
 """
-YieldSense AI — User Endpoints
+YieldSense AI  -  User Endpoints
 
 User profile routes: get and update profile.
 """

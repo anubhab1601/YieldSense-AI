@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Input Component
+ * YieldSense AI  -  Input Component
  *
  * Clean, accessible text input.
  * Consistent with form-select utility class.

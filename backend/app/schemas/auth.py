@@ -1,5 +1,5 @@
 """
-YieldSense AI — Auth Schemas
+YieldSense AI  -  Auth Schemas
 
 Pydantic models for authentication request/response validation.
 """

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Recommendation Engine Schemas
+YieldSense AI  -  Recommendation Engine Schemas
 
 Pydantic models for the recommendation engine API.
 """

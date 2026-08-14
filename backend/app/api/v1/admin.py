@@ -1,5 +1,5 @@
 """
-YieldSense AI — Admin API Endpoints
+YieldSense AI  -  Admin API Endpoints
 
 System administration endpoints for system metrics, user management, and system-wide audit.
 """

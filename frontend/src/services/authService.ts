@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Auth Service
+ * YieldSense AI  -  Auth Service
  *
  * Client-side authentication service using Firebase Auth.
  */

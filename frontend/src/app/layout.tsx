@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Root Layout
+ * YieldSense AI  -  Root Layout
  */
 
 import type { Metadata } from "next";
@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "YieldSense AI — Crop Yield Prediction & Agricultural Forecasting",
+  title: "YieldSense AI  -  Crop Yield Prediction & Agricultural Forecasting",
   description:
     "AI-powered Crop Yield Prediction and Agricultural Productivity Forecasting System. Help farmers make better farming decisions using historical crop data, weather, and soil analysis.",
   keywords: [

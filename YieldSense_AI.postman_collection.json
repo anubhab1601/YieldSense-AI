@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "yieldsense-ai-collection-v1",
     "name": "YieldSense AI API Collection",
-    "description": "Postman API collection for YieldSense AI — Crop Yield Prediction and Agricultural Forecasting System.",
+    "description": "Postman API collection for YieldSense AI  -  Crop Yield Prediction and Agricultural Forecasting System.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [

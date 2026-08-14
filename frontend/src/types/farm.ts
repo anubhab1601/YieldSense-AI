@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Types
+ * YieldSense AI  -  Farm Types
  */
 
 export interface Farm {

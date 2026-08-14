@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Badge Component
+ * YieldSense AI  -  Badge Component
  *
  * Semantic status badges. Rounded-md for most contexts,
  * used only where state communication is needed.

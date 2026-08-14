@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Advisory Service (Week 6)
+ * YieldSense AI  -  Farm Advisory Service (Week 6)
  */
 
 import api from "./api";

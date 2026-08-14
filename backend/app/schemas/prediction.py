@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction Schemas
+YieldSense AI  -  Prediction Schemas
 
 Pydantic models for the yield prediction API.
 """

@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Recommendation, Risk, Report, History Types (Milestone 3)
+ * YieldSense AI  -  Recommendation, Risk, Report, History Types (Milestone 3)
  */
 
 // ============================================================

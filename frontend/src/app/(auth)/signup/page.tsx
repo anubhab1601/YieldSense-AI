@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Signup Page
+ * YieldSense AI  -  Signup Page
  */
 
 "use client";

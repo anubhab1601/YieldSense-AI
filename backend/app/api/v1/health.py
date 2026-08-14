@@ -1,5 +1,5 @@
 """
-YieldSense AI — Health Check Endpoints
+YieldSense AI  -  Health Check Endpoints
 
 Basic health and root endpoints.
 """
@@ -14,7 +14,7 @@ settings = get_settings()
 
 @router.get("/", summary="Root endpoint")
 async def root():
-    """Root endpoint — returns application info."""
+    """Root endpoint  -  returns application info."""
     return {
         "name": settings.APP_NAME,
         "version": settings.APP_VERSION,

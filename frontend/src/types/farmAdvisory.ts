@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Advisory Types (Week 6)
+ * YieldSense AI  -  Farm Advisory Types (Week 6)
  */
 
 export interface IdentifiedRisk {

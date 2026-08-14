@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Analytics Types (Milestone 3)
+ * YieldSense AI  -  Analytics Types (Milestone 3)
  */
 
 export interface RecentPredictionItem {

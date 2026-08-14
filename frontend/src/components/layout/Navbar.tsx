@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Navbar Component
+ * YieldSense AI  -  Navbar Component
  *
  * Clean, minimal header. No gradient text, no decorative effects.
  */
@@ -50,7 +50,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
             className="flex items-center gap-2.5"
             aria-label="YieldSense AI home"
           >
-            {/* Logo mark — simple geometric shape */}
+            {/* Logo mark  -  simple geometric shape */}
             <div className="w-7 h-7 rounded-md bg-[#1a6b3c] flex items-center justify-center shrink-0">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M7 1.5C7 1.5 2.5 4 2.5 8C2.5 10.5 4.5 12.5 7 12.5C9.5 12.5 11.5 10.5 11.5 8C11.5 4 7 1.5 7 1.5Z" fill="white" fillOpacity="0.9"/>

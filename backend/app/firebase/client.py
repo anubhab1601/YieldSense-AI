@@ -1,5 +1,5 @@
 """
-YieldSense AI — Firebase Admin SDK Client
+YieldSense AI  -  Firebase Admin SDK Client
 
 Initializes and provides the Firebase Admin SDK singleton.
 """

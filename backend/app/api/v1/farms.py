@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Endpoints
+YieldSense AI  -  Farm Endpoints
 
 Farm CRUD routes with pagination and stats.
 """

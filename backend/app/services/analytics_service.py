@@ -1,5 +1,5 @@
 """
-YieldSense AI — Analytics Service
+YieldSense AI  -  Analytics Service
 
 Computes dashboard summary statistics and chart data
 from Firestore prediction history and farm data.

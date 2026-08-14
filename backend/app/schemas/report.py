@@ -1,5 +1,5 @@
 """
-YieldSense AI — Report & History Schemas
+YieldSense AI  -  Report & History Schemas
 
 Pydantic models for report generation, history, and export APIs.
 """

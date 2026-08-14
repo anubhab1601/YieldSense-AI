@@ -1,5 +1,5 @@
 """
-YieldSense AI — Soil Analysis Endpoints
+YieldSense AI  -  Soil Analysis Endpoints
 
 Soil health analysis routes.
 """

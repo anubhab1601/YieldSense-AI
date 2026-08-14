@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Admin Control Center Page
+ * YieldSense AI  -  Admin Control Center Page
  *
  * Dedicated system administration dashboard for admins:
  * - System-wide platform metrics & stats
@@ -215,12 +215,12 @@ export default function AdminDashboardPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm pt-2 border-t border-gray-100 dark:border-gray-800">
               <div>
                 <p className="text-xs text-gray-400">Model Name</p>
-                <p className="font-semibold text-gray-900 dark:text-white">{stats.model_name || "—"}</p>
+                <p className="font-semibold text-gray-900 dark:text-white">{stats.model_name || " - "}</p>
               </div>
               <div>
                 <p className="text-xs text-gray-400">Accuracy (R²)</p>
                 <p className="font-semibold text-green-600 dark:text-green-400">
-                  {stats.model_accuracy ? `${(stats.model_accuracy * 100).toFixed(2)}%` : "—"}
+                  {stats.model_accuracy ? `${(stats.model_accuracy * 100).toFixed(2)}%` : " - "}
                 </p>
               </div>
               <div>
@@ -334,7 +334,7 @@ export default function AdminDashboardPage() {
                           </Badge>
                         </td>
                         <td className="px-5 py-3.5 text-gray-500 text-xs">
-                          {u.created_at ? formatDate(u.created_at) : "—"}
+                          {u.created_at ? formatDate(u.created_at) : " - "}
                         </td>
                         <td className="px-5 py-3.5 text-right">
                           <Button
@@ -412,11 +412,11 @@ export default function AdminDashboardPage() {
                             {p.risk_level}
                           </Badge>
                         ) : (
-                          "—"
+                          " - "
                         )}
                       </td>
                       <td className="px-5 py-3.5 text-xs text-gray-400">
-                        {p.created_at ? getRelativeTime(p.created_at) : "—"}
+                        {p.created_at ? getRelativeTime(p.created_at) : " - "}
                       </td>
                     </tr>
                   ))

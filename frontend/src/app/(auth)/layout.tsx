@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Auth Layout
+ * YieldSense AI  -  Auth Layout
  *
  * Clean, minimal auth page wrapper.
  * No decorative blobs, no gradient backgrounds.

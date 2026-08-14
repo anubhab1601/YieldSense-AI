@@ -1,5 +1,5 @@
 """
-YieldSense AI — User Model
+YieldSense AI  -  User Model
 
 Domain model for user data stored in Firestore.
 """

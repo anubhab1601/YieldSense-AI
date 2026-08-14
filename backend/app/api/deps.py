@@ -1,5 +1,5 @@
 """
-YieldSense AI — API Dependencies
+YieldSense AI  -  API Dependencies
 
 FastAPI dependency injection functions for authentication and database access.
 """

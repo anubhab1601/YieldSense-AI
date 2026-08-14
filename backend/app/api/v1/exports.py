@@ -1,5 +1,5 @@
 """
-YieldSense AI — Export API Endpoints
+YieldSense AI  -  Export API Endpoints
 
 Generates PDF and CSV export downloads.
 """
@@ -20,7 +20,7 @@ router = APIRouter(prefix="/export", tags=["Export"])
 
 def _safe_filename(raw_title: str, ext: str) -> str:
     """Ensure filename in Content-Disposition header is strictly ASCII-encoded for HTTP/1.1 compliance."""
-    s = str(raw_title).replace("—", "-").replace("–", "-").replace(" ", "_")
+    s = str(raw_title).replace(" - ", "-").replace("–", "-").replace(" ", "_")
     s = re.sub(r"[^\w\-]", "", s)
     s = s[:40] or "report"
     return f"YieldSense_{s}.{ext}"

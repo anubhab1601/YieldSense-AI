@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Notifications Page
+ * YieldSense AI  -  Notifications Page
  */
 
 "use client";
@@ -44,7 +44,7 @@ export default function NotificationsPage() {
         setNotifications(data.notifications);
         setUnreadCount(data.unread_count);
       } catch {
-        // No notifications yet — this is fine
+        // No notifications yet  -  this is fine
         setNotifications([]);
       } finally {
         setLoading(false);

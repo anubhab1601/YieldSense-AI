@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Details Page
+ * YieldSense AI  -  Farm Details Page
  */
 
 "use client";
@@ -233,7 +233,7 @@ export default function FarmDetailPage() {
         </Card>
       ))}
 
-      {/* Week 6 — Farm Advisory Panel */}
+      {/* Week 6  -  Farm Advisory Panel */}
       <FarmAdvisoryPanel farmId={farmId} />
 
       {/* Delete Dialog */}

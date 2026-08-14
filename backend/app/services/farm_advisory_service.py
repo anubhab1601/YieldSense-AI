@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Advisory Service
+YieldSense AI  -  Farm Advisory Service
 
 Implements the rule-based Recommendation Engine and Risk Assessment.
 
@@ -28,7 +28,7 @@ from app.utils.exceptions import NotFoundException, ForbiddenException
 
 # ============================================================
 # Centralized Thresholds (Agronomic Configuration)
-# Change values here — all rules update automatically.
+# Change values here  -  all rules update automatically.
 # ============================================================
 
 # Soil pH rules (§3)
@@ -101,7 +101,7 @@ DEFAULT_CROP_WATER_REQUIREMENT: float = 700.0
 
 
 # ============================================================
-# Pure Rule Functions (independently testable — §21)
+# Pure Rule Functions (independently testable  -  §21)
 # These functions have no I/O or side effects.
 # ============================================================
 
@@ -127,7 +127,7 @@ def generate_farm_recommendations(
       - If a value is None, rules requiring that value are skipped.
       - Other rules continue to evaluate normally.
       - The function never raises an exception due to missing data.
-      - A zero is NOT substituted for None — the rule is simply skipped.
+      - A zero is NOT substituted for None  -  the rule is simply skipped.
 
     Args:
         soil_ph: Soil pH reading. None if unavailable.
@@ -146,11 +146,11 @@ def generate_farm_recommendations(
     if soil_ph is not None:
         if soil_ph < SOIL_ACIDIC_THRESHOLD:
             recommendations.append(
-                f"Soil is acidic (pH {soil_ph:.1f}) — consider applying lime to raise pH above {SOIL_ACIDIC_THRESHOLD}."
+                f"Soil is acidic (pH {soil_ph:.1f})  -  consider applying lime to raise pH above {SOIL_ACIDIC_THRESHOLD}."
             )
         elif soil_ph > SOIL_ALKALINE_THRESHOLD:
             recommendations.append(
-                f"Soil is alkaline (pH {soil_ph:.1f}) — consider adding organic compost to lower pH below {SOIL_ALKALINE_THRESHOLD}."
+                f"Soil is alkaline (pH {soil_ph:.1f})  -  consider adding organic compost to lower pH below {SOIL_ALKALINE_THRESHOLD}."
             )
         # pH within range → no contradictory recommendation
 
@@ -161,13 +161,13 @@ def generate_farm_recommendations(
             pct_below = round((1 - predicted_yield / avg_yield) * 100, 1)
             recommendations.append(
                 f"Predicted yield ({predicted_yield:.2f} tons/ha) is {pct_below}% below your farm average "
-                f"({avg_yield:.2f} tons/ha) — review irrigation and fertilizer schedules."
+                f"({avg_yield:.2f} tons/ha)  -  review irrigation and fertilizer schedules."
             )
         elif predicted_yield > avg_yield * YIELD_ABOVE_THRESHOLD:
             pct_above = round((predicted_yield / avg_yield - 1) * 100, 1)
             recommendations.append(
                 f"Predicted yield ({predicted_yield:.2f} tons/ha) is {pct_above}% above your farm average "
-                f"({avg_yield:.2f} tons/ha) — current farming practices are effective, continue as-is."
+                f"({avg_yield:.2f} tons/ha)  -  current farming practices are effective, continue as-is."
             )
         # Within normal range → no unnecessary advice (§4)
 
@@ -175,12 +175,12 @@ def generate_farm_recommendations(
     if rainfall_deviation is not None:
         if rainfall_deviation < -RAINFALL_WARNING_DEVIATION:
             recommendations.append(
-                f"Rainfall is significantly below the crop baseline ({rainfall_deviation:.0f} mm) — "
+                f"Rainfall is significantly below the crop baseline ({rainfall_deviation:.0f} mm)  -  "
                 f"review and increase irrigation frequency to prevent yield loss."
             )
         elif rainfall_deviation > RAINFALL_WARNING_DEVIATION:
             recommendations.append(
-                f"Rainfall is significantly above the crop baseline (+{rainfall_deviation:.0f} mm) — "
+                f"Rainfall is significantly above the crop baseline (+{rainfall_deviation:.0f} mm)  -  "
                 f"monitor drainage and watch for waterlogging, which can damage roots."
             )
         # Within ±RAINFALL_WARNING_DEVIATION → no unnecessary advice (§5)
@@ -188,7 +188,7 @@ def generate_farm_recommendations(
     # ---- Normal conditions fallback (§6) ----
     if not recommendations:
         recommendations.append(
-            "All indicators look normal — continue current farming practices."
+            "All indicators look normal  -  continue current farming practices."
         )
 
     return recommendations
@@ -225,7 +225,7 @@ def assess_farm_risk(
     risk_score: int = 0
     identified_risks: List[Dict[str, str]] = []
 
-    # ---- Yield risk (§9) — no double-counting ----
+    # ---- Yield risk (§9)  -  no double-counting ----
     if predicted_yield is not None and avg_yield is not None and avg_yield > 0:
         if predicted_yield < avg_yield * YIELD_VERY_LOW_THRESHOLD:
             risk_score += 2
@@ -235,7 +235,7 @@ def assess_farm_risk(
                 "severity": "High",
                 "reason": (
                     f"Predicted yield ({predicted_yield:.2f} tons/ha) is {pct}% below farm average "
-                    f"({avg_yield:.2f} tons/ha) — significantly under the {int(YIELD_VERY_LOW_THRESHOLD*100)}% threshold."
+                    f"({avg_yield:.2f} tons/ha)  -  significantly under the {int(YIELD_VERY_LOW_THRESHOLD*100)}% threshold."
                 ),
                 "advice": (
                     "Investigate soil health, nutrient deficiencies, and water availability immediately. "
@@ -258,7 +258,7 @@ def assess_farm_risk(
                 ),
             })
 
-    # ---- Rainfall risk (§10) — no double-counting ----
+    # ---- Rainfall risk (§10)  -  no double-counting ----
     if rainfall_deviation is not None:
         abs_dev = abs(rainfall_deviation)
         if abs_dev > RAINFALL_HIGH_RISK:
@@ -283,7 +283,7 @@ def assess_farm_risk(
                 "type": "Rainfall Risk",
                 "severity": "Medium",
                 "reason": (
-                    f"Rainfall deviation is {rainfall_deviation:+.0f} mm from crop baseline — "
+                    f"Rainfall deviation is {rainfall_deviation:+.0f} mm from crop baseline  -  "
                     f"moderately {direction} normal levels."
                 ),
                 "advice": (
@@ -292,7 +292,7 @@ def assess_farm_risk(
                 ),
             })
 
-    # ---- Soil risk (§11) — single point only ----
+    # ---- Soil risk (§11)  -  single point only ----
     if soil_ph is not None:
         if soil_ph < SOIL_HIGH_RISK_PH_LOW or soil_ph > SOIL_HIGH_RISK_PH_HIGH:
             risk_score += 1
@@ -355,7 +355,7 @@ def _dominant_category(risks: List[Dict[str, str]]) -> str:
 
 
 # ============================================================
-# Data Assembly — reads from Firestore
+# Data Assembly  -  reads from Firestore
 # ============================================================
 
 def _get_farm_predictions(farm_id: str, user_id: str, db) -> List[Dict[str, Any]]:
@@ -383,7 +383,7 @@ def _compute_yield_stats(predictions: List[Dict[str, Any]]) -> Tuple[Optional[fl
     Compute predicted_yield (most recent) and avg_yield (historical mean).
 
     Returns:
-        (predicted_yield, avg_yield) — either may be None if data is unavailable.
+        (predicted_yield, avg_yield)  -  either may be None if data is unavailable.
     """
     if not predictions:
         return None, None
@@ -429,7 +429,7 @@ def _compute_rainfall_deviation(predictions: List[Dict[str, Any]], crop: str) ->
 
 
 # ============================================================
-# Public Orchestrator — called by API route
+# Public Orchestrator  -  called by API route
 # ============================================================
 
 def get_farm_advisory(farm_id: str, user_id: str, db) -> Dict[str, Any]:

@@ -15,12 +15,12 @@ from app.services.prediction_service import predict_yield
 
 router = APIRouter(prefix="/prediction", tags=["Prediction"])
 
-# Optional auth — prediction works without auth but saves history if authenticated
+# Optional auth  -  prediction works without auth but saves history if authenticated
 _bearer = HTTPBearer(auto_error=False)
 
 
 async def _optional_user_id(credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer)) -> Optional[str]:
-    """Optionally extract user ID from bearer token — does NOT raise 401 if missing."""
+    """Optionally extract user ID from bearer token  -  does NOT raise 401 if missing."""
     if not credentials:
         return None
     try:

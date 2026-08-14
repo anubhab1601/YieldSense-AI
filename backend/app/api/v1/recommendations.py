@@ -1,9 +1,9 @@
 """
-YieldSense AI — Recommendations API Endpoints
+YieldSense AI  -  Recommendations API Endpoints
 
 Provides endpoints for:
-  POST /recommendations/       — generate agronomy recommendations from manual input
-  GET  /recommendations/farm/{farm_id} — farm-linked advisory (auth-gated, ownership-validated)
+  POST /recommendations/        -  generate agronomy recommendations from manual input
+  GET  /recommendations/farm/{farm_id}  -  farm-linked advisory (auth-gated, ownership-validated)
 """
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -55,7 +55,7 @@ async def post_recommendations(request: RecommendationEngineRequest):
 @router.get(
     "/farm/{farm_id}",
     response_model=FarmAdvisoryResponse,
-    summary="Get farm advisory — recommendations + risk assessment",
+    summary="Get farm advisory  -  recommendations + risk assessment",
 )
 async def get_farm_advisory_endpoint(
     farm_id: str,
@@ -79,7 +79,7 @@ async def get_farm_advisory_endpoint(
 
     Security:
     - Requires valid Firebase ID token.
-    - Farm ownership is validated — users cannot access other users' farms.
+    - Farm ownership is validated  -  users cannot access other users' farms.
     """
     try:
         result = get_farm_advisory(farm_id=farm_id, user_id=user_id, db=db)

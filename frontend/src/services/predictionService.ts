@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Prediction Service
+ * YieldSense AI  -  Prediction Service
  *
  * API calls for prediction, weather, and soil analysis.
  */

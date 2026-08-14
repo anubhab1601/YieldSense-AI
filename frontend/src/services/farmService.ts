@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Service
+ * YieldSense AI  -  Farm Service
  *
  * API calls for farm CRUD operations.
  */

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction Service
+YieldSense AI  -  Prediction Service
 
 Orchestrates the full prediction pipeline:
   1. Validate input

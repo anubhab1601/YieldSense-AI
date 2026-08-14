@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Custom Hooks
+ * YieldSense AI  -  Custom Hooks
  */
 
 "use client";

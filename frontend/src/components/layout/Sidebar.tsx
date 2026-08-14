@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Sidebar Navigation Component
+ * YieldSense AI  -  Sidebar Navigation Component
  *
  * Clean sidebar with logical grouping and left-border active state.
  * No gradient boxes, no version numbers, no decorative elements.
@@ -124,7 +124,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         })}
       </nav>
 
-      {/* Footer — just a subtle brand mark */}
+      {/* Footer  -  just a subtle brand mark */}
       <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-800">
         <p className="text-xs text-gray-400 dark:text-gray-600">YieldSense AI</p>
       </div>

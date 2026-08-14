@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Dashboard Layout (Server Component)
+ * YieldSense AI  -  Dashboard Layout (Server Component)
  *
  * Server wrapper that forces dynamic rendering and renders the client layout.
  */

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Model
+YieldSense AI  -  Farm Model
 
 Domain model for farm data stored in Firestore.
 """

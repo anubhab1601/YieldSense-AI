@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Season Comparison Chart + Rainfall vs Yield Scatter
+ * YieldSense AI  -  Season Comparison Chart + Rainfall vs Yield Scatter
  */
 
 "use client";
@@ -18,6 +18,7 @@ import {
   ZAxis,
   Cell,
 } from "recharts";
+import { CloudRain } from "lucide-react";
 import type { SeasonYieldPoint, RainfallYieldPoint } from "@/types/analytics";
 
 // ============================================================
@@ -118,10 +119,19 @@ const ScatterTooltip = ({ active, payload }: any) => {
 };
 
 export function RainfallVsYieldChart({ data, height = 280 }: RainfallProps) {
-  if (!data || data.length === 0) {
+  // Requirement 3: Insufficient data handling (less than 2 records)
+  if (!data || data.length < 2) {
     return (
-      <div className="flex items-center justify-center h-48 text-gray-400 dark:text-gray-600 text-sm">
-        No data available yet.
+      <div className="flex flex-col items-center justify-center min-h-[220px] text-center p-6 bg-gray-50 dark:bg-gray-900/40 rounded-xl border border-dashed border-gray-200 dark:border-gray-800">
+        <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-3">
+          <CloudRain className="h-6 w-6" />
+        </div>
+        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">
+          Not Enough Historical Prediction Data Yet
+        </h4>
+        <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm">
+          Make a few more predictions to see the relationship between rainfall and yield.
+        </p>
       </div>
     );
   }
@@ -131,7 +141,7 @@ export function RainfallVsYieldChart({ data, height = 280 }: RainfallProps) {
 
   return (
     <ResponsiveContainer width="100%" height={height}>
-      <ScatterChart margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+      <ScatterChart margin={{ top: 10, right: 20, left: 10, bottom: 20 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" strokeOpacity={0.5} />
         <XAxis
           dataKey="rainfall"
@@ -141,7 +151,7 @@ export function RainfallVsYieldChart({ data, height = 280 }: RainfallProps) {
           tick={{ fontSize: 11, fill: "#9ca3af" }}
           tickLine={false}
           axisLine={false}
-          label={{ value: "Rainfall (mm)", position: "insideBottomRight", offset: -5, fontSize: 10, fill: "#9ca3af" }}
+          label={{ value: "Rainfall (mm)", position: "insideBottom", offset: -10, fontSize: 11, fill: "#6b7280" }}
         />
         <YAxis
           dataKey="yield_value"
@@ -152,8 +162,9 @@ export function RainfallVsYieldChart({ data, height = 280 }: RainfallProps) {
           tickLine={false}
           axisLine={false}
           width={65}
+          label={{ value: "Yield (t/ha)", angle: -90, position: "insideLeft", offset: 10, fontSize: 11, fill: "#6b7280" }}
         />
-        <ZAxis range={[40, 40]} />
+        <ZAxis range={[60, 60]} />
         <Tooltip content={<ScatterTooltip />} cursor={{ strokeDasharray: "3 3" }} />
         {crops.map((crop, i) => (
           <Scatter
@@ -161,7 +172,7 @@ export function RainfallVsYieldChart({ data, height = 280 }: RainfallProps) {
             name={crop}
             data={data.filter((d) => d.crop === crop)}
             fill={CROP_COLORS[i % CROP_COLORS.length]}
-            fillOpacity={0.7}
+            fillOpacity={0.8}
           />
         ))}
       </ScatterChart>

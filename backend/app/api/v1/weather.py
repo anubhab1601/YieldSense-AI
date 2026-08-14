@@ -1,5 +1,5 @@
 """
-YieldSense AI — Weather Endpoints
+YieldSense AI  -  Weather Endpoints
 
 Weather data routes using the Open-Meteo service.
 """

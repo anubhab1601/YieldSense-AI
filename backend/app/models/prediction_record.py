@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction Record Model
+YieldSense AI  -  Prediction Record Model
 
 Domain model for full prediction history records stored in Firestore.
 """

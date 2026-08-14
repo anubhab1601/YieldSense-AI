@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Reports Page (Milestone 3)
+ * YieldSense AI  -  Reports Page (Milestone 3)
  *
  * Full reports UI: generate, list, download PDF/CSV, delete.
  */
@@ -384,7 +384,7 @@ export default function ReportsPage() {
               How to generate a report
             </p>
             <p className="text-xs text-blue-600 dark:text-blue-400 mt-0.5">
-              1. Make a prediction on the Prediction page — it saves automatically to history.
+              1. Make a prediction on the Prediction page  -  it saves automatically to history.
               2. Click "Generate Report" and select the prediction.
               3. Download the report as PDF or CSV.
             </p>

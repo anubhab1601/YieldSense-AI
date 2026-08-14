@@ -1,5 +1,5 @@
 """
-YieldSense AI — Weather Service
+YieldSense AI  -  Weather Service
 
 Integrates with Open-Meteo (free, no API key) for weather data.
 Includes in-memory TTL caching to minimize API calls.

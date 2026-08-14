@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Analytics, Recommendations, Risk, History, Report Services (Milestone 3)
+ * YieldSense AI  -  Analytics, Recommendations, Risk, History, Report Services (Milestone 3)
  */
 
 import api from "./api";

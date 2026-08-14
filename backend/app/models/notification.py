@@ -1,5 +1,5 @@
 """
-YieldSense AI — Notification Model
+YieldSense AI  -  Notification Model
 
 Domain model for notifications stored in Firestore.
 """

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction History Service
+YieldSense AI  -  Prediction History Service
 
 Manages storage and retrieval of prediction history in Firestore.
 """

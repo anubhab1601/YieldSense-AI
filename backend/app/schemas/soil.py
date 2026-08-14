@@ -1,5 +1,5 @@
 """
-YieldSense AI — Soil Schemas
+YieldSense AI  -  Soil Schemas
 
 Pydantic models for soil analysis request/response.
 """

@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Profile Page
+ * YieldSense AI  -  Profile Page
  */
 
 "use client";

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Agricultural Risk Assessment Engine
+YieldSense AI  -  Agricultural Risk Assessment Engine
 
 Detects 10 categories of agricultural risk from environmental and soil parameters.
 Returns a structured risk report with severity, reason, and mitigation per risk.
@@ -95,7 +95,7 @@ def _detect_rainfall_risk(crop: str, rainfall: float) -> Optional[Dict]:
             "category": "Climate",
             "severity": "Critical",
             "severity_score": score,
-            "reason": f"{crop} requires ~{water_req} mm annually but only {rainfall:.0f} mm available — a {deficit_pct:.0f}% deficit. Crop failure is likely without irrigation.",
+            "reason": f"{crop} requires ~{water_req} mm annually but only {rainfall:.0f} mm available  -  a {deficit_pct:.0f}% deficit. Crop failure is likely without irrigation.",
             "mitigation": "Install drip or micro-irrigation immediately. Consider drought-tolerant varieties such as Millets or Sorghum. Apply mulching to reduce soil evaporation.",
             "affected_aspects": ["Yield", "Crop Survival", "Water Stress"],
         }
@@ -227,7 +227,7 @@ def _detect_ph_risk(crop: str, soil_ph: float) -> Optional[Dict]:
             "category": "Soil",
             "severity": severity,
             "severity_score": score,
-            "reason": f"Soil pH ({soil_ph:.1f}) exceeds {crop}'s optimal maximum ({ph_max}). Alkaline conditions lock up iron, manganese, zinc, and phosphorus — causing deficiency symptoms even with adequate fertilizer applications.",
+            "reason": f"Soil pH ({soil_ph:.1f}) exceeds {crop}'s optimal maximum ({ph_max}). Alkaline conditions lock up iron, manganese, zinc, and phosphorus  -  causing deficiency symptoms even with adequate fertilizer applications.",
             "mitigation": f"Apply elemental sulfur (200–400 kg/ha) or gypsum to lower pH to {ph_min}–{ph_max}. Use ammonium sulfate fertilizers. Apply chelated micronutrients (Fe, Zn, Mn) as foliar spray.",
             "affected_aspects": ["Micronutrient Availability", "Phosphorus Lock-up", "Crop Color"],
         }
@@ -282,7 +282,7 @@ def _detect_npk_risks(crop: str, n: float, p: float, k: float) -> List[Dict]:
         else:
             continue  # Adequate
 
-        # Format reason string — pass crop as keyword arg to resolve {crop} placeholder
+        # Format reason string  -  pass crop as keyword arg to resolve {crop} placeholder
         reason = nc["reason_template"].format(current, pct, target, crop=crop)
 
         risks.append({

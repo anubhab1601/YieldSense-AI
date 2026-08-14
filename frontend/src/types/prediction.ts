@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Prediction Types
+ * YieldSense AI  -  Prediction Types
  */
 
 export interface PredictionRequest {

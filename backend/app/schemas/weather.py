@@ -1,5 +1,5 @@
 """
-YieldSense AI — Weather Schemas
+YieldSense AI  -  Weather Schemas
 
 Pydantic models for weather API request/response validation.
 """

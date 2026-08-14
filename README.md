@@ -109,15 +109,15 @@ flowchart LR
 
 The project development is organized into 9 software development phases:
 
-- **PHASE 1 — PROJECT FOUNDATION**: Setup FastAPI backend, Next.js frontend, Tailwind CSS design system tokens, and `/api/v1/health` endpoint.
-- **PHASE 2 — APPLICATION & AUTHENTICATION**: Client/Server Firebase Auth (Signup, Login, Profile); Firestore Farm CRUD with strict `user_id` multi-tenant data isolation.
-- **PHASE 3 — DATA MANAGEMENT & PREPROCESSING**: Preprocessing pipelines for `Crop_recommendation_processed.csv` and `yield_df_processed.csv`; One-Hot Encoding and `StandardScaler` transformations.
-- **PHASE 4 — MACHINE LEARNING & YIELD PREDICTION**: Random Forest crop recommendation model (99.32% Accuracy), tuned KNN yield prediction model ($R^2 = 0.9860$), physical safety overrides, live weather integration, soil analyzer.
-- **PHASE 5 — ANALYTICS & VISUALIZATION**: Dashboard summary statistics, interactive analytics charts (Yield Trend, Crop Comparison, Season Performance, Scatter Analysis), searchable prediction history.
-- **PHASE 6 — RECOMMENDATION & RISK ASSESSMENT**: Centralized agronomic thresholds, rule-based recommendation engine, point-based risk scoring, farm-linked advisory API (`GET /api/v1/recommendations/farm/{farm_id}`), `FarmAdvisoryPanel`.
-- **PHASE 7 — TESTING & DEPLOYMENT**: Automated Pytest suite (32 test modules passing), Postman collection (`YieldSense_AI.postman_collection.json`), production Dockerfiles, Docker Compose pipeline.
-- **PHASE 8 — MODEL & REPOSITORY MANAGEMENT**: Model validation on 20% held-out test data (`backend/ml/evaluate_test_set.py`, `backend/ml/evaluation_report.md`), secret removal, `.env.example` templates.
-- **PHASE 9 — FINAL QUALITY ASSURANCE**: Admin Control Center (`/admin`), ReportLab PDF and CSV export engine, production cloud deployment guide (`docs/deployment.md`), demonstration guide (`docs/demo_guide.md`).
+- **PHASE 1  -  PROJECT FOUNDATION**: Setup FastAPI backend, Next.js frontend, Tailwind CSS design system tokens, and `/api/v1/health` endpoint.
+- **PHASE 2  -  APPLICATION & AUTHENTICATION**: Client/Server Firebase Auth (Signup, Login, Profile); Firestore Farm CRUD with strict `user_id` multi-tenant data isolation.
+- **PHASE 3  -  DATA MANAGEMENT & PREPROCESSING**: Preprocessing pipelines for `Crop_recommendation_processed.csv` and `yield_df_processed.csv`; One-Hot Encoding and `StandardScaler` transformations.
+- **PHASE 4  -  MACHINE LEARNING & YIELD PREDICTION**: Random Forest crop recommendation model (99.32% Accuracy), tuned KNN yield prediction model ($R^2 = 0.9860$), physical safety overrides, live weather integration, soil analyzer.
+- **PHASE 5  -  ANALYTICS & VISUALIZATION**: Dashboard summary statistics, interactive analytics charts (Yield Trend, Crop Comparison, Season Performance, Scatter Analysis), searchable prediction history.
+- **PHASE 6  -  RECOMMENDATION & RISK ASSESSMENT**: Centralized agronomic thresholds, rule-based recommendation engine, point-based risk scoring, farm-linked advisory API (`GET /api/v1/recommendations/farm/{farm_id}`), `FarmAdvisoryPanel`.
+- **PHASE 7  -  TESTING & DEPLOYMENT**: Automated Pytest suite (32 test modules passing), Postman collection (`YieldSense_AI.postman_collection.json`), production Dockerfiles, Docker Compose pipeline.
+- **PHASE 8  -  MODEL & REPOSITORY MANAGEMENT**: Model validation on 20% held-out test data (`backend/ml/evaluate_test_set.py`, `backend/ml/evaluation_report.md`), secret removal, `.env.example` templates.
+- **PHASE 9  -  FINAL QUALITY ASSURANCE**: Admin Control Center (`/admin`), ReportLab PDF and CSV export engine, production cloud deployment guide (`docs/deployment.md`), demonstration guide (`docs/demo_guide.md`).
 
 ---
 

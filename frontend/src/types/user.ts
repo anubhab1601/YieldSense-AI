@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — User Types
+ * YieldSense AI  -  User Types
  */
 
 export interface UserProfile {

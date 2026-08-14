@@ -1,8 +1,8 @@
 /**
- * YieldSense AI — Button Component
+ * YieldSense AI  -  Button Component
  *
  * Solid colors, no gradients, no colored shadows.
- * Intentional and practical — not decorative.
+ * Intentional and practical  -  not decorative.
  */
 
 "use client";

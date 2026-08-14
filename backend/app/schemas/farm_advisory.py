@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Advisory Schemas
+YieldSense AI  -  Farm Advisory Schemas
 
 Pydantic response models for the farm-linked advisory API endpoint.
 """

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Schemas
+YieldSense AI  -  Farm Schemas
 
 Pydantic models for farm CRUD request/response validation.
 """

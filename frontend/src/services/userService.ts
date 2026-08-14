@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — User Service
+ * YieldSense AI  -  User Service
  *
  * API calls for user profile operations.
  */

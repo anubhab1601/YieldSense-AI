@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Analytics Dashboard Page (Week 5)
+ * YieldSense AI  -  Analytics Dashboard Page (Week 5)
  *
  * Full analytics dashboard with:
  * - Productivity Score (latest yield vs historical avg)
@@ -10,7 +10,7 @@
  * - Rainfall vs Yield scatter plot
  * - 5 summary metric cards
  *
- * All data is fetched live from the backend — no hardcoded values.
+ * All data is fetched live from the backend  -  no hardcoded values.
  */
 
 "use client";
@@ -196,7 +196,7 @@ export default function AnalyticsPage() {
               {
                 id: "card-avg-yield",
                 label: "Average Yield",
-                value: data.avg_yield ? `${data.avg_yield.toFixed(2)} t/ha` : "—",
+                value: data.avg_yield ? `${data.avg_yield.toFixed(2)} t/ha` : " - ",
                 sub: "Historical mean",
                 icon: <TrendingUp className="h-5 w-5" />,
                 color: "from-green-500 to-emerald-500",
@@ -205,7 +205,7 @@ export default function AnalyticsPage() {
               {
                 id: "card-best-crop",
                 label: "Best Performing Crop",
-                value: data.best_crop || "—",
+                value: data.best_crop || " - ",
                 sub: "Highest avg yield",
                 icon: <Leaf className="h-5 w-5" />,
                 color: "from-amber-500 to-orange-500",
@@ -214,7 +214,7 @@ export default function AnalyticsPage() {
               {
                 id: "card-best-season",
                 label: "Best Season",
-                value: data.best_season || "—",
+                value: data.best_season || " - ",
                 sub: "Optimal growing period",
                 icon: <CloudRain className="h-5 w-5" />,
                 color: "from-blue-500 to-cyan-500",
@@ -379,7 +379,7 @@ export default function AnalyticsPage() {
               <div>
                 <h2 className="text-base font-semibold text-gray-900 dark:text-white">Rainfall vs Yield</h2>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  Scatter analysis — each dot is a prediction, color-coded by crop
+                  Scatter analysis  -  each dot is a prediction, color-coded by crop
                 </p>
               </div>
               <CloudRain className="h-4 w-4 text-cyan-600" />
@@ -396,12 +396,12 @@ export default function AnalyticsPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white/60 dark:bg-gray-900/40 rounded-xl p-3">
                 <p className="text-xs text-gray-500 mb-1">Best Crop</p>
-                <p className="font-bold text-gray-900 dark:text-white">{data.best_crop || "—"}</p>
+                <p className="font-bold text-gray-900 dark:text-white">{data.best_crop || " - "}</p>
                 <p className="text-xs text-gray-400 mt-0.5">Highest average yield recorded</p>
               </div>
               <div className="bg-white/60 dark:bg-gray-900/40 rounded-xl p-3">
                 <p className="text-xs text-gray-500 mb-1">Best Season</p>
-                <p className="font-bold text-gray-900 dark:text-white">{data.best_season || "—"}</p>
+                <p className="font-bold text-gray-900 dark:text-white">{data.best_season || " - "}</p>
                 <p className="text-xs text-gray-400 mt-0.5">Optimal growing period</p>
               </div>
               <div className="bg-white/60 dark:bg-gray-900/40 rounded-xl p-3">
@@ -409,7 +409,7 @@ export default function AnalyticsPage() {
                 <p className="font-bold text-gray-900 dark:text-white">
                   {data.farm_comparison && data.farm_comparison.length > 0
                     ? data.farm_comparison[0].farm_name
-                    : "—"}
+                    : " - "}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">
                   {data.farm_comparison && data.farm_comparison.length > 0

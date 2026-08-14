@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farms List Page
+ * YieldSense AI  -  Farms List Page
  */
 
 "use client";

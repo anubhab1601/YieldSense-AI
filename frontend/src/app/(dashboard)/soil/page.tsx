@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Soil Analysis Page
+ * YieldSense AI  -  Soil Analysis Page
  *
  * Soil health analysis with NPK inputs, health score, and recommendations.
  */

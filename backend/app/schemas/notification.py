@@ -1,5 +1,5 @@
 """
-YieldSense AI — Notification Schemas
+YieldSense AI  -  Notification Schemas
 
 Pydantic models for notification response validation.
 """

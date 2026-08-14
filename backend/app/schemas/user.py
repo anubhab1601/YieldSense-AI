@@ -1,5 +1,5 @@
 """
-YieldSense AI — User Schemas
+YieldSense AI  -  User Schemas
 
 Pydantic models for user profile request/response validation.
 """

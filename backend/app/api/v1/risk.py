@@ -1,5 +1,5 @@
 """
-YieldSense AI — Risk Assessment API Endpoints
+YieldSense AI  -  Risk Assessment API Endpoints
 """
 
 from fastapi import APIRouter, HTTPException

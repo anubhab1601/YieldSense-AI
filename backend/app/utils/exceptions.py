@@ -1,5 +1,5 @@
 """
-YieldSense AI — Custom Exceptions
+YieldSense AI  -  Custom Exceptions
 
 Application-specific exception classes for consistent error handling.
 """

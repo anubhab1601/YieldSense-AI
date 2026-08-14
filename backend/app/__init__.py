@@ -1,1 +1,1 @@
-# YieldSense AI — Backend Application Package
+# YieldSense AI  -  Backend Application Package

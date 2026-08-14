@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Card Component
+ * YieldSense AI  -  Card Component
  *
  * Clean surface container. No decorative effects,
  * no blobs, no excessive shadows or animations.

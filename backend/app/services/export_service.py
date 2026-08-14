@@ -1,5 +1,5 @@
 """
-YieldSense AI — Export Service
+YieldSense AI  -  Export Service
 
 Generates PDF and CSV exports of reports and prediction history.
 
@@ -95,7 +95,7 @@ def _clean_text(val: Any) -> str:
         return "N/A"
     s = str(val)
     replacements = {
-        "\u2014": "-",  # em-dash —
+        "\u2014": "-",  # em-dash  - 
         "\u2013": "-",  # en-dash –
         "\u2018": "'",  # left single quote ‘
         "\u2019": "'",  # right single quote ’

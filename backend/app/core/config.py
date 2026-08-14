@@ -1,5 +1,5 @@
 """
-YieldSense AI — Application Configuration
+YieldSense AI  -  Application Configuration
 
 Centralizes all environment-driven settings using pydantic-settings.
 All configuration is loaded from environment variables or .env file.
@@ -48,5 +48,5 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings() -> Settings:
-    """Cached settings instance — ensures settings are loaded once."""
+    """Cached settings instance  -  ensures settings are loaded once."""
     return Settings()

@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Forgot Password Page
+ * YieldSense AI  -  Forgot Password Page
  */
 
 "use client";

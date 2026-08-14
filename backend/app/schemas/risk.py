@@ -1,5 +1,5 @@
 """
-YieldSense AI — Risk Assessment Schemas
+YieldSense AI  -  Risk Assessment Schemas
 
 Pydantic models for the agricultural risk assessment API.
 """

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Utility Helpers
+YieldSense AI  -  Utility Helpers
 
 Shared utility functions used across the application.
 """

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Notification Endpoints
+YieldSense AI  -  Notification Endpoints
 
 Notification routes: list and mark as read.
 """

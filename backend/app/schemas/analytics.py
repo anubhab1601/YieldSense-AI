@@ -1,5 +1,5 @@
 """
-YieldSense AI — Analytics Schemas
+YieldSense AI  -  Analytics Schemas
 
 Pydantic response models for dashboard summary and analytics data.
 """

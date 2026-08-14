@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Crop Comparison Bar Chart
+ * YieldSense AI  -  Crop Comparison Bar Chart
  */
 
 "use client";

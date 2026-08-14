@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Yield Trend Line Chart
+ * YieldSense AI  -  Yield Trend Line Chart
  */
 
 "use client";

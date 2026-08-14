@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Landing Page
+ * YieldSense AI  -  Landing Page
  *
  * Specific, honest, and practical.
  * No gradient blobs, no gradient text, no fabricated statistics.
@@ -20,7 +20,7 @@ const features = [
     icon: <BarChart3 className="h-5 w-5" />,
     title: "Crop Yield Prediction",
     description:
-      "Enter your farm conditions — soil nutrients, rainfall, temperature — and get a predicted yield in tonnes per hectare using a machine learning model trained on historical agricultural data.",
+      "Enter your farm conditions  -  soil nutrients, rainfall, temperature  -  and get a predicted yield in tonnes per hectare using a machine learning model trained on historical agricultural data.",
   },
   {
     icon: <Cloud className="h-5 w-5" />,

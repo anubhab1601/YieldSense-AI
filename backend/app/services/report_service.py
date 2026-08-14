@@ -1,5 +1,5 @@
 """
-YieldSense AI — Report Generation Service
+YieldSense AI  -  Report Generation Service
 
 Creates, saves, and retrieves structured reports from Firestore.
 Reports are assembled from prediction history, risk, and recommendations.

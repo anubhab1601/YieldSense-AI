@@ -1,5 +1,5 @@
 """
-YieldSense AI — Report Model
+YieldSense AI  -  Report Model
 
 Domain model for generated reports stored in Firestore.
 """

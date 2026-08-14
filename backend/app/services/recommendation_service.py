@@ -1,8 +1,8 @@
 """
-YieldSense AI — Recommendation Engine Service
+YieldSense AI  -  Recommendation Engine Service
 
 Rule-based agricultural recommendation engine.
-Architecture uses a Strategy pattern — future AI models can replace
+Architecture uses a Strategy pattern  -  future AI models can replace
 the RuleEngine strategy without changing the API or service interface.
 
 Recommendation categories:
@@ -226,7 +226,7 @@ class RuleBasedStrategy(RecommendationStrategy):
             if pct < 50:
                 status = "Critically Low"
                 rate = f"Apply {deficit:.0f} kg/ha of {info['source']}"
-                reason = f"{crop} requires ~{target:.0f} kg/ha {nutrient}, current {current:.0f} kg/ha is severely deficient — will significantly limit yield."
+                reason = f"{crop} requires ~{target:.0f} kg/ha {nutrient}, current {current:.0f} kg/ha is severely deficient  -  will significantly limit yield."
             elif pct < 75:
                 status = "Low"
                 rate = f"Apply {deficit * 0.8:.0f} kg/ha of {info['source']}"
@@ -275,9 +275,9 @@ class RuleBasedStrategy(RecommendationStrategy):
 
         # Humidity adjustment
         if humidity > 80:
-            advice += " High humidity increases disease risk — avoid overhead irrigation."
+            advice += " High humidity increases disease risk  -  avoid overhead irrigation."
         elif humidity < 40:
-            advice += " Low humidity increases evapotranspiration — irrigate early morning or evening."
+            advice += " Low humidity increases evapotranspiration  -  irrigate early morning or evening."
 
         return advice, frequency, reason
 
@@ -289,7 +289,7 @@ class RuleBasedStrategy(RecommendationStrategy):
         suggestions.append(f"Plan harvest during {harvest_timing} for the {season} season.")
 
         if crop in ["Rice", "Wheat", "Barley", "Maize"]:
-            suggestions.append("Monitor grain moisture content — harvest when moisture drops to 20–25% for cereals.")
+            suggestions.append("Monitor grain moisture content  -  harvest when moisture drops to 20–25% for cereals.")
             suggestions.append("Use combine harvester for large areas (>5 ha) to reduce post-harvest losses.")
             suggestions.append("Thresh and dry grain immediately after harvest to prevent mold and aflatoxin.")
         elif crop in ["Cotton"]:
@@ -299,7 +299,7 @@ class RuleBasedStrategy(RecommendationStrategy):
             suggestions.append("Allow the crop to cure for 7–14 days post-harvest before storage.")
             suggestions.append("Harvest during dry weather to prevent fungal infection in storage.")
         elif crop in ["Sugarcane"]:
-            suggestions.append("Harvest at peak sucrose concentration — typically 12–18 months after planting.")
+            suggestions.append("Harvest at peak sucrose concentration  -  typically 12–18 months after planting.")
             suggestions.append("Coordinate with nearest mill for timely crushing to avoid sucrose loss.")
         else:
             suggestions.append(f"Monitor {crop} for maturity indicators specific to the variety.")
@@ -350,7 +350,7 @@ class RuleBasedStrategy(RecommendationStrategy):
         if crop in ["Rice", "Wheat", "Maize"]:
             practices.append(f"Rotate {crop} with legumes (soybean, chickpea) to restore nitrogen naturally and break pest cycles.")
         elif crop in ["Soybean", "Chickpea", "Lentil", "Groundnut"]:
-            practices.append(f"{crop} is a legume — it fixes atmospheric nitrogen. Follow with a cereal crop (wheat/rice) to utilize residual nitrogen.")
+            practices.append(f"{crop} is a legume  -  it fixes atmospheric nitrogen. Follow with a cereal crop (wheat/rice) to utilize residual nitrogen.")
 
         # Temperature stress
         if temp > 35:
@@ -410,23 +410,23 @@ class RuleBasedStrategy(RecommendationStrategy):
         # Rainfall assessment
         deficit = water_req - rainfall
         if abs(deficit) < water_req * 0.2:
-            reasons.append(f"Rainfall ({rainfall:.0f} mm) closely matches {crop}'s water requirement ({water_req} mm) — good environmental match.")
+            reasons.append(f"Rainfall ({rainfall:.0f} mm) closely matches {crop}'s water requirement ({water_req} mm)  -  good environmental match.")
         elif deficit > 0:
-            reasons.append(f"Annual rainfall ({rainfall:.0f} mm) is {deficit:.0f} mm below {crop}'s requirement ({water_req} mm) — irrigation needed.")
+            reasons.append(f"Annual rainfall ({rainfall:.0f} mm) is {deficit:.0f} mm below {crop}'s requirement ({water_req} mm)  -  irrigation needed.")
         else:
-            reasons.append(f"Rainfall ({rainfall:.0f} mm) exceeds {crop}'s requirement ({water_req} mm) — drainage management may be needed.")
+            reasons.append(f"Rainfall ({rainfall:.0f} mm) exceeds {crop}'s requirement ({water_req} mm)  -  drainage management may be needed.")
 
         # Temperature
         if temp_range[0] <= temp <= temp_range[1]:
             reasons.append(f"Temperature ({temp:.1f}°C) is within optimal range for {crop} ({temp_range[0]}–{temp_range[1]}°C).")
         else:
-            reasons.append(f"Temperature ({temp:.1f}°C) is outside optimal range for {crop} ({temp_range[0]}–{temp_range[1]}°C) — stress management recommended.")
+            reasons.append(f"Temperature ({temp:.1f}°C) is outside optimal range for {crop} ({temp_range[0]}–{temp_range[1]}°C)  -  stress management recommended.")
 
         # Soil pH
         if ph_range[0] <= ph <= ph_range[1]:
             reasons.append(f"Soil pH ({ph:.1f}) is within the optimal range for {crop} ({ph_range[0]}–{ph_range[1]}).")
         else:
-            reasons.append(f"Soil pH ({ph:.1f}) is outside {crop}'s optimal range ({ph_range[0]}–{ph_range[1]}) — nutrient availability is impaired.")
+            reasons.append(f"Soil pH ({ph:.1f}) is outside {crop}'s optimal range ({ph_range[0]}–{ph_range[1]})  -  nutrient availability is impaired.")
 
         # NPK summary
         crop_req = CROP_NPK_REQUIREMENTS.get(crop, {"N": 100, "P": 50, "K": 50})
@@ -439,7 +439,7 @@ class RuleBasedStrategy(RecommendationStrategy):
             deficients.append(f"K ({k:.0f}/{crop_req['K']} kg/ha)")
 
         if deficients:
-            reasons.append(f"Nutrient deficiencies detected: {', '.join(deficients)} — fertilizer corrections recommended.")
+            reasons.append(f"Nutrient deficiencies detected: {', '.join(deficients)}  -  fertilizer corrections recommended.")
         else:
             reasons.append(f"NPK levels are generally adequate for {crop} cultivation at this time.")
 

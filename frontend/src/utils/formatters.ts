@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Formatters
+ * YieldSense AI  -  Formatters
  */
 
 export function formatDate(dateString: string): string {

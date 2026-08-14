@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Weather Page
+ * YieldSense AI  -  Weather Page
  *
  * Live weather data with farm location selector and 7-day forecast.
  */

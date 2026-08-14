@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Loading Spinner Component
+ * YieldSense AI  -  Loading Spinner Component
  */
 
 "use client";

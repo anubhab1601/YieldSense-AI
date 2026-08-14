@@ -1,5 +1,5 @@
 """
-YieldSense AI — Admin Service
+YieldSense AI  -  Admin Service
 
 Manages system-wide administration, user management, platform metrics, and audit logs.
 """

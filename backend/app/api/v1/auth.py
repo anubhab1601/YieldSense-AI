@@ -1,5 +1,5 @@
 """
-YieldSense AI — Auth Endpoints
+YieldSense AI  -  Auth Endpoints
 
 Authentication routes: register, login, logout, forgot-password.
 """

@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Prediction History Page (Milestone 3)
+ * YieldSense AI  -  Prediction History Page (Milestone 3)
  */
 
 "use client";
@@ -137,8 +137,8 @@ function HistoryRow({ record, onDelete }: { record: PredictionHistoryItem; onDel
               { label: "Fertilizer", value: `${record.fertilizer_usage} kg/ha` },
               { label: "State", value: record.state },
               { label: "Model", value: record.model_used },
-              { label: "Accuracy", value: record.model_accuracy ? `${(record.model_accuracy * 100).toFixed(1)}%` : "—" },
-              { label: "Risk Score", value: record.risk_score ? `${record.risk_score.toFixed(1)}/100` : "—" },
+              { label: "Accuracy", value: record.model_accuracy ? `${(record.model_accuracy * 100).toFixed(1)}%` : " - " },
+              { label: "Risk Score", value: record.risk_score ? `${record.risk_score.toFixed(1)}/100` : " - " },
               { label: "Date", value: record.created_at.slice(0, 10) },
             ].map(({ label, value }) => (
               <div key={label}>

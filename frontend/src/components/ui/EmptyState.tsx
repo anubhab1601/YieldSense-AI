@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Empty State Component
+ * YieldSense AI  -  Empty State Component
  */
 
 "use client";

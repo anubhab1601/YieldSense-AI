@@ -1,5 +1,5 @@
 """
-YieldSense AI — Security Utilities
+YieldSense AI  -  Security Utilities
 
 Handles Firebase token verification and security-related helpers.
 """

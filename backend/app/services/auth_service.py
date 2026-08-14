@@ -1,5 +1,5 @@
 """
-YieldSense AI — Auth Service
+YieldSense AI  -  Auth Service
 
 Business logic for authentication operations.
 Interacts with Firebase Auth and Firestore.

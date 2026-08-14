@@ -1,5 +1,5 @@
 """
-YieldSense AI — Notification Service
+YieldSense AI  -  Notification Service
 
 Business logic for notification operations.
 """

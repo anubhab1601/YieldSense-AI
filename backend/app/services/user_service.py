@@ -1,5 +1,5 @@
 """
-YieldSense AI — User Service
+YieldSense AI  -  User Service
 
 Business logic for user profile operations.
 """

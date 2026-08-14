@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Advisory Panel (Week 6)
+ * YieldSense AI  -  Farm Advisory Panel (Week 6)
  *
  * Displays rule-based recommendations & risk assessment for a specific farm.
  */

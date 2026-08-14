@@ -1,5 +1,5 @@
 """
-YieldSense AI — Firestore Database Client
+YieldSense AI  -  Firestore Database Client
 
 Provides Firestore client and collection name constants.
 """

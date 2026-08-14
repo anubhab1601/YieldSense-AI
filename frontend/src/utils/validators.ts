@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Validators
+ * YieldSense AI  -  Validators
  */
 
 export function validateEmail(email: string): string | null {

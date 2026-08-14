@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Settings Page
+ * YieldSense AI  -  Settings Page
  */
 
 "use client";

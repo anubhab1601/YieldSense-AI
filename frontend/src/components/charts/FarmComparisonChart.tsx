@@ -1,5 +1,5 @@
 /**
- * YieldSense AI — Farm Comparison Horizontal Bar Chart
+ * YieldSense AI  -  Farm Comparison Horizontal Bar Chart
  *
  * Displays average yield per farm as a horizontal bar chart,
  * sorted highest to lowest.
