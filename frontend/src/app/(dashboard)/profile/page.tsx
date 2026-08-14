@@ -105,7 +105,7 @@ export default function ProfilePage() {
       {/* Avatar & Name */}
       <Card padding="md">
         <div className="flex items-center gap-5">
-          <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg shadow-green-500/25">
+          <div className="w-14 h-14 rounded-lg bg-[#1a6b3c] flex items-center justify-center text-white text-xl font-bold shrink-0">
             {profile.display_name?.charAt(0)?.toUpperCase() || "U"}
           </div>
           <div>

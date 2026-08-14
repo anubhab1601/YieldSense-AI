@@ -1,5 +1,8 @@
 /**
  * YieldSense AI — Button Component
+ *
+ * Solid colors, no gradients, no colored shadows.
+ * Intentional and practical — not decorative.
  */
 
 "use client";
@@ -17,21 +20,21 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<string, string> = {
   primary:
-    "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg shadow-green-500/25 hover:shadow-green-500/40",
+    "bg-[#1a6b3c] hover:bg-[#155730] active:bg-[#124a2a] text-white border border-transparent",
   secondary:
-    "bg-amber-500 hover:bg-amber-600 text-white shadow-lg shadow-amber-500/25",
+    "bg-gray-800 hover:bg-gray-900 active:bg-gray-950 text-white border border-transparent dark:bg-gray-700 dark:hover:bg-gray-600",
   danger:
-    "bg-red-500 hover:bg-red-600 text-white shadow-lg shadow-red-500/25",
+    "bg-red-600 hover:bg-red-700 active:bg-red-800 text-white border border-transparent",
   ghost:
-    "bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300",
+    "bg-transparent hover:bg-gray-100 active:bg-gray-200 text-gray-700 dark:text-gray-300 dark:hover:bg-gray-800 dark:active:bg-gray-700 border border-transparent",
   outline:
-    "border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20",
+    "bg-white dark:bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600",
 };
 
 const sizeStyles: Record<string, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-3.5 text-base",
+  sm: "px-3 py-1.5 text-xs font-medium gap-1.5",
+  md: "px-4 py-2 text-sm font-medium gap-2",
+  lg: "px-5 py-2.5 text-sm font-semibold gap-2",
 };
 
 export default function Button({
@@ -48,11 +51,11 @@ export default function Button({
   return (
     <button
       className={`
-        inline-flex items-center justify-center gap-2 rounded-xl font-semibold
-        transition-all duration-200 ease-out
-        focus:outline-none focus:ring-2 focus:ring-green-500/50 focus:ring-offset-2
-        disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none
-        active:scale-[0.98]
+        inline-flex items-center justify-center rounded-lg
+        transition-colors duration-150
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1a6b3c] focus-visible:ring-offset-1
+        disabled:opacity-50 disabled:cursor-not-allowed
+        select-none
         ${variantStyles[variant]}
         ${sizeStyles[size]}
         ${fullWidth ? "w-full" : ""}
@@ -62,9 +65,9 @@ export default function Button({
       {...props}
     >
       {isLoading ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
+        <Loader2 className="h-3.5 w-3.5 animate-spin shrink-0" />
       ) : icon ? (
-        <span className="h-4 w-4">{icon}</span>
+        <span className="shrink-0">{icon}</span>
       ) : null}
       {children}
     </button>

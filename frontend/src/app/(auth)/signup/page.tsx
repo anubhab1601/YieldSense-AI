@@ -143,19 +143,19 @@ export default function SignupPage() {
           </label>
           <div className="grid grid-cols-2 gap-3">
             {[
-              { value: "farmer", label: "🌾 Farmer" },
-              { value: "admin", label: "⚙️ Admin" },
+              { value: "farmer", label: "Farmer" },
+              { value: "admin", label: "Administrator" },
             ].map((role) => (
               <button
                 key={role.value}
                 type="button"
                 onClick={() => updateField("role", role.value)}
                 className={`
-                  px-4 py-2.5 rounded-xl text-sm font-medium border-2 transition-all duration-200
+                  px-4 py-2.5 rounded-lg text-sm font-medium border transition-colors duration-150
                   ${
                     formData.role === role.value
-                      ? "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400"
-                      : "border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:border-gray-300"
+                      ? "border-[#1a6b3c] bg-[#e8f5ec] dark:bg-green-900/20 text-[#1a6b3c] dark:text-green-400"
+                      : "border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500"
                   }
                 `}
               >
@@ -174,7 +174,7 @@ export default function SignupPage() {
         Already have an account?{" "}
         <Link
           href={ROUTES.LOGIN}
-          className="text-green-600 hover:text-green-700 font-semibold"
+          className="text-[#1a6b3c] hover:text-[#155730] font-semibold"
         >
           Sign in
         </Link>

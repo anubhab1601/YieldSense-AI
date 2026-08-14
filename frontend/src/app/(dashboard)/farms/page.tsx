@@ -132,15 +132,15 @@ export default function FarmsListPage() {
           onAction={searchQuery ? undefined : () => router.push(ROUTES.FARM_NEW)}
         />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredFarms.map((farm) => (
             <Card key={farm.id} hover padding="none" onClick={() => router.push(ROUTES.FARM_DETAIL(farm.id))}>
               {/* Card Header */}
               <div className="p-5 pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-green-500/20">
-                      <Sprout className="h-5 w-5" />
+                    <div className="w-9 h-9 rounded-md bg-[#e8f5ec] dark:bg-green-900/20 flex items-center justify-center text-[#1a6b3c] dark:text-green-400">
+                      <Sprout className="h-4 w-4" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900 dark:text-white text-sm">

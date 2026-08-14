@@ -92,7 +92,7 @@ export default function WeatherPage() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Farm Location</label>
               <select
                 onChange={(e) => selectFarm(e.target.value)}
-                className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="form-select"
               >
                 <option value="">Select farm</option>
                 {farms.map((farm) => (
@@ -114,7 +114,7 @@ export default function WeatherPage() {
       {weather && !loading && (
         <>
           {/* Current Weather */}
-          <Card padding="md" className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/30 dark:to-cyan-950/30 border-blue-200 dark:border-blue-800">
+          <Card padding="md" className="bg-blue-50/50 dark:bg-blue-950/10 border-blue-200 dark:border-blue-800">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               <div className="text-center sm:text-left">
                 {getWeatherIcon(weather.current.description)}

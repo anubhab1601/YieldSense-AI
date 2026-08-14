@@ -57,34 +57,34 @@ export default function Dialog({
       }}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in" />
+      <div className="absolute inset-0 bg-black/40" />
 
       {/* Dialog */}
       <div
         className={`
-          relative bg-white dark:bg-gray-900 rounded-2xl shadow-2xl
+          relative bg-white dark:bg-gray-900 rounded-lg shadow-xl
           w-full ${maxWidthStyles[maxWidth]}
-          animate-in zoom-in-95 duration-200
-          border border-gray-100 dark:border-gray-800
+          zoom-in-95
+          border border-gray-200 dark:border-gray-800
         `}
       >
         {/* Header */}
         {title && (
-          <div className="flex items-center justify-between p-6 border-b border-gray-100 dark:border-gray-800">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100 dark:border-gray-800">
+            <h2 className="text-base font-semibold text-gray-900 dark:text-white">
               {title}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-400 hover:text-gray-600 transition-colors"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
         )}
 
         {/* Content */}
-        <div className="p-6">{children}</div>
+        <div className="px-5 py-5">{children}</div>
       </div>
     </div>
   );

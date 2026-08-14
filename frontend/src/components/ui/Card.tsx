@@ -1,5 +1,8 @@
 /**
  * YieldSense AI — Card Component
+ *
+ * Clean surface container. No decorative effects,
+ * no blobs, no excessive shadows or animations.
  */
 
 "use client";
@@ -17,8 +20,8 @@ interface CardProps {
 const paddingStyles: Record<string, string> = {
   none: "",
   sm: "p-4",
-  md: "p-6",
-  lg: "p-8",
+  md: "p-5",
+  lg: "p-7",
 };
 
 export default function Card({
@@ -32,11 +35,10 @@ export default function Card({
     <div
       onClick={onClick}
       className={`
-        bg-white dark:bg-gray-900 rounded-2xl
-        border border-gray-100 dark:border-gray-800
-        shadow-sm
-        ${hover ? "hover:shadow-lg hover:border-green-200 dark:hover:border-green-800 hover:-translate-y-0.5 cursor-pointer" : ""}
-        transition-all duration-300 ease-out
+        bg-white dark:bg-gray-900
+        rounded-lg
+        border border-gray-200 dark:border-gray-800
+        ${hover ? "hover:border-gray-300 dark:hover:border-gray-700 cursor-pointer transition-colors duration-150" : ""}
         ${paddingStyles[padding]}
         ${className}
       `}
@@ -56,7 +58,7 @@ export function CardHeader({ children, className = "" }: { children: React.React
 
 export function CardTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <h3 className={`text-lg font-semibold text-gray-900 dark:text-white ${className}`}>
+    <h3 className={`text-sm font-semibold text-gray-900 dark:text-white ${className}`}>
       {children}
     </h3>
   );
@@ -64,7 +66,7 @@ export function CardTitle({ children, className = "" }: { children: React.ReactN
 
 export function CardDescription({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <p className={`text-sm text-gray-500 dark:text-gray-400 mt-1 ${className}`}>
+    <p className={`text-xs text-gray-500 dark:text-gray-400 mt-0.5 ${className}`}>
       {children}
     </p>
   );

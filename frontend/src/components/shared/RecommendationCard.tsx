@@ -58,19 +58,17 @@ const SUITABILITY_COLORS: Record<string, string> = {
 
 export default function RecommendationCard({ recommendations: rec, compact = false }: Props) {
   return (
-    <div className="rounded-2xl border border-green-200 dark:border-green-800 bg-gradient-to-br from-green-500/5 to-emerald-500/5 p-4 space-y-3">
+    <div className="rounded-lg border bg-white dark:bg-gray-900 overflow-hidden">
+      {/* Green accent bar */}
+      <div className="h-1 w-full bg-[#1a6b3c]" />
+      <div className="p-4 space-y-3">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-green-600" />
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white">Agricultural Recommendations</h3>
-            <p className="text-xs text-gray-500">Confidence: {rec.confidence} · Rule-based analysis</p>
-          </div>
+      <div className="flex items-center gap-2">
+        <Lightbulb className="h-4 w-4 text-[#1a6b3c]" />
+        <div>
+          <h3 className="font-semibold text-gray-900 dark:text-white">Agricultural Recommendations</h3>
+          <p className="text-xs text-gray-500">Confidence: {rec.confidence} · Rule-based analysis</p>
         </div>
-        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-          {rec.confidence}
-        </span>
       </div>
 
       {/* Crop Alternatives */}
@@ -179,6 +177,7 @@ export default function RecommendationCard({ recommendations: rec, compact = fal
       <p className="text-xs text-gray-400 dark:text-gray-600 border-t border-gray-100 dark:border-gray-800 pt-2">
         {rec.disclaimer}
       </p>
+      </div>
     </div>
   );
 }

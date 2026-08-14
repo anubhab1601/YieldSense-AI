@@ -99,7 +99,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-end">
           <Link
             href={ROUTES.FORGOT_PASSWORD}
-            className="text-sm text-green-600 hover:text-green-700 font-medium"
+            className="text-sm text-[#1a6b3c] hover:text-[#155730] font-medium"
           >
             Forgot password?
           </Link>
@@ -114,7 +114,7 @@ export default function LoginPage() {
         Don&apos;t have an account?{" "}
         <Link
           href={ROUTES.SIGNUP}
-          className="text-green-600 hover:text-green-700 font-semibold"
+          className="text-[#1a6b3c] hover:text-[#155730] font-semibold"
         >
           Create one
         </Link>

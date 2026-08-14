@@ -2,6 +2,7 @@
  * YieldSense AI — Dashboard Shell (Client Component)
  *
  * Client-side shell with Navbar + Sidebar + auth guard.
+ * Adjusted for 56px navbar (h-14) and 240px sidebar (w-60).
  */
 
 "use client";
@@ -42,9 +43,9 @@ export default function DashboardShell({
       <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* Main content area */}
-      <main className="lg:pl-64 pt-0">
-        <div className="p-4 lg:p-8 max-w-7xl mx-auto">
+      {/* Main content — offset for 240px sidebar on desktop */}
+      <main className="lg:pl-60">
+        <div className="px-4 py-6 lg:px-8 lg:py-8 max-w-screen-xl mx-auto">
           {children}
         </div>
       </main>

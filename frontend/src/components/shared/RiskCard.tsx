@@ -121,7 +121,15 @@ export default function RiskCard({ risk, compact = false }: Props) {
   const displayedRisks = showAll ? risk.risks : risk.risks.slice(0, 3);
 
   return (
-    <div className={`rounded-2xl border bg-gradient-to-br ${overall.gradient} p-4 space-y-4`}>
+    <div className={`rounded-lg border bg-white dark:bg-gray-900 overflow-hidden`}>
+      {/* Risk level accent bar */}
+      <div className={`h-1 w-full ${
+        risk.overall_risk_level === "Low" ? "bg-green-500" :
+        risk.overall_risk_level === "Medium" ? "bg-amber-500" :
+        risk.overall_risk_level === "High" ? "bg-orange-500" :
+        "bg-red-500"
+      }`} />
+      <div className="p-4 space-y-4">
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
@@ -132,7 +140,7 @@ export default function RiskCard({ risk, compact = false }: Props) {
           </div>
         </div>
         <div className="flex flex-col items-end gap-1">
-          <span className={`px-3 py-1 rounded-full text-sm font-semibold ${overall.badge}`}>
+          <span className={`px-2.5 py-0.5 rounded-md text-sm font-semibold ${overall.badge}`}>
             {risk.overall_risk_level}
           </span>
           <span className="text-xs text-gray-400">Score: {risk.risk_score.toFixed(1)}/100</span>
@@ -140,9 +148,9 @@ export default function RiskCard({ risk, compact = false }: Props) {
       </div>
 
       {/* Priority */}
-      <div className="bg-white/60 dark:bg-gray-900/40 rounded-xl p-3">
+      <div className="bg-gray-50 dark:bg-gray-800/60 rounded-lg p-3">
         <div className="flex items-center gap-2 mb-1">
-          <Zap className="h-4 w-4 text-purple-600" />
+          <Zap className="h-3.5 w-3.5 text-gray-500" />
           <span className="text-sm font-semibold text-gray-900 dark:text-white">{risk.priority_level}</span>
         </div>
         <p className="text-xs text-gray-600 dark:text-gray-400">{risk.priority_reason}</p>
@@ -157,7 +165,7 @@ export default function RiskCard({ risk, compact = false }: Props) {
           {risk.risks.length > 3 && (
             <button
               onClick={() => setShowAll(!showAll)}
-              className="text-xs text-green-600 hover:text-green-700 font-medium flex items-center gap-1"
+              className="text-xs text-[#1a6b3c] hover:text-[#155730] font-medium flex items-center gap-1"
             >
               {showAll ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
               {showAll ? "Show fewer" : `Show ${risk.risks.length - 3} more risks`}
@@ -167,11 +175,12 @@ export default function RiskCard({ risk, compact = false }: Props) {
       )}
 
       {/* Category badge */}
-      <div className="flex items-center justify-between text-xs text-gray-500">
+      <div className="flex items-center justify-between text-xs text-gray-500 pt-1 border-t border-gray-100 dark:border-gray-800">
         <span>Category: <span className="font-medium text-gray-700 dark:text-gray-300">{risk.risk_category}</span></span>
-        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${overall.badge}`}>
+        <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${overall.badge}`}>
           {risk.risk_category === "Stable" ? "No Action Needed" : risk.priority_level}
         </span>
+      </div>
       </div>
     </div>
   );

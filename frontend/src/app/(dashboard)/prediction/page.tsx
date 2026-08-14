@@ -159,7 +159,7 @@ export default function PredictionPage() {
                   <select
                     value={selectedFarmId}
                     onChange={(e) => handleFarmSelect(e.target.value)}
-                    className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    className="form-select"
                   >
                     <option value="">Select a farm (optional)</option>
                     {farms.map((farm) => (
@@ -180,14 +180,14 @@ export default function PredictionPage() {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Crop</label>
                     <select value={form.crop} onChange={(e) => updateField("crop", e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                      className="form-select">
                       {CROP_OPTIONS.filter(c => c !== "Other").map((c) => (<option key={c} value={c}>{c}</option>))}
                     </select>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Season</label>
                     <select value={form.season} onChange={(e) => updateField("season", e.target.value)}
-                      className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                      className="form-select">
                       {SEASON_OPTIONS.map((s) => (<option key={s} value={s}>{s}</option>))}
                     </select>
                   </div>
@@ -198,7 +198,7 @@ export default function PredictionPage() {
                       type="text" value={form.state}
                       onChange={(e) => updateField("state", e.target.value)}
                       placeholder="e.g. Punjab, Maharashtra"
-                      className="w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      className="form-select"
                     />
                   </div>
                 </div>
@@ -298,11 +298,11 @@ export default function PredictionPage() {
                     <div className="flex flex-col sm:flex-row items-center gap-6">
                       {/* Main yield */}
                       <div className="text-center">
-                        <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-green-500/25 mb-3">
-                          <TrendingUp className="h-8 w-8" />
+                        <div className="w-14 h-14 mx-auto rounded-lg bg-[#e8f5ec] dark:bg-green-900/20 flex items-center justify-center text-[#1a6b3c] dark:text-green-400 mb-3">
+                          <TrendingUp className="h-7 w-7" />
                         </div>
-                        <p className="text-sm text-gray-500">Predicted Yield</p>
-                        <p className="text-4xl font-bold text-green-600">{result.predicted_yield.toFixed(2)}</p>
+                        <p className="text-xs text-gray-500 mb-1">Predicted Yield</p>
+                        <p className="text-4xl font-bold text-[#1a6b3c] dark:text-green-400">{result.predicted_yield.toFixed(2)}</p>
                         <p className="text-xs text-gray-400">{result.prediction_unit}</p>
                       </div>
 

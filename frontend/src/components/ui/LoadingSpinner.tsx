@@ -15,8 +15,8 @@ interface LoadingSpinnerProps {
 
 const sizeMap = {
   sm: "h-4 w-4",
-  md: "h-8 w-8",
-  lg: "h-12 w-12",
+  md: "h-6 w-6",
+  lg: "h-8 w-8",
 };
 
 export default function LoadingSpinner({
@@ -26,25 +26,23 @@ export default function LoadingSpinner({
 }: LoadingSpinnerProps) {
   const content = (
     <div className="flex flex-col items-center justify-center gap-3">
-      <Loader2 className={`${sizeMap[size]} animate-spin text-green-600`} />
+      <Loader2 className={`${sizeMap[size]} animate-spin text-[#1a6b3c]`} />
       {text && (
-        <p className="text-sm text-gray-500 dark:text-gray-400 animate-pulse">
-          {text}
-        </p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{text}</p>
       )}
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-gray-950/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/90 dark:bg-gray-950/90">
         {content}
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center py-12">
+    <div className="flex items-center justify-center py-16">
       {content}
     </div>
   );
