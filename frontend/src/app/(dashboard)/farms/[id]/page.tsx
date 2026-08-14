@@ -18,6 +18,7 @@ import Input from "@/components/ui/Input";
 import Badge from "@/components/ui/Badge";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import Dialog from "@/components/ui/Dialog";
+import FarmAdvisoryPanel from "@/components/farms/FarmAdvisoryPanel";
 import { ROUTES, CROP_OPTIONS } from "@/utils/constants";
 import { formatDate } from "@/utils/formatters";
 import type { Farm, FarmUpdate } from "@/types/farm";
@@ -232,26 +233,8 @@ export default function FarmDetailPage() {
         </Card>
       ))}
 
-      {/* AI Prediction Placeholder */}
-      <Card padding="md" className="border-dashed border-2 border-green-200 dark:border-green-800 bg-green-50/50 dark:bg-green-900/10">
-        <div className="text-center py-4">
-          <div className="w-12 h-12 rounded-2xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-3">
-            <Ruler className="h-6 w-6 text-green-600" />
-          </div>
-          <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-            AI Yield Prediction
-          </h3>
-          <p className="text-sm text-gray-500 mb-3">
-            Crop yield predictions based on this farm&apos;s data will appear here.
-          </p>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-            <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            <span className="text-xs font-medium text-amber-700 dark:text-amber-400">
-              Coming in Milestone 2
-            </span>
-          </div>
-        </div>
-      </Card>
+      {/* Week 6 — Farm Advisory Panel */}
+      <FarmAdvisoryPanel farmId={farmId} />
 
       {/* Delete Dialog */}
       <Dialog

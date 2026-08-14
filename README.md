@@ -44,6 +44,14 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 * ⚙️ **Dedicated Admin Control Center (`/admin`)**: System administration platform with live KPI metrics (Total Users, System Farms, System Predictions, Reports), user management table with role switching (`Farmer` ↔ `Admin`), ML engine status monitoring, system-wide prediction audit stream, and role-guarded access.
 * ⚡ **Auto-Refresh Auth Lifecycle**: Zero-delay single page refresh on login and registration for clean session isolation across Farmer and Admin accounts.
 
+### Week 6: Recommendation Engine & Agricultural Risk Assessment
+* 💡 **Rule-Based Recommendation Engine**: Centralized, deterministic, explainable advisory engine (`farm_advisory_service.py`) that evaluates soil pH (acidity/alkalinity thresholds), predicted yield relative to historical farm average yield, and rainfall deviation from crop baselines to generate plain-English farmer guidance.
+* 🛡️ **Agricultural Risk Assessment**: Point-based risk scoring system assessing yield risk, rainfall risk (drought & excess water), and extreme soil pH to assign `Low`, `Medium`, or `High` risk levels with priority guidance and identified risk explanations.
+* 🔌 **Farm-Linked Advisory API**: `GET /api/v1/recommendations/farm/{farm_id}` endpoint with Firebase token authentication and farm ownership validation.
+* 🛡️ **Missing Data Safety**: Gracefully evaluates available parameters and skips missing rules without crashing or inventing fake default zeroes.
+* 🚜 **Farm Details Advisory UI**: Dedicated `FarmAdvisoryPanel` on the Farm Details page displaying risk badges, priority reasons, identified risks with advice, recommendations, and metric summaries.
+* 🧪 **Comprehensive Test Suite**: Automated test suite (`backend/test_week6.py`) covering all 11 required agronomic scenarios.
+
 ---
 
 ## 🏗️ Architecture

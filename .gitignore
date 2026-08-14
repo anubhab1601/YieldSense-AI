@@ -99,3 +99,16 @@ backend/datasets/processed/*.csv
 # ============================================================
 backend/ml/models/saved/
 !backend/ml/models/saved/.gitkeep
+
+# ============================================================
+# AI Assistant Context Files (Must never be committed)
+# ============================================================
+CLAUDE.md
+claude.md
+AGENTS.md
+agents.md
+**/CLAUDE.md
+**/claude.md
+**/AGENTS.md
+**/agents.md
+
