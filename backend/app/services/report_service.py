@@ -127,7 +127,7 @@ class ReportService:
             "recommendations": recommendations,
             "farm": farm_data,
             "generated_at": utc_now_iso(),
-            "generated_by": "YieldSense AI — Milestone 3",
+            "generated_by": "YieldSense AI",
         }
 
         # Save report to Firestore

@@ -39,7 +39,7 @@ async def predict_yield_endpoint(
     """
     Predict crop yield using the trained ML model.
 
-    The prediction pipeline (Milestone 3 enhanced):
+    The prediction pipeline:
     1. Validates all input parameters
     2. Fetches live weather data (if coordinates provided)
     3. Analyzes soil health

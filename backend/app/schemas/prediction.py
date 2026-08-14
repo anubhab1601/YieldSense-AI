@@ -83,7 +83,7 @@ class PredictionResponse(BaseModel):
     weather_summary: Optional[WeatherSummaryResponse] = None
     soil_summary: Optional[SoilSummaryResponse] = None
 
-    # Milestone 3 additions
+    # Additional structured response fields
     risk_assessment: Optional[Dict] = Field(None, description="Risk assessment results")
     recommendations: Optional[Dict] = Field(None, description="Agricultural recommendations")
     prediction_id: Optional[str] = Field(None, description="Firestore record ID (if saved)")

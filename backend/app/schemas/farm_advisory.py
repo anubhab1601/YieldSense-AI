@@ -1,5 +1,5 @@
 """
-YieldSense AI — Farm Advisory Schemas (Week 6)
+YieldSense AI — Farm Advisory Schemas
 
 Pydantic response models for the farm-linked advisory API endpoint.
 """
@@ -46,29 +46,29 @@ class MetricsUsed(BaseModel):
 
 
 class FarmAdvisoryResponse(BaseModel):
-    """Full farm advisory response — recommendations + risk assessment."""
+    """Full farm advisory response - recommendations + risk assessment."""
 
     # Farm identification
     farm_id: str
     farm_name: str
     crop: str
 
-    # Recommendations (§2–§7)
+    # Recommendations
     recommendations: List[str]
     """Plain-English list of actionable recommendations. Never empty."""
 
-    # Risk assessment (§8–§13)
+    # Risk assessment
     risk_level: str
-    """'Low', 'Medium', or 'High' (§12)."""
+    """'Low', 'Medium', or 'High'."""
 
     risk_score: float
-    """Numeric risk score (0–5+). Supports the risk_level decision."""
+    """Numeric risk score (0-5+). Supports the risk_level decision."""
 
     risk_category: str
     """Dominant risk type: 'Yield Risk', 'Rainfall Risk', 'Soil Risk', 'Stable'."""
 
     identified_risks: List[IdentifiedRisk]
-    """Per-risk explanations — what, why, and what to do (§13)."""
+    """Per-risk explanations - what, why, and what to do."""
 
     detected_risk_count: int
     """Number of distinct risk factors identified."""

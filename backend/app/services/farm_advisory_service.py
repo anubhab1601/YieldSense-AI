@@ -1,7 +1,7 @@
 """
-YieldSense AI — Farm Advisory Service (Week 6)
+YieldSense AI — Farm Advisory Service
 
-Implements the Week 6 rule-based Recommendation Engine and Risk Assessment.
+Implements the rule-based Recommendation Engine and Risk Assessment.
 
 Design principles:
   - Deterministic: same inputs always produce same outputs
@@ -27,7 +27,7 @@ from app.utils.exceptions import NotFoundException, ForbiddenException
 
 
 # ============================================================
-# Centralized Thresholds (Week 6 spec §26)
+# Centralized Thresholds (Agronomic Configuration)
 # Change values here — all rules update automatically.
 # ============================================================
 

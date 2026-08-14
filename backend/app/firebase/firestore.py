@@ -18,7 +18,7 @@ NOTIFICATIONS_COLLECTION = "notifications"
 PREDICTION_HISTORY_COLLECTION = "prediction_history"
 REPORTS_COLLECTION = "reports"
 
-# Milestone 3 collections
+# Analytics and Advisory Collections
 RECOMMENDATIONS_COLLECTION = "recommendations"
 RISK_ASSESSMENTS_COLLECTION = "risk_assessments"
 ANALYTICS_COLLECTION = "analytics"

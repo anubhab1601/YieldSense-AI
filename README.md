@@ -12,54 +12,69 @@
 
 ## 📋 Overview
 
-YieldSense AI is a production-ready Web and Machine Learning platform designed to help farmers and agricultural administrators make intelligent, data-driven farming choices. By integrating historical agricultural data, live weather forecasts, soil characteristics, and machine learning models, the system predicts crop yields, recommends optimal crops, generates analytical insights, exports PDF/CSV reports, and provides complete system administration.
-
-This codebase contains the complete implementation for **Milestone 1** (Core Software Foundation & Infrastructure), **Milestone 2** (Machine Learning, Integration, and Advanced Services), and **Milestone 3** (Analytics, History, Reporting, Multi-Tenant Isolation, and Admin Governance).
+YieldSense AI is an enterprise-grade agricultural decision support platform engineered to help farmers, agronomists, and agricultural administrators optimize crop yields. By unifying historical production datasets, live Open-Meteo weather intelligence, soil nutrient chemistry, and dual machine learning inference pipelines, the application delivers actionable yield forecasts, agronomic recommendations, risk management, analytics, PDF/CSV report generation, and system administration.
 
 ---
 
-## 🚀 Milestone Features
+## 🛠️ End-to-End Development Lifecycle Phases
 
-### Milestone 1: Software Foundation & Core Infrastructure
-* 🏗️ **Complete Software Foundation**: Setup a robust FastAPI backend and Next.js frontend with Tailwind CSS and TypeScript.
-* 🔐 **Firebase Authentication Integration**: Client-side SDK and Backend Admin SDK validation (Signup, Login, Forgot Password, protected routes).
-* 🚜 **Farm Management System**: Full CRUD capability for farm attributes (Area, Crop, Location) stored in Google Firestore.
-* 🔔 **Notifications & Settings**: Infrastructure for farm notifications, settings pages, and user profile management.
-* 🐳 **Containerization**: Backend Dockerfile, Frontend Dockerfile, and `docker-compose.yml` for multi-container orchestration.
+### PHASE 1 — PROJECT FOUNDATION
+* **Objective**: Establish project architecture, repository structure, and core technical dependencies.
+* **Key Components**: FastAPI backend, Next.js 16 frontend with App Router, TypeScript type safety, and Tailwind CSS design system tokens.
+* **Implementation & Verification**: `/api/v1/health` and Next.js root landing page configured and active.
 
-### Milestone 2: Machine Learning & Intelligent Services
-* 🧠 **Dual Machine Learning Pipelines**: Independent pipelines for classification (crop recommendation) and regression (yield prediction).
-* 📊 **Automated Model Selection**: Evaluates 5 different algorithms for classification and regression, generating comparison matrices and saving the best-performing models dynamically.
-* 📈 **KNN Hyperparameter Tuning**: Automatically conducts KNN elbow curve searches (plotting accuracy/$R^2$ scores vs. $k$-neighbors) to train with optimal parameters.
-* 🛡️ **Agronomic Boundary Safety Overrides**: Implements strict physical rule overrides inside the prediction engine to force a 0.0 tons/ha output in unviable growing conditions (e.g., freezing temperature, extreme drought, extreme soil pH, or severe nutrient depletion).
-* 🌤️ **Live Weather Integration**: Connects with Open-Meteo API to fetch current weather conditions and 7-day daily forecasts with caching to optimize performance.
-* 🌱 **Soil Health Analysis**: Rule-based soil health evaluation assessing NPK ratings, pH status, and crop-specific suitability.
-* 🖥️ **Interactive Dashboards**: Live pages for Predictions, Weather monitoring, and Soil analysis connected to FastAPI endpoints.
+### PHASE 2 — APPLICATION & AUTHENTICATION
+* **Objective**: Build identity management, access control, and multi-tenant farm data management.
+* **Key Components**: Client-side and server-side Firebase Authentication (Signup, Login, Password Reset, Profile Management); Firestore Farm CRUD operations with strict `user_id` multi-tenant data isolation.
+* **Implementation & Verification**: Authenticated user sessions function with single-refresh state updates and user-scoped data access.
 
-### Milestone 3: Analytics, History, Reports, Isolation & Admin Governance
-* 📈 **Analytics & Live Charts Dashboard**: Interactive visual insights featuring Yield Trends, Crop Yield Comparison, Season Performance, and Scatter Analysis (Rainfall vs. Yield).
-* 📜 **Historical Predictions System**: Comprehensive prediction history with individual search, pagination, detailed modal view, and record deletion.
-* 📄 **PDF & CSV Export Engine**: Professional ReportLab PDF generator (with custom canvas headers, non-latin1 unicode sanitization, metrics table, risk badges, agronomic recommendations) and CSV downloader.
-* 🛡️ **Multi-Tenant User Isolation**: Automatic user-scoped Firestore queries (`user_id == uid`) ensuring 100% data separation between individual farmers.
-* ⚙️ **Dedicated Admin Control Center (`/admin`)**: System administration platform with live KPI metrics (Total Users, System Farms, System Predictions, Reports), user management table with role switching (`Farmer` ↔ `Admin`), ML engine status monitoring, system-wide prediction audit stream, and role-guarded access.
-* ⚡ **Auto-Refresh Auth Lifecycle**: Zero-delay single page refresh on login and registration for clean session isolation across Farmer and Admin accounts.
+### PHASE 3 — DATA MANAGEMENT & PREPROCESSING
+* **Objective**: Ingest, clean, encode, and scale agricultural datasets for machine learning training pipelines.
+* **Key Components**: Processing pipelines for `Crop_recommendation_processed.csv` and `yield_df_processed.csv`; One-Hot Encoding for region and crop attributes; `StandardScaler` transformations for numerical feature scaling.
+* **Implementation & Verification**: Preprocessed datasets saved under `backend/datasets/processed/` ready for ML pipelines.
 
-### Week 6: Recommendation Engine & Agricultural Risk Assessment
-* 💡 **Rule-Based Recommendation Engine**: Centralized, deterministic, explainable advisory engine (`farm_advisory_service.py`) that evaluates soil pH (acidity/alkalinity thresholds), predicted yield relative to historical farm average yield, and rainfall deviation from crop baselines to generate plain-English farmer guidance.
-* 🛡️ **Agricultural Risk Assessment**: Point-based risk scoring system assessing yield risk, rainfall risk (drought & excess water), and extreme soil pH to assign `Low`, `Medium`, or `High` risk levels with priority guidance and identified risk explanations.
-* 🔌 **Farm-Linked Advisory API**: `GET /api/v1/recommendations/farm/{farm_id}` endpoint with Firebase token authentication and farm ownership validation.
-* 🛡️ **Missing Data Safety**: Gracefully evaluates available parameters and skips missing rules without crashing or inventing fake default zeroes.
-* 🚜 **Farm Details Advisory UI**: Dedicated `FarmAdvisoryPanel` on the Farm Details page displaying risk badges, priority reasons, identified risks with advice, recommendations, and metric summaries.
-* 🧪 **Comprehensive Test Suite**: Automated test suite (`backend/test_week6.py`) covering all 11 required agronomic scenarios.
+### PHASE 4 — MACHINE LEARNING & YIELD PREDICTION
+* **Objective**: Train, optimize, evaluate, and serve machine learning inference models.
+* **Key Components**:
+  - **Classification Model**: Random Forest Crop Recommendation Model (**99.32% Accuracy**, **0.9937 Precision**, **0.9932 F1**).
+  - **Regression Model**: Tuned KNN Crop Yield Prediction Model (**0.9860 R² Score**, **0.414 tons/ha MAE**, **1.009 tons/ha RMSE**).
+  - **Agronomic Safety Overrides**: Deterministic physical boundary rules forcing 0.0 tons/ha yield on freezing temperatures, extreme drought, severe soil pH, or nutrient depletion.
+* **Implementation & Verification**: Singleton inference engine (`predictor.py`) loads `.joblib` model artifacts and serves real-time predictions.
 
-### Week 7: Testing, Docker & Cloud Deployment
-* 🧪 **Final ML Validation Report**: Evaluated models on 20% held-out test split (`backend/ml/evaluate_test_set.py`), documenting exact R² (`0.9860`), MAE (`0.414 tons/ha`), and RMSE (`1.009 tons/ha`) for regression, and Accuracy (`99.32%`), Precision (`0.9937`), Recall (`0.9932`), and F1 (`0.9932`) for classification (`backend/ml/evaluation_report.md`).
-* 🤖 **Automated Backend Pytest Suite**: 15 automated test modules (`backend/tests/`) covering Health, Auth, Farms, Prediction, Weather, Soil, Analytics, Recommendations, Risk, and Error Validation (`100% pass rate`).
-* 📬 **Postman Collection**: `YieldSense_AI.postman_collection.json` containing organized API requests with environment variable parameterization.
-* 🐳 **Optimized Production Containerization**: Multi-stage `frontend/Dockerfile` (with Next.js `output: 'standalone'`), slim `backend/Dockerfile`, and `.dockerignore` filters.
-* 🚢 **Docker Compose Pipeline**: Production `docker-compose.yml` with container networking, healthchecks (`/api/v1/health`), and Firebase environment binding.
-* 🔒 **Secrets & Security Audit**: Clean `.env.example` templates across root, backend, and frontend; 100% secret-free repository.
-* 📘 **Cloud Deployment Guide**: Complete production deployment manual (`docs/deployment.md`) for Render, Railway, Vercel, and AWS.
+### PHASE 5 — ANALYTICS & VISUALIZATION
+* **Objective**: Surface aggregate operational metrics and live interactive data visualizations.
+* **Key Components**: Live Analytics Dashboard (`/analytics`) featuring Yield Trends, Crop Yield Comparison, Season Performance, and Scatter Analysis (Rainfall vs. Yield); History log (`/history`) with search, pagination, and modal views.
+* **Implementation & Verification**: Live charts render in real time from prediction history and farm records.
+
+### PHASE 6 — RECOMMENDATION & RISK ASSESSMENT
+* **Objective**: Provide rule-based agronomic recommendations and point-based agricultural risk scoring.
+* **Key Components**:
+  - Centralized agronomic thresholds (`SOIL_ACIDIC_THRESHOLD`, `YIELD_LOW_THRESHOLD`, `RAINFALL_WARNING_DEVIATION`).
+  - Rule-Based Advisory Engine: Generates plain-English recommendations based on soil pH, yield deviation vs. farm average, and rainfall deviation.
+  - Risk Assessment Engine: Assigns `Low`, `Medium`, or `High` risk levels with priority guidance and identified risk explanations.
+  - Farm-Linked API: `GET /api/v1/recommendations/farm/{farm_id}` endpoint and `FarmAdvisoryPanel` frontend component.
+* **Implementation & Verification**: 100% test coverage on all 11 core agronomic scenarios with graceful missing data handling.
+
+### PHASE 7 — TESTING & DEPLOYMENT
+* **Objective**: Ensure comprehensive test coverage, containerization, and production cloud readiness.
+* **Key Components**:
+  - **Automated Pytest Suite**: 15 test modules (`backend/tests/`) covering Health, Auth, Farms, Prediction, Weather, Soil, Analytics, Recommendations, Risk, and Error Handling (`100% pass rate`).
+  - **Postman API Collection**: `YieldSense_AI.postman_collection.json` with parameterized environment variables.
+  - **Production Containerization**: Multi-stage `frontend/Dockerfile` (with Next.js `output: 'standalone'`), slim `backend/Dockerfile`, `.dockerignore` filters, and `docker-compose.yml`.
+* **Implementation & Verification**: 15/15 pytest cases passing, clean production Docker Compose build, zero TypeScript errors.
+
+### PHASE 8 — MODEL & REPOSITORY MANAGEMENT
+* **Objective**: Maintain reproducible ML model metadata, evaluation reports, and secret-free repository security.
+* **Key Components**:
+  - Model evaluation script (`backend/ml/evaluate_test_set.py`) evaluating models on 20% unseen test split.
+  - Evaluation Report: `backend/ml/evaluation_report.md` documenting exact test metrics.
+  - Security Audit: Secret removal, clean `.env.example` templates, git ignore rules for assistant context files.
+* **Implementation & Verification**: Held-out test evaluation completed and report stored cleanly.
+
+### PHASE 9 — FINAL QUALITY ASSURANCE
+* **Objective**: Complete end-to-end user workflow verification and system governance.
+* **Key Components**: Dedicated Admin Control Center (`/admin`) with live system KPIs, role management (`Farmer` ↔ `Admin`), system audit stream; ReportLab PDF and CSV export engine; production deployment guide (`docs/deployment.md`).
+* **Implementation & Verification**: Full end-to-end user workflow verified across landing, login, farm creation, prediction, advisory, analytics, report export, and logout.
 
 ---
 
@@ -129,10 +144,15 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 │   │   │   └── config.py            # Path & model feature configs
 │   │   ├── inference/
 │   │   │   └── predictor.py         # Singleton predictor loading .joblib artifacts
+│   │   ├── evaluate_test_set.py     # Test evaluation validation script
+│   │   ├── evaluation_report.md     # Model metrics evaluation report
 │   │   └── train.py                 # ML training orchestrator CLI
+│   ├── tests/                       # Automated Pytest suite
 │   ├── package.json                 # npm runner scripts for backend dev & training
 │   ├── requirements.txt
 │   └── main.py                      # FastAPI App entrypoint
+├── docs/
+│   └── deployment.md                # Production Cloud & Container Deployment Guide
 ├── frontend/
 │   ├── src/
 │   │   ├── app/                     # Next.js App Router structure
@@ -150,52 +170,35 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 │   │       └── constants.ts         # Constants & route definitions matching ML categories
 │   ├── package.json
 │   └── tailwind.config.ts
+├── YieldSense_AI.postman_collection.json
+├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-## 📁 Milestone File Mapping
-
-### Milestone 1 Files (Core Foundation)
-* **Backend Core & Config**: `backend/app/core/config.py`, `backend/app/core/security.py`, `backend/app/firebase/client.py`
-* **Database & Firebase Integration**: `backend/app/firebase/firestore.py`
-* **Domain Models & CRUD Services**: `backend/app/models/farm.py`, `backend/app/models/user.py`, `backend/app/services/farm_service.py`, `backend/app/services/auth_service.py`, `backend/app/services/user_service.py`
-* **API Routers**: `backend/app/api/v1/auth.py`, `backend/app/api/v1/farms.py`, `backend/app/api/v1/users.py`, `backend/app/api/v1/notifications.py`
-* **Deployment Setup**: `backend/Dockerfile`, `frontend/Dockerfile`, `docker-compose.yml`
-* **Frontend Auth & Views**: `frontend/src/app/(auth)/login/page.tsx`, `frontend/src/app/(auth)/signup/page.tsx`, `frontend/src/app/(dashboard)/farms/page.tsx`
-
-### Milestone 2 Files (Machine Learning & Integration)
-* **ML Pipeline & Runner**: `backend/ml/train.py`, `backend/ml/preprocessing/`, `backend/ml/training/`, `backend/ml/evaluation/`
-* **Model Inference Engine**: `backend/ml/inference/predictor.py`
-* **Weather, Soil, & Prediction Services**: `backend/app/services/weather_service.py`, `backend/app/services/soil_service.py`, `backend/app/services/prediction_service.py`
-* **Prediction, Weather, & Soil APIs**: `backend/app/api/v1/prediction.py`, `backend/app/api/v1/weather.py`, `backend/app/api/v1/soil.py`
-
-### Milestone 3 Files (Analytics, History, Exports & Admin Control)
-* **Analytics & History Services**: `backend/app/services/analytics_service.py`, `backend/app/services/history_service.py`
-* **Report & PDF/CSV Export Engine**: `backend/app/services/report_service.py`, `backend/app/services/export_service.py`
-* **Admin System & Governance**: `backend/app/services/admin_service.py`, `backend/app/api/v1/admin.py`, `frontend/src/services/adminService.ts`, `frontend/src/app/(dashboard)/admin/page.tsx`
-* **Milestone 3 Routers**: `backend/app/api/v1/analytics.py`, `backend/app/api/v1/history.py`, `backend/app/api/v1/reports.py`, `backend/app/api/v1/exports.py`
-* **Frontend Pages & Charts**: `frontend/src/app/(dashboard)/analytics/page.tsx`, `frontend/src/app/(dashboard)/history/page.tsx`, `frontend/src/app/(dashboard)/reports/page.tsx`, `frontend/src/components/charts/`
-
----
-
-## 🧠 Machine Learning Engine
+## 🧠 Machine Learning Performance Summary
 
 YieldSense AI employs a modular machine learning pipeline built on `scikit-learn` and `joblib`.
 
-### 1. Crop Recommendation (Classification)
+### 1. Crop Recommendation (Classification Model)
 * **Dataset**: `Crop_recommendation_processed.csv` (2,200 total records)
-* **Goal**: Classify the optimal crop based on NPK, temperature, humidity, pH, and rainfall.
-* **Algorithms Evaluated**: Logistic Regression, Decision Trees, Random Forest, KNN Classifier.
-* **KNN Optimization**: Optimal parameter **$k=1$**.
-* **Best Model**: **Random Forest** (Accuracy: **99.32%**, Precision: **0.9937**, Recall: **0.9932**, F1: **0.9932** evaluated on 20% unseen test split of 440 records).
+* **Features**: `N`, `P`, `K`, `temperature`, `humidity`, `ph`, `rainfall` (7 features)
+* **Best Model**: **Random Forest Classifier** (n_estimators=100)
+* **Test Metrics (Evaluated on 20% held-out test split of 440 records)**:
+  - **Accuracy**: **`99.32%`**
+  - **Precision (Weighted)**: **`0.9937`**
+  - **Recall (Weighted)**: **`0.9932`**
+  - **F1-Score (Weighted)**: **`0.9932`**
 
-### 2. Crop Yield Prediction (Regression)
+### 2. Crop Yield Prediction (Regression Model)
 * **Dataset**: `yield_df_processed.csv` (25,932 total records, 123 feature columns)
-* **Goal**: Predict yield in tons/hectare using environmental parameters, location, and crop category.
-* **Algorithms Evaluated**: Linear Regression, Decision Trees, Random Forest Regressor, KNN Regressor.
-* **Best Model**: **KNN Regressor (tuned, k=1)** ($R^2$ Score: **0.9860**, MAE: **0.414 tons/ha**, RMSE: **1.009 tons/ha** evaluated on 20% unseen test split of 5,187 records).
+* **Features**: Numerical parameters (`Year`, `rainfall`, `pesticides`, `avg_temp`) + One-Hot Encoded `Area` and `Item` columns
+* **Best Model**: **KNN Regressor (tuned, k=1)**
+* **Test Metrics (Evaluated on 20% held-out test split of 5,187 records)**:
+  - **R² Score**: **`0.9860`** (98.60%)
+  - **Mean Absolute Error (MAE)**: **`0.4140 tons/ha`** (4,140.23 hg/ha)
+  - **Root Mean Squared Error (RMSE)**: **`1.0090 tons/ha`** (10,090.20 hg/ha)
 
 ### 3. Agronomic Safety Overrides
 Rule-based boundary layers prevent false positive predictions under extreme conditions:
@@ -206,67 +209,53 @@ Rule-based boundary layers prevent false positive predictions under extreme cond
 
 ---
 
-## ⚙️ Project Setup & Configuration
+## ⚙️ Development & Testing Execution
 
 ### Prerequisites
 * Python 3.10+
 * Node.js 18+
+* Docker & Docker Compose (optional for containerized setup)
 
 ### Running Locally
 
-#### 1. Start Backend
+#### 1. Backend Server
 ```bash
 cd backend
 npm run dev
+# Server running at http://localhost:8000
 ```
-*(Runs uvicorn on http://localhost:8000)*
 
-#### 2. Start Frontend
+#### 2. Frontend Development Server
 ```bash
 cd frontend
 npm run dev
+# Next.js running at http://localhost:3000
 ```
-*(Runs Next.js development server on http://localhost:3000)*
 
 ---
 
 ### 🧪 Automated Testing & API Validation
 
-#### 1. Run Backend Pytest Suite
+#### 1. Backend Pytest Suite
 ```bash
 cd backend
 python -m pytest tests/ -v
 ```
 
-#### 2. Run Week 6 Agronomic Scenario Tests
-```bash
-cd backend
-python test_week6.py
-```
-
-#### 3. Postman API Collection
+#### 2. Postman API Collection
 Import `YieldSense_AI.postman_collection.json` into Postman. Set environment variables `{{baseUrl}}` (`http://localhost:8000/api/v1`) and `{{authToken}}`.
 
 ---
 
-### 🐳 Docker & Containerization Setup
+### 🐳 Containerized Production Setup
 
-Run the containerized application locally using Docker Compose:
+Run the multi-container stack via Docker Compose:
 
 ```bash
 docker compose up --build -d
 ```
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000/api/v1
-- **API Documentation**: http://localhost:8000/docs
-- **Deployment Guide**: See [`docs/deployment.md`](docs/deployment.md) for full cloud hosting instructions.
-
-
----
-
-## 🚀 Repository & Deployment Note
-
-* **Active Development Branch**: `anubhab-mishra` (synced with `main`).
-* **Multi-Tenant Security**: User datasets are isolated at the database query level (`user_id == uid`).
-* **Admin Governance**: Dedicated role-based access control guarding `/admin`.
+- **Frontend Application**: http://localhost:3000
+- **Backend REST API**: http://localhost:8000/api/v1
+- **OpenAPI Swagger Docs**: http://localhost:8000/docs
+- **Cloud Deployment Guide**: See [`docs/deployment.md`](docs/deployment.md) for hosting configurations.

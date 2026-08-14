@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction Service (Milestone 3 Enhanced)
+YieldSense AI — Prediction Service
 
 Orchestrates the full prediction pipeline:
   1. Validate input
@@ -7,10 +7,10 @@ Orchestrates the full prediction pipeline:
   3. Analyze soil health
   4. Prepare feature vector
   5. Load model + predict
-  6. Run Risk Assessment (Milestone 3)
-  7. Generate Recommendations (Milestone 3)
-  8. Auto-save to prediction history (Milestone 3)
-  9. Fire notification (Milestone 3)
+  6. Run Risk Assessment
+  7. Generate Recommendations
+  8. Auto-save to prediction history
+  9. Fire notification
  10. Assemble structured response
 """
 
@@ -115,7 +115,7 @@ async def predict_yield(input_data: Dict[str, Any], user_id: Optional[str] = Non
         "prediction_timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
-    # ---- Step 5: Risk Assessment (Milestone 3) ----
+    # ---- Step 5: Risk Assessment ----
     risk_data = None
     try:
         from app.services.risk_service import assess_risk
@@ -136,7 +136,7 @@ async def predict_yield(input_data: Dict[str, Any], user_id: Optional[str] = Non
     except Exception:
         response["risk_assessment"] = None
 
-    # ---- Step 6: Recommendations (Milestone 3) ----
+    # ---- Step 6: Recommendations ----
     try:
         from app.services.recommendation_service import generate_recommendations
         rec_input = {

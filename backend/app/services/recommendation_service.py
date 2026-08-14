@@ -109,7 +109,7 @@ class RecommendationStrategy:
 
 
 # ============================================================
-# Rule-Based Strategy (Milestone 3 Default)
+# Rule-Based Strategy
 # ============================================================
 
 class RuleBasedStrategy(RecommendationStrategy):
@@ -457,7 +457,7 @@ def generate_recommendations(input_data: Dict[str, Any], strategy: Optional[Reco
     Args:
         input_data: Prediction parameters (crop, temp, rainfall, NPK, etc.)
         strategy: Optional custom strategy. Defaults to RuleBasedStrategy.
-                  Pass an AI model strategy here in future milestones.
+                  Pass an alternative strategy here if configured.
 
     Returns:
         Full recommendation response dict.

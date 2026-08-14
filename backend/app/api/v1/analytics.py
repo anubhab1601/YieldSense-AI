@@ -1,5 +1,5 @@
 """
-YieldSense AI — Analytics API Endpoints (Milestone 3)
+YieldSense AI — Analytics API Endpoints
 """
 
 from fastapi import APIRouter, Depends, HTTPException

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Prediction History API Endpoints (Milestone 3)
+YieldSense AI — Prediction History API Endpoints
 """
 
 import math

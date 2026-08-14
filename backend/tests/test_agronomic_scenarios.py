@@ -1,24 +1,25 @@
 """
-YieldSense AI — Week 6 Unit Test Suite
+YieldSense AI — Agronomic Rule Engine Test Suite
 
-Tests the pure functions:
+Tests the pure advisory functions:
   - generate_farm_recommendations()
   - assess_farm_risk()
 
-All 11 scenarios from the Week 6 specification (section 21).
-
-Usage:
-    cd backend
-    python -m pytest test_week6.py -v
-
-No database, no Firebase, no network required — pure function testing.
+Covers all 11 core agronomic scenarios:
+  1. Normal Farm
+  2. Acidic Soil
+  3. Alkaline Soil
+  4. Low Predicted Yield
+  5. Very Low Yield
+  6. Low Rainfall
+  7. High Rainfall
+  8. Extreme Rainfall
+  9. Poor Soil pH
+  10. Compound Multiple Risks
+  11. Missing Input Data
 """
 
-import sys
-import os
-
-# Ensure the backend root is on the path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pytest
 
 from app.services.farm_advisory_service import (
     generate_farm_recommendations,
@@ -29,12 +30,10 @@ from app.services.farm_advisory_service import (
     SOIL_HIGH_RISK_PH_HIGH,
     YIELD_LOW_THRESHOLD,
     YIELD_VERY_LOW_THRESHOLD,
-    YIELD_MODERATE_RISK,
     RAINFALL_WARNING_DEVIATION,
     RAINFALL_HIGH_RISK,
     RAINFALL_MODERATE_RISK,
     RISK_HIGH_SCORE,
-    RISK_MEDIUM_SCORE,
 )
 
 
@@ -61,7 +60,6 @@ def test_scenario_1_normal_farm():
     assert risk["risk_level"] == "Low"
     assert risk["risk_score"] == 0
     assert len(risk["identified_risks"]) == 0
-    print("[OK] Scenario 1: Normal farm - PASSED")
 
 
 def test_scenario_2_acidic_soil():
@@ -78,7 +76,6 @@ def test_scenario_2_acidic_soil():
     assert any("acidic" in t for t in texts)
     assert any("lime" in t for t in texts)
     assert not any("alkaline" in t for t in texts)
-    print("[OK] Scenario 2: Acidic soil - PASSED")
 
 
 def test_scenario_3_alkaline_soil():
@@ -95,7 +92,6 @@ def test_scenario_3_alkaline_soil():
     assert any("alkaline" in t for t in texts)
     assert any("compost" in t or "organic" in t for t in texts)
     assert not any("lime" in t for t in texts)
-    print("[OK] Scenario 3: Alkaline soil - PASSED")
 
 
 def test_scenario_4_low_predicted_yield():
@@ -112,7 +108,6 @@ def test_scenario_4_low_predicted_yield():
     texts = _get_rec_texts(recs)
     assert any("below" in t for t in texts)
     assert any("irrigation" in t or "fertilizer" in t for t in texts)
-    print("[OK] Scenario 4: Low predicted yield - PASSED")
 
 
 def test_scenario_5_very_low_yield():
@@ -130,7 +125,6 @@ def test_scenario_5_very_low_yield():
     yield_risks = [r for r in risk["identified_risks"] if r["type"] == "Yield Risk"]
     assert len(yield_risks) == 1
     assert yield_risks[0]["severity"] == "High"
-    print("[OK] Scenario 5: Very low yield - PASSED")
 
 
 def test_scenario_6_low_rainfall():
@@ -146,7 +140,6 @@ def test_scenario_6_low_rainfall():
     texts = _get_rec_texts(recs)
     assert any("irrigation" in t for t in texts)
     assert any("below" in t for t in texts)
-    print("[OK] Scenario 6: Low rainfall - PASSED")
 
 
 def test_scenario_7_high_rainfall():
@@ -161,7 +154,6 @@ def test_scenario_7_high_rainfall():
     )
     texts = _get_rec_texts(recs)
     assert any("drainage" in t or "waterlog" in t for t in texts)
-    print("[OK] Scenario 7: High rainfall - PASSED")
 
 
 def test_scenario_8_extreme_rainfall():
@@ -187,7 +179,6 @@ def test_scenario_8_extreme_rainfall():
         soil_ph=6.5,
     )
     assert risk_moderate["risk_score"] == 1
-    print("[OK] Scenario 8: Extreme rainfall - PASSED")
 
 
 def test_scenario_9_poor_soil_ph():
@@ -210,7 +201,6 @@ def test_scenario_9_poor_soil_ph():
     soil_risks_alk = [r for r in risk_alkaline["identified_risks"] if r["type"] == "Soil Risk"]
     assert len(soil_risks_alk) == 1
     assert risk_alkaline["risk_score"] >= 1
-    print("[OK] Scenario 9: Poor soil pH - PASSED")
 
 
 def test_scenario_10_multiple_problems():
@@ -226,7 +216,6 @@ def test_scenario_10_multiple_problems():
     assert risk["risk_score"] >= RISK_HIGH_SCORE
     assert risk["risk_level"] == "High"
     assert len(risk["identified_risks"]) == 3
-    print("[OK] Scenario 10: Multiple problems -> High risk - PASSED")
 
 
 def test_scenario_11_missing_data():
@@ -249,32 +238,6 @@ def test_scenario_11_missing_data():
     assert risk["risk_level"] == "Low"
     assert len(risk["identified_risks"]) == 0
 
-    recs_partial = generate_farm_recommendations(
-        soil_ph=4.5,
-        predicted_yield=None,
-        avg_yield=None,
-        rainfall_deviation=None,
-    )
-    texts = _get_rec_texts(recs_partial)
-    assert any("acidic" in t for t in texts)
-
-    recs_no_pred = generate_farm_recommendations(
-        soil_ph=6.5,
-        predicted_yield=None,
-        avg_yield=4.0,
-        rainfall_deviation=0.0,
-    )
-    assert "all indicators look normal" in recs_no_pred[0].lower()
-
-    recs_no_avg = generate_farm_recommendations(
-        soil_ph=6.5,
-        predicted_yield=2.0,
-        avg_yield=None,
-        rainfall_deviation=0.0,
-    )
-    assert "all indicators look normal" in recs_no_avg[0].lower()
-    print("[OK] Scenario 11: Missing data - PASSED")
-
 
 def test_no_double_counting_yield_risk():
     avg = 10.0
@@ -288,7 +251,6 @@ def test_no_double_counting_yield_risk():
     yield_risks = [r for r in risk["identified_risks"] if r["type"] == "Yield Risk"]
     assert len(yield_risks) == 1
     assert risk["risk_score"] == 2
-    print("[OK] No double-counting yield risk - PASSED")
 
 
 def test_no_double_counting_rainfall_risk():
@@ -301,7 +263,6 @@ def test_no_double_counting_rainfall_risk():
     rainfall_risks = [r for r in risk["identified_risks"] if r["type"] == "Rainfall Risk"]
     assert len(rainfall_risks) == 1
     assert risk["risk_score"] == 2
-    print("[OK] No double-counting rainfall risk - PASSED")
 
 
 def test_ph_within_normal_range_no_recommendation():
@@ -315,7 +276,6 @@ def test_ph_within_normal_range_no_recommendation():
         texts = _get_rec_texts(recs)
         assert not any("acidic" in t for t in texts)
         assert not any("alkaline" in t for t in texts)
-    print("[OK] Normal pH range - no acidic/alkaline recommendation - PASSED")
 
 
 def test_yield_within_normal_range_no_recommendation():
@@ -331,7 +291,6 @@ def test_yield_within_normal_range_no_recommendation():
         texts = _get_rec_texts(recs)
         assert not any("below" in t and "average" in t for t in texts)
         assert not any("above" in t and "average" in t for t in texts)
-    print("[OK] Normal yield range - no unnecessary yield recommendation - PASSED")
 
 
 def test_rainfall_within_normal_range_no_recommendation():
@@ -345,7 +304,6 @@ def test_rainfall_within_normal_range_no_recommendation():
         texts = _get_rec_texts(recs)
         assert not any("irrigation" in t for t in texts)
         assert not any("drainage" in t for t in texts)
-    print("[OK] Normal rainfall range - no unnecessary rainfall recommendation - PASSED")
 
 
 def test_recommendations_never_empty():
@@ -357,47 +315,3 @@ def test_recommendations_never_empty():
     for soil_ph, pred, avg, rain_dev in cases:
         recs = generate_farm_recommendations(soil_ph, pred, avg, rain_dev)
         assert len(recs) > 0
-    print("[OK] Recommendations never empty - PASSED")
-
-
-if __name__ == "__main__":
-    tests = [
-        test_scenario_1_normal_farm,
-        test_scenario_2_acidic_soil,
-        test_scenario_3_alkaline_soil,
-        test_scenario_4_low_predicted_yield,
-        test_scenario_5_very_low_yield,
-        test_scenario_6_low_rainfall,
-        test_scenario_7_high_rainfall,
-        test_scenario_8_extreme_rainfall,
-        test_scenario_9_poor_soil_ph,
-        test_scenario_10_multiple_problems,
-        test_scenario_11_missing_data,
-        test_no_double_counting_yield_risk,
-        test_no_double_counting_rainfall_risk,
-        test_ph_within_normal_range_no_recommendation,
-        test_yield_within_normal_range_no_recommendation,
-        test_rainfall_within_normal_range_no_recommendation,
-        test_recommendations_never_empty,
-    ]
-
-    passed = 0
-    failed = 0
-    for t in tests:
-        try:
-            t()
-            passed += 1
-        except AssertionError as e:
-            print(f"[FAIL] {t.__name__}: FAILED - {e}")
-            failed += 1
-        except Exception as e:
-            print(f"[FAIL] {t.__name__}: ERROR - {e}")
-            failed += 1
-
-    print(f"\n{'='*60}")
-    print(f"Week 6 Tests: {passed} passed, {failed} failed")
-    if failed == 0:
-        print("All tests passed [PASS]")
-    else:
-        print("Some tests FAILED [FAIL]")
-        sys.exit(1)

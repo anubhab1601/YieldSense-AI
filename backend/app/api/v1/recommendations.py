@@ -1,10 +1,8 @@
 """
 YieldSense AI — Recommendations API Endpoints
 
-Week 5 (Milestone 3):
+Provides endpoints for:
   POST /recommendations/       — generate agronomy recommendations from manual input
-
-Week 6:
   GET  /recommendations/farm/{farm_id} — farm-linked advisory (auth-gated, ownership-validated)
 """
 
@@ -21,7 +19,7 @@ router = APIRouter(prefix="/recommendations", tags=["Recommendations"])
 
 
 # ============================================================
-# Week 5 Endpoint (Milestone 3) — kept intact
+# Manual Input Recommendation Endpoint
 # ============================================================
 
 @router.post(
@@ -51,7 +49,7 @@ async def post_recommendations(request: RecommendationEngineRequest):
 
 
 # ============================================================
-# Week 6 Endpoint — farm-linked, authenticated advisory
+# Farm-linked Advisory Endpoint
 # ============================================================
 
 @router.get(

@@ -1,5 +1,5 @@
 """
-YieldSense AI — Reports API Endpoints (Milestone 3)
+YieldSense AI — Reports API Endpoints
 """
 
 from fastapi import APIRouter, Depends, HTTPException

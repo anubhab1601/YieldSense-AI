@@ -1,5 +1,5 @@
 """
-YieldSense AI — Export API Endpoints (Milestone 3)
+YieldSense AI — Export API Endpoints
 
 Generates PDF and CSV export downloads.
 """
