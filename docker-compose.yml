@@ -8,19 +8,21 @@ services:
     container_name: yieldsense-backend
     ports:
       - "8000:8000"
+    environment:
+      - PORT=8000
+      - DEBUG=false
+      - API_V1_PREFIX=/api/v1
     env_file:
       - ./backend/.env
-    volumes:
-      - ./backend/datasets:/app/datasets
     restart: unless-stopped
     networks:
       - yieldsense-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 20s
       timeout: 10s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
   frontend:
     build:
@@ -29,8 +31,12 @@ services:
     container_name: yieldsense-frontend
     ports:
       - "3000:3000"
+    environment:
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
     env_file:
-      - ./frontend/.env
+      - ./frontend/.env.local
     depends_on:
       backend:
         condition: service_healthy

@@ -52,6 +52,15 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 * 🚜 **Farm Details Advisory UI**: Dedicated `FarmAdvisoryPanel` on the Farm Details page displaying risk badges, priority reasons, identified risks with advice, recommendations, and metric summaries.
 * 🧪 **Comprehensive Test Suite**: Automated test suite (`backend/test_week6.py`) covering all 11 required agronomic scenarios.
 
+### Week 7: Testing, Docker & Cloud Deployment
+* 🧪 **Final ML Validation Report**: Evaluated models on 20% held-out test split (`backend/ml/evaluate_test_set.py`), documenting exact R² (`0.9860`), MAE (`0.414 tons/ha`), and RMSE (`1.009 tons/ha`) for regression, and Accuracy (`99.32%`), Precision (`0.9937`), Recall (`0.9932`), and F1 (`0.9932`) for classification (`backend/ml/evaluation_report.md`).
+* 🤖 **Automated Backend Pytest Suite**: 15 automated test modules (`backend/tests/`) covering Health, Auth, Farms, Prediction, Weather, Soil, Analytics, Recommendations, Risk, and Error Validation (`100% pass rate`).
+* 📬 **Postman Collection**: `YieldSense_AI.postman_collection.json` containing organized API requests with environment variable parameterization.
+* 🐳 **Optimized Production Containerization**: Multi-stage `frontend/Dockerfile` (with Next.js `output: 'standalone'`), slim `backend/Dockerfile`, and `.dockerignore` filters.
+* 🚢 **Docker Compose Pipeline**: Production `docker-compose.yml` with container networking, healthchecks (`/api/v1/health`), and Firebase environment binding.
+* 🔒 **Secrets & Security Audit**: Clean `.env.example` templates across root, backend, and frontend; 100% secret-free repository.
+* 📘 **Cloud Deployment Guide**: Complete production deployment manual (`docs/deployment.md`) for Render, Railway, Vercel, and AWS.
+
 ---
 
 ## 🏗️ Architecture
@@ -176,18 +185,17 @@ This codebase contains the complete implementation for **Milestone 1** (Core Sof
 YieldSense AI employs a modular machine learning pipeline built on `scikit-learn` and `joblib`.
 
 ### 1. Crop Recommendation (Classification)
-* **Dataset**: `Crop_recommendation_processed.csv` (2,200 rows)
+* **Dataset**: `Crop_recommendation_processed.csv` (2,200 total records)
 * **Goal**: Classify the optimal crop based on NPK, temperature, humidity, pH, and rainfall.
 * **Algorithms Evaluated**: Logistic Regression, Decision Trees, Random Forest, KNN Classifier.
-* **KNN Optimization**: Optimal parameter **$k=3$**.
-* **Best Model**: **Random Forest** (Accuracy: **0.9932**, F1: 0.9932).
+* **KNN Optimization**: Optimal parameter **$k=1$**.
+* **Best Model**: **Random Forest** (Accuracy: **99.32%**, Precision: **0.9937**, Recall: **0.9932**, F1: **0.9932** evaluated on 20% unseen test split of 440 records).
 
 ### 2. Crop Yield Prediction (Regression)
-* **Dataset**: `yield_df_processed.csv` (25,932 rows, 114 columns)
+* **Dataset**: `yield_df_processed.csv` (25,932 total records, 123 feature columns)
 * **Goal**: Predict yield in tons/hectare using environmental parameters, location, and crop category.
 * **Algorithms Evaluated**: Linear Regression, Decision Trees, Random Forest Regressor, KNN Regressor.
-* **KNN Optimization**: Optimal parameter **$k=2$**.
-* **Best Model**: **KNN Regressor (tuned)** ($R^2$ Score: **0.9860**).
+* **Best Model**: **KNN Regressor (tuned, k=1)** ($R^2$ Score: **0.9860**, MAE: **0.414 tons/ha**, RMSE: **1.009 tons/ha** evaluated on 20% unseen test split of 5,187 records).
 
 ### 3. Agronomic Safety Overrides
 Rule-based boundary layers prevent false positive predictions under extreme conditions:
@@ -219,6 +227,41 @@ cd frontend
 npm run dev
 ```
 *(Runs Next.js development server on http://localhost:3000)*
+
+---
+
+### 🧪 Automated Testing & API Validation
+
+#### 1. Run Backend Pytest Suite
+```bash
+cd backend
+python -m pytest tests/ -v
+```
+
+#### 2. Run Week 6 Agronomic Scenario Tests
+```bash
+cd backend
+python test_week6.py
+```
+
+#### 3. Postman API Collection
+Import `YieldSense_AI.postman_collection.json` into Postman. Set environment variables `{{baseUrl}}` (`http://localhost:8000/api/v1`) and `{{authToken}}`.
+
+---
+
+### 🐳 Docker & Containerization Setup
+
+Run the containerized application locally using Docker Compose:
+
+```bash
+docker compose up --build -d
+```
+
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:8000/api/v1
+- **API Documentation**: http://localhost:8000/docs
+- **Deployment Guide**: See [`docs/deployment.md`](docs/deployment.md) for full cloud hosting instructions.
+
 
 ---
 
