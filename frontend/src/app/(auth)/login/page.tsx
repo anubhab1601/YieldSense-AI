@@ -57,16 +57,16 @@ export default function LoginPage() {
 
   return (
     <>
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+      <div className="text-center mb-5">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           Welcome back
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 mt-1">
           Sign in to your YieldSense AI account
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <Input
           label="Email"
           type="email"
@@ -99,7 +99,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-end">
           <Link
             href={ROUTES.FORGOT_PASSWORD}
-            className="text-sm text-[#1a6b3c] hover:text-[#155730] font-medium"
+            className="text-xs text-[#1a6b3c] hover:text-[#155730] font-medium"
           >
             Forgot password?
           </Link>
@@ -110,7 +110,7 @@ export default function LoginPage() {
         </Button>
       </form>
 
-      <p className="text-center text-sm text-gray-500 mt-6">
+      <p className="text-center text-xs text-gray-500 mt-5">
         Don&apos;t have an account?{" "}
         <Link
           href={ROUTES.SIGNUP}

@@ -77,17 +77,17 @@ export default function SignupPage() {
 
 
   return (
-    <div style={{ transform: "translateY(1cm)" }}>
-      <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+    <>
+      <div className="text-center mb-4">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
           Create your account
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-xs text-gray-500 mt-1">
           Start predicting crop yields with AI
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
         <Input
           label="Full Name"
           type="text"
@@ -138,10 +138,10 @@ export default function SignupPage() {
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+          <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">
             I am a
           </label>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2">
             {[
               { value: "farmer", label: "Farmer" },
               { value: "admin", label: "Administrator" },
@@ -151,7 +151,7 @@ export default function SignupPage() {
                 type="button"
                 onClick={() => updateField("role", role.value)}
                 className={`
-                  px-4 py-2.5 rounded-lg text-sm font-medium border transition-colors duration-150
+                  px-3 py-2 rounded-lg text-xs font-medium border transition-colors duration-150
                   ${
                     formData.role === role.value
                       ? "border-[#1a6b3c] bg-[#e8f5ec] dark:bg-green-900/20 text-[#1a6b3c] dark:text-green-400"
@@ -170,7 +170,7 @@ export default function SignupPage() {
         </Button>
       </form>
 
-      <p className="text-center text-sm text-gray-500 mt-6">
+      <p className="text-center text-xs text-gray-500 mt-4">
         Already have an account?{" "}
         <Link
           href={ROUTES.LOGIN}
@@ -179,6 +179,6 @@ export default function SignupPage() {
           Sign in
         </Link>
       </p>
-    </div>
+    </>
   );
 }
