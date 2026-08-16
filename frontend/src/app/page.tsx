@@ -62,7 +62,7 @@ const steps = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950" style={{ zoom: "135%" }}>
+    <div className="min-h-screen bg-white dark:bg-gray-950" style={{ zoom: "175%" }}>
 
       {/* ── Header ── */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-950/95 border-b border-gray-200 dark:border-gray-800 backdrop-blur-sm">
