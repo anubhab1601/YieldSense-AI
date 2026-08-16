@@ -56,7 +56,7 @@ export default function LoginPage() {
 
 
   return (
-    <div style={{ transform: "translateY(-4cm)" }}>
+    <>
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Welcome back
@@ -119,6 +119,6 @@ export default function LoginPage() {
           Create one
         </Link>
       </p>
-    </div>
+    </>
   );
 }
