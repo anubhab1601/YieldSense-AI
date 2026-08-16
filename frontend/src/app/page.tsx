@@ -62,7 +62,7 @@ const steps = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-950" style={{ zoom: "175%" }}>
+    <div className="min-h-screen bg-white dark:bg-gray-950" style={{ zoom: "135%" }}>
 
       {/* ── Header ── */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-gray-950/95 border-b border-gray-200 dark:border-gray-800 backdrop-blur-sm">
@@ -91,16 +91,16 @@ export default function LandingPage() {
 
       {/* ── Hero ── */}
       <section className="border-b border-gray-100 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
           <div className="max-w-2xl">
-            <p className="text-sm font-medium text-[#1a6b3c] mb-4 uppercase tracking-wide">
+            <p className="text-sm font-medium text-[#1a6b3c] mb-3 uppercase tracking-wide">
               Agricultural Yield Forecasting
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-5">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-4">
               Forecast crop yields.<br />
               Make better farming decisions.
             </h1>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-8 max-w-xl">
+            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-xl">
               YieldSense AI predicts crop yields using soil data, weather conditions, and
               historical records. Understand your risk, get fertilizer recommendations, and
               plan your season with confidence.
