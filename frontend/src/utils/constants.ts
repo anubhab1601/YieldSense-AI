@@ -6,8 +6,13 @@ export const APP_NAME = "YieldSense AI";
 export const APP_DESCRIPTION =
   "AI-powered Crop Yield Prediction and Agricultural Productivity Forecasting System";
 
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+const getApiBaseUrl = (): string => {
+  const url = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api/v1";
+  const trimmed = url.replace(/\/+$/, "");
+  return trimmed.endsWith("/api/v1") ? trimmed : `${trimmed}/api/v1`;
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 export const ROUTES = {
   HOME: "/",
