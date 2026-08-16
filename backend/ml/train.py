@@ -52,7 +52,9 @@ def train_crop_recommendation():
 
     crop_path = PROCESSED_DIR / "Crop_recommendation_processed.csv"
     if not crop_path.exists():
-        raise FileNotFoundError(f"Processed crop dataset not found: {crop_path}")
+        print(f"Processed crop dataset not found at {crop_path}. Running preprocessing pipeline...")
+        from preprocessing.run_preprocess import main as run_preprocess_main
+        run_preprocess_main()
 
     # Load data
     df = pd.read_csv(crop_path)
@@ -198,7 +200,9 @@ def train_crop_yield():
 
     yield_path = PROCESSED_DIR / "yield_df_processed.csv"
     if not yield_path.exists():
-        raise FileNotFoundError(f"Processed yield dataset not found: {yield_path}")
+        print(f"Processed yield dataset not found at {yield_path}. Running preprocessing pipeline...")
+        from preprocessing.run_preprocess import main as run_preprocess_main
+        run_preprocess_main()
 
     # Load data
     df = pd.read_csv(yield_path)
