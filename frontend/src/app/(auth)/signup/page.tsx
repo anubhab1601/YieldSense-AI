@@ -77,7 +77,7 @@ export default function SignupPage() {
 
 
   return (
-    <>
+    <div style={{ transform: "translateY(1cm)" }}>
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
           Create your account
@@ -179,6 +179,6 @@ export default function SignupPage() {
           Sign in
         </Link>
       </p>
-    </>
+    </div>
   );
 }
