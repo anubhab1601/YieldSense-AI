@@ -12,7 +12,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
   return (
     <div
       className="h-screen w-screen overflow-hidden flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950 px-4"
-      style={{ zoom: "105%" }}
+      style={{ zoom: "125%" }}
     >
       <div className="w-full max-w-sm flex flex-col items-center my-auto">
         {/* Logo */}
