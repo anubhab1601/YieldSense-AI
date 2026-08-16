@@ -35,8 +35,14 @@ class Settings(BaseSettings):
 
     @property
     def cors_origins_list(self) -> List[str]:
-        """Parse comma-separated CORS origins into a list."""
-        return [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        """Parse comma-separated CORS origins into a list, ensuring vercel origins are supported."""
+        origins = [origin.strip() for origin in self.CORS_ORIGINS.split(",") if origin.strip()]
+        # Automatically include production and preview Vercel origins if not explicitly listed
+        default_vercels = ["https://yield-sense-ai.vercel.app"]
+        for v in default_vercels:
+            if v not in origins:
+                origins.append(v)
+        return origins
 
     # ---- Application Metadata ----
     APP_NAME: str = "YieldSense AI"
