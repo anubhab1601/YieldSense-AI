@@ -48,16 +48,60 @@ SAVED_MODELS_DIR.mkdir(parents=True, exist_ok=True)
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
+def ensure_datasets_processed():
+    """Build processed CSV datasets directly from raw datasets if missing."""
+    raw_dir = BASE_DIR / "datasets" / "raw"
+    PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+
+    crop_output = PROCESSED_DIR / "Crop_recommendation_processed.csv"
+    if not crop_output.exists():
+        crop_input = raw_dir / "Crop_recommendation.csv"
+        if not crop_input.exists():
+            raise FileNotFoundError(f"Raw dataset missing: {crop_input}")
+        print(f"Processing raw crop dataset: {crop_input}...")
+        df = pd.read_csv(crop_input).drop_duplicates().reset_index(drop=True)
+        for col in df.columns:
+            if df[col].isna().any():
+                if pd.api.types.is_numeric_dtype(df[col]):
+                    df[col] = df[col].fillna(df[col].median())
+                else:
+                    df[col] = df[col].fillna(df[col].mode(dropna=True).iloc[0])
+        df['label'] = df['label'].astype(str).str.strip()
+        label_map = {label: idx for idx, label in enumerate(sorted(df['label'].unique()))}
+        df['label_encoded'] = df['label'].map(label_map).astype('int64')
+        df.to_csv(crop_output, index=False)
+        print("Crop recommendation dataset processed successfully.")
+
+    yield_output = PROCESSED_DIR / "yield_df_processed.csv"
+    if not yield_output.exists():
+        yield_input = raw_dir / "yield_df.csv"
+        if not yield_input.exists():
+            raise FileNotFoundError(f"Raw dataset missing: {yield_input}")
+        print(f"Processing raw yield dataset: {yield_input}...")
+        df = pd.read_csv(yield_input)
+        if 'Unnamed: 0' in df.columns:
+            df = df.drop(columns=['Unnamed: 0'])
+        df = df.drop_duplicates().reset_index(drop=True)
+        for col in df.columns:
+            if df[col].isna().any():
+                if pd.api.types.is_numeric_dtype(df[col]):
+                    df[col] = df[col].fillna(df[col].median())
+                else:
+                    df[col] = df[col].fillna(df[col].mode(dropna=True).iloc[0])
+        df['Area'] = df['Area'].astype(str).str.strip()
+        df['Item'] = df['Item'].astype(str).str.strip()
+        df = pd.get_dummies(df, columns=['Area', 'Item'], drop_first=True, dtype='int64')
+        df.to_csv(yield_output, index=False)
+        print("Crop yield dataset processed successfully.")
+
+
 def train_crop_recommendation():
     print("\n" + "=" * 60)
     print("TRAINING CROP RECOMMENDATION MODEL (CLASSIFICATION)")
     print("=" * 60)
 
+    ensure_datasets_processed()
     crop_path = PROCESSED_DIR / "Crop_recommendation_processed.csv"
-    if not crop_path.exists():
-        print(f"Processed crop dataset not found at {crop_path}. Running preprocessing pipeline...")
-        from preprocessing.run_preprocess import main as run_preprocess_main
-        run_preprocess_main()
 
     # Load data
     df = pd.read_csv(crop_path)
@@ -201,11 +245,8 @@ def train_crop_yield():
     print("TRAINING CROP YIELD REGRESSION MODEL")
     print("=" * 60)
 
+    ensure_datasets_processed()
     yield_path = PROCESSED_DIR / "yield_df_processed.csv"
-    if not yield_path.exists():
-        print(f"Processed yield dataset not found at {yield_path}. Running preprocessing pipeline...")
-        from preprocessing.run_preprocess import main as run_preprocess_main
-        run_preprocess_main()
 
     # Load data
     df = pd.read_csv(yield_path)
