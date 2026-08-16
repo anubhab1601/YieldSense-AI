@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-950 px-4 py-4 sm:py-6">
-      <div className="w-full max-w-sm flex flex-col items-center my-auto">
+      <div className="w-full max-w-sm flex flex-col items-center my-auto" style={{ zoom: "125%" }}>
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4 shrink-0">
           <div className="w-7 h-7 rounded-md bg-[#1a6b3c] flex items-center justify-center shrink-0">
