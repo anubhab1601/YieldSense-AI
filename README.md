@@ -11,6 +11,14 @@
 
 ---
 
+## 🌐 Live Deployment Links
+
+- **Live Web Application (Vercel)**: [**https://yield-sense-ai.vercel.app**](https://yield-sense-ai.vercel.app/)
+- **Live Backend API (Render)**: [**https://yieldsense-ai.onrender.com/api/v1**](https://yieldsense-ai.onrender.com/api/v1)
+- **Interactive API Documentation (Swagger)**: [**https://yieldsense-ai.onrender.com/docs**](https://yieldsense-ai.onrender.com/docs)
+
+---
+
 ## 📋 Overview
 
 YieldSense AI is a full-stack agricultural decision-support platform designed to help farmers, agronomists, and agricultural administrators forecast crop production and manage farming risks. The application integrates historical agricultural production data, soil nutrient chemistry, live Open-Meteo weather forecasts, and dual machine learning inference pipelines to produce accurate yield forecasts and agronomic recommendations.
