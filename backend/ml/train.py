@@ -30,6 +30,9 @@ from sklearn.metrics import (
     r2_score, mean_absolute_error, mean_squared_error
 )
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # Set non-interactive matplotlib backend
 import matplotlib
 matplotlib.use('Agg')
@@ -315,7 +318,7 @@ def train_crop_yield():
     # Plot Model Comparison Bar Chart (R2)
     df_results = pd.DataFrame(results).T.reset_index().rename(columns={"index": "Model"})
     plt.figure(figsize=(10, 5))
-    sns.barplot(data=df_results, x="Model", y="R2", palette="magma")
+    sns.barplot(data=df_results, x="Model", y="R2", hue="Model", palette="magma", legend=False)
     plt.title("Crop Yield Regressors: R² Score Comparison")
     plt.ylabel("R² Score")
     plt.ylim(0, 1.05)
